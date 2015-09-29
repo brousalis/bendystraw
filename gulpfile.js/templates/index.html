@@ -1,0 +1,42 @@
+<!doctype html>
+<html ng-app="testApp">
+  <head>
+    <meta charset="utf-8">
+    <title>testApp</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+
+    <!-- build:css(source) stylesheets/vendor.css -->
+      <!-- bower:css -->
+      <!-- endbower -->
+    <!-- endbuild -->
+
+    <!-- build:css stylesheets/app.css -->
+      <!-- inject:css -->
+      <!-- endinject -->
+    <!-- endbuild -->
+  </head>
+  <body>
+    <div ui-view></div>
+
+    <!-- build:js(source) app/vendor.js -->
+      <!-- inject:vendor -->
+      <!-- endinject -->
+
+      <!-- bower:js -->
+      <!-- endbower -->
+    <!-- endbuild -->
+
+    <!-- build:js app/app.js -->
+      <!-- inject:templates -->
+      <!-- endinject -->
+
+      <!-- inject:js -->
+      <!-- endinject -->
+    <!-- endbuild -->
+
+    <!-- @if NODE_ENV='production' -->
+    <!-- @endif -->
+  </body>
+</html>
+
