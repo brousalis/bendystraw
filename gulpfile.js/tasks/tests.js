@@ -11,7 +11,7 @@ var $ = require('gulp-load-plugins')();
 
 function runTests (singleRun, done) {
   karma.server.start({
-    configFile: path.join(__dirname, '/../karma.config.js'),
+    configFile: path.join(__dirname, '/../karma.conf.js'),
     singleRun: singleRun,
     autoWatch: !singleRun
   }, function() {
@@ -19,26 +19,13 @@ function runTests (singleRun, done) {
   });
 }
 
-gulp.task('test', ['scripts'], function(done) {
-  runTests(true, done);
-});
-
-gulp.task('test:auto', ['watch'], function(done) {
-  runTests(false, done);
-});
-
-// Downloads the selenium webdriver
-gulp.task('webdriver-update', $.protractor.webdriver_update);
-
-gulp.task('webdriver-standalone', $.protractor.webdriver_standalone);
-
 function runProtractor (done) {
   var params = process.argv;
   var args = params.length > 3 ? [params[3], params[4]] : [];
 
   gulp.src(path.join(config.paths.tests, '/**/*.js'))
     .pipe($.protractor.protractor({
-      configFile: 'protractor.config.js',
+      configFile: 'protractor.conf.js',
       args: args
     }))
     .on('error', function (err) {
@@ -52,6 +39,18 @@ function runProtractor (done) {
     });
 }
 
+// Downloads the selenium webdriver
+gulp.task('webdriver-update', $.protractor.webdriver_update);
+gulp.task('webdriver-standalone', $.protractor.webdriver_standalone);
+
 gulp.task('protractor', ['protractor:src']);
 gulp.task('protractor:src', ['serve:e2e', 'webdriver-update'], runProtractor);
 gulp.task('protractor:dist', ['serve:e2e-dist', 'webdriver-update'], runProtractor);
+
+gulp.task('test', ['scripts'], function(done) {
+  runTests(true, done);
+});
+
+gulp.task('test:auto', ['watch'], function(done) {
+  runTests(false, done);
+});

@@ -6,6 +6,8 @@ var config = require('../config');
 
 var $ = require('gulp-load-plugins')();
 
+// Takes the compiled html files, minifys them, then adds them to the
+// Angular template cache file.
 gulp.task('partials', ['markups'], function () {
   return gulp.src([
     path.join(config.paths.src, '/app/**/*.html'),
@@ -25,6 +27,7 @@ gulp.task('partials', ['markups'], function () {
 
 gulp.task('html', ['inject', 'partials'], function () {
   var partialsInjectFile = gulp.src(path.join(config.paths.tmp, '/partials/templateCacheHtml.js'), { read: false });
+
   var partialsInjectOptions = {
     starttag: '<!-- inject:partials -->',
     ignorePath: path.join(config.paths.tmp, '/partials'),
@@ -36,6 +39,16 @@ gulp.task('html', ['inject', 'partials'], function () {
   var cssFilter = $.filter('**/*.css');
   var assets;
 
+  // This does a lot.
+  // - Injects the partials file including all of the html templates into the page
+  // - Uses ngAnnotate to correct the syntax of the Angular javascript
+  // - Minifies javascript files
+  // - Minifies CSS
+  // - Uses useref to concat files into bundles using build: syntax in html
+  // - Cachebusting for all assets using rev
+  // - Minifies html files
+  // - Copies all files into the build folder
+  // - Prints out sizes of compiled files
   return gulp.src(path.join(config.paths.tmp, '/serve/*.html'))
     .pipe($.inject(partialsInjectFile, partialsInjectOptions))
     .pipe(assets = $.useref.assets())
@@ -71,6 +84,7 @@ gulp.task('fonts', function () {
     .pipe(gulp.dest(path.join(config.paths.dist, '/fonts/')));
 });
 
+// Used for custom fonts, files in the public folder, etc...
 gulp.task('other', function () {
   var fileFilter = $.filter(function (file) {
     return file.stat.isFile();
@@ -84,8 +98,9 @@ gulp.task('other', function () {
     .pipe(gulp.dest(path.join(config.paths.dist, '/')));
 });
 
+// Cleans the build folder and tmp folder for development
 gulp.task('clean', function (done) {
   $.del([path.join(config.paths.dist, '/'), path.join(config.paths.tmp, '/')], done);
 });
 
-gulp.task('build', ['html', 'other']);
+gulp.task('build', ['html', 'fonts', 'other']);

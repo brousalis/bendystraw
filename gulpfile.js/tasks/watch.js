@@ -12,8 +12,14 @@ function isOnlyChange(event) {
 
 gulp.task('watch', ['markups', 'inject'], function () {
 
+  // When HTML files are changed (or more bower components added), re-inject
+  // files into index.html
   gulp.watch([path.join(config.paths.src, '/*.html'), 'bower.json'], ['inject']);
 
+  // When Jade files are changed, recompile the templates. Causes a full reload
+  // gulp.watch(path.join(config.paths.src, '/app/**/*.jade'), ['markups']);
+
+  // When Stylesheets are changed, recompile them
   gulp.watch([
     path.join(config.paths.src, '/app/**/*.css'),
     path.join(config.paths.src, '/app/**/*.sass')
@@ -25,6 +31,7 @@ gulp.task('watch', ['markups', 'inject'], function () {
     }
   });
 
+  // When Javascript files are changed, recompile them
   gulp.watch([
     path.join(config.paths.src, '/app/**/*.js'),
     path.join(config.paths.src, '/app/**/*.coffee')
@@ -34,11 +41,5 @@ gulp.task('watch', ['markups', 'inject'], function () {
     } else {
       gulp.start('inject');
     }
-  });
-
-  gulp.watch(path.join(config.paths.src, '/app/**/*.jade'), ['markups']);
-
-  gulp.watch(path.join(config.paths.src, '/app/**/*.html'), function(event) {
-    browserSync.reload(event.path);
   });
 });
