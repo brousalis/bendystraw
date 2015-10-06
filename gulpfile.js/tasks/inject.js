@@ -34,7 +34,7 @@ gulp.task('inject', ['scripts', 'styles', 'templates'], function () {
 
   var templatesInjectOptions = {
     starttag: '<!-- inject:templates -->',
-    ignorePath: path.join(config.paths.tmp, '/templates'),
+    ignorePath: [config.paths.src, config.paths.tmp],
     addRootSlash: false
   };
 

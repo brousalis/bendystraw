@@ -6,19 +6,6 @@ var config = require('../config');
 var browserSync = require('browser-sync');
 var $ = require('gulp-load-plugins')();
 
-// Compiles Jade files to html files
-gulp.task('markups', function() {
-  function renameToHtml(path) {
-    path.extname = '.html';
-  }
-
-  return gulp.src(path.join(config.paths.src, '/app/**/*.jade'))
-    .pipe($.consolidate('jade')).on('error', config.errorHandler('Jade'))
-    .pipe($.rename(renameToHtml))
-    .pipe(gulp.dest(path.join(config.paths.tmp, '/serve/app/')))
-    .pipe(browserSync.reload({ stream: true }));
-});
-
 // Takes the compiled html files, minifys them, then adds them to the
 // Angular template cache file.
 gulp.task('templates', ['markups'], function () {
@@ -35,5 +22,18 @@ gulp.task('templates', ['markups'], function () {
       module: 'wccApp',
       root: 'app'
     }))
-    .pipe(gulp.dest(config.paths.tmp + '/templates/'));
+    .pipe(gulp.dest(config.paths.tmp + '/serve/templates/'));
+});
+
+// Compiles Jade files to html files
+gulp.task('markups', function() {
+  function renameToHtml(path) {
+    path.extname = '.html';
+  }
+
+  return gulp.src(path.join(config.paths.src, '/app/**/*.jade'))
+    .pipe($.consolidate('jade')).on('error', config.errorHandler('Jade'))
+    .pipe($.rename(renameToHtml))
+    .pipe(gulp.dest(path.join(config.paths.tmp, '/serve/app/')))
+    .pipe(browserSync.reload({ stream: true }));
 });
