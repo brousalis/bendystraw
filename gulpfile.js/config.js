@@ -1,6 +1,5 @@
 var gutil = require('gulp-util');
 
-// Paths for the project
 exports.paths = {
   src: 'source',
   tests: 'tests',
@@ -8,7 +7,11 @@ exports.paths = {
   tmp: '.tmp'
 };
 
- // Common implementation for an error handler of a Gulp plugin
+exports.settings = {
+  module: 'wccApp',
+  root: 'app'
+}
+
 exports.errorHandler = function(title) {
   return function(err) {
     gutil.log(gutil.colors.red('[' + title + ']'), err.toString());

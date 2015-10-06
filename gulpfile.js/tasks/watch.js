@@ -16,7 +16,10 @@ gulp.task('watch', ['inject', 'templates'], function () {
   gulp.watch([path.join(config.paths.src, '/*.html'), 'bower.json'], ['inject']);
 
   // When Jade files are changed, recompile the templates. Causes a full reload
-  gulp.watch(path.join(config.paths.src, '/app/**/*.jade'), ['markups']);
+  gulp.watch(path.join(config.paths.src, '/app/**/*.jade'), function(event) {
+    console.log(event)
+    gulp.start('markup')
+  });
 
   // When Stylesheets are changed, recompile them
   gulp.watch([
