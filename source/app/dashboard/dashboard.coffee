@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module('wccApp.dashboard', [
+angular.module('testApp.dashboard', [
   'ui.router'
 ])
 

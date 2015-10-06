@@ -8,10 +8,11 @@ var config = require('../config');
 
 var $ = require('gulp-load-plugins')();
 
-gulp.task('compile', ['inject'], function () {
+gulp.task('compile', ['inject', 'images'], function () {
   var htmlFilter = $.filter('*.html');
   var jsFilter = $.filter('**/*.js');
   var cssFilter = $.filter('**/*.css');
+  var imageFilter = $.filter('**/*.{' + settings.extensions.join(',') + '}');
   var assets;
 
   var templatesInjectFile = gulp.src(path.join(config.paths.tmp, '/templates/templateCacheHtml.js'), { read: false });
@@ -40,7 +41,7 @@ gulp.task('compile', ['inject'], function () {
     .pipe($.uglify({ preserveComments: $.uglifySaveLicense })).on('error', config.errorHandler('Uglify'))
     .pipe(jsFilter.restore())
     .pipe(cssFilter)
-    .pipe($.csso())
+    .pipe($.minifyCss())
     .pipe(cssFilter.restore())
     .pipe(assets.restore())
     .pipe($.useref())

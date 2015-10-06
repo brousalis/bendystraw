@@ -1,10 +1,10 @@
 'use strict'
 
-angular.module 'wccApp', [
+angular.module 'testApp', [
   'restangular'
   'ui.router'
 
-  'wccApp.dashboard'
+  'testApp.dashboard'
 ]
 
 .config ($httpProvider, $provide, $urlRouterProvider, $stateProvider, RestangularProvider) ->
@@ -14,7 +14,7 @@ angular.module 'wccApp', [
   .state 'main',
     abstract: true
     templateUrl: 'app/layouts/mainLayout.html'
-    controller: 'wccAppController'
+    controller: 'testAppController'
 
   $urlRouterProvider.otherwise('/dashboard')
 
@@ -23,5 +23,5 @@ angular.module 'wccApp', [
 .run ->
   console.log 'app run'
 
-.controller 'wccAppController', ($rootScope, $scope) ->
+.controller 'testAppController', ($rootScope, $scope) ->
   console.log 'app controller'

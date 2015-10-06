@@ -28,7 +28,6 @@ gulp.task('styles', function () {
     addRootSlash: false
   };
 
-
   return gulp.src([
     path.join(config.paths.src, '/stylesheets/main.sass')
   ])

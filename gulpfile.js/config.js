@@ -8,8 +8,9 @@ exports.paths = {
 };
 
 exports.settings = {
-  module: 'wccApp',
-  root: 'app'
+  extensions: ['jpg', 'png', 'svg', 'gif'],
+  module: 'testApp',
+  root: 'app',
 }
 
 exports.errorHandler = function(title) {

@@ -40,17 +40,19 @@ function runProtractor (done) {
 }
 
 // Downloads the selenium webdriver
-gulp.task('webdriver-update', $.protractor.webdriver_update);
-gulp.task('webdriver-standalone', $.protractor.webdriver_standalone);
+// gulp.task('webdriver-update', $.protractor.webdriver_update);
+// gulp.task('webdriver-standalone', $.protractor.webdriver_standalone);
 
-gulp.task('protractor', ['protractor:src']);
-gulp.task('protractor:src', ['serve:e2e', 'webdriver-update'], runProtractor);
-gulp.task('protractor:dist', ['serve:e2e-dist', 'webdriver-update'], runProtractor);
+// End to end testing
+// gulp.task('protractor', ['protractor:src']);
+// gulp.task('protractor:src', ['serve:e2e', 'webdriver-update'], runProtractor);
+// gulp.task('protractor:dist', ['serve:e2e-dist', 'webdriver-update'], runProtractor);
 
-gulp.task('test', ['scripts'], function(done) {
-  runTests(true, done);
-});
+// Karma testing
+// gulp.task('test', ['scripts'], function(done) {
+//   runTests(true, done);
+// });
 
-gulp.task('test:auto', ['watch'], function(done) {
-  runTests(false, done);
-});
+// gulp.task('test:auto', ['watch'], function(done) {
+//   runTests(false, done);
+// });
