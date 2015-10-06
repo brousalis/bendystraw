@@ -5,17 +5,20 @@ var gulp = require('gulp');
 var del = require('del');
 var mainBowerFiles = require('main-bower-files');
 var config = require('../config');
-
 var $ = require('gulp-load-plugins')();
 
-gulp.task('compile', ['inject', 'images'], function () {
+// Builds the app to be deployed to production.
+gulp.task('build', ['compile', 'build-images', 'fonts', 'other']);
+
+// Compiles/minifys the assets
+gulp.task('compile', ['inject'], function () {
   var htmlFilter = $.filter('*.html');
   var jsFilter = $.filter('**/*.js');
   var cssFilter = $.filter('**/*.css');
-  var imageFilter = $.filter('**/*.{' + settings.extensions.join(',') + '}');
   var assets;
 
-  var templatesInjectFile = gulp.src(path.join(config.paths.tmp, '/templates/templateCacheHtml.js'), { read: false });
+  // Angular templateCache injection into index.html
+  var templatesInjectFile = gulp.source(path.join(config.paths.tmp, '/templates/templateCacheHtml.js'), { read: false });
   var templatesInjectOptions = {
     starttag: '<!-- inject:templates -->',
     ignorePath: path.join(config.paths.tmp, '/templates'),
@@ -32,7 +35,7 @@ gulp.task('compile', ['inject', 'images'], function () {
   // - Minifies html files
   // - Copies all files into the build folder
   // - Prints out sizes of compiled files
-  return gulp.src(path.join(config.paths.tmp, '/serve/*.html'))
+  return gulp.source(path.join(config.paths.tmp, '/serve/*.html'))
     .pipe($.inject(templatesInjectFile, templatesInjectOptions))
     .pipe(assets = $.useref.assets())
     .pipe($.rev())
@@ -54,36 +57,33 @@ gulp.task('compile', ['inject', 'images'], function () {
       conditionals: true
     }))
     .pipe(htmlFilter.restore())
-    .pipe(gulp.dest(path.join(config.paths.dist, '/')))
-    .pipe($.size({ title: path.join(config.paths.dist, '/'), showFiles: true }));
+    .pipe(gulp.dest(path.join(config.paths.dest, '/')))
+    .pipe($.size({ title: path.join(config.paths.dest, '/'), showFiles: true }));
 });
 
-// Only applies for fonts from bower dependencies
+// Only applies to fonts from bower dependencies
 // Custom fonts are handled by the "other" task
 gulp.task('fonts', function () {
-  return gulp.src(mainBowerFiles())
-    .pipe($.filter('**/*.{eot,svg,ttf,woff,woff2}'))
+  return gulp.source(mainBowerFiles())
+    .pipe($.filter('**/*.{' + config.settings.fonts.join(',') + '}'))
     .pipe($.flatten())
-    .pipe(gulp.dest(path.join(config.paths.dist, '/fonts/')));
+    .pipe(gulp.dest(path.join(config.paths.dest, '/fonts/')));
 });
 
-// Used for custom fonts, files in the public folder, etc...
+// Used for custom fonts, files in the other folders, etc...
 gulp.task('other', function () {
   var fileFilter = $.filter(function (file) {
     return file.stat.isFile();
   });
-
-  return gulp.src([
+  return gulp.source([
     path.join(config.paths.src, '/**/*'),
-    path.join('!' + config.paths.src, '/**/*.{html,css,js,sass,coffee,jade}')
+    path.join('!' + config.paths.src, '/**/*.{html,css,js,sass,coffee,jade,' + config.settings.extensions.join(',') + '}')
   ])
     .pipe(fileFilter)
-    .pipe(gulp.dest(path.join(config.paths.dist, '/')));
+    .pipe(gulp.dest(path.join(config.paths.dest, '/')));
 });
 
 // Cleans the build folder and tmp folder for development
 gulp.task('clean', function (done) {
-  del([path.join(config.paths.dist, '/'), path.join(config.paths.tmp, '/')], done);
+  del([path.join(config.paths.dest, '/'), path.join(config.paths.tmp, '/')], done);
 });
-
-gulp.task('build', ['compile', 'fonts', 'other']);

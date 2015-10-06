@@ -13,11 +13,9 @@ browserSync.use(browserSyncSpa({
   selector: '[ng-app]'
 }));
 
-function browserSyncInit(baseDir, browser) {
-  browser = browser === undefined ? 'default' : browser;
-
+function browserSyncInit(baseDir) {
   var routes = null;
-  if(baseDir === config.paths.src || (util.isArray(baseDir) && baseDir.indexOf(config.paths.src) !== -1)) {
+  if(baseDir === config.paths.source || (util.isArray(baseDir) && baseDir.indexOf(config.paths.source) !== -1)) {
     routes = {
       '/bower_components': 'bower_components'
     };
@@ -33,8 +31,7 @@ function browserSyncInit(baseDir, browser) {
   browserSync.instance = browserSync.init({
     startPath: '/',
     server: server,
-    port: 4567,
-    browser: browser
+    port: config.settings.port
   });
 }
 
@@ -43,13 +40,13 @@ gulp.task('server', ['watch'], function () {
 });
 
 gulp.task('server:build', ['build'], function () {
-  browserSyncInit(config.paths.dist);
+  browserSyncInit(config.paths.dest);
 });
 
 gulp.task('server:tests', ['inject'], function () {
-  browserSyncInit([config.paths.tmp + '/serve', config.paths.src], []);
+  browserSyncInit([config.paths.tmp + '/serve', config.paths.src]);
 });
 
 gulp.task('server:tests:build', ['build'], function () {
-  browserSyncInit(config.paths.dist, []);
+  browserSyncInit(config.paths.dest);
 });

@@ -2,17 +2,21 @@ var path = require('path');
 var gulp = require('gulp');
 var config = require('../config');
 var browserSync = require('browser-sync');
-var pngquant = require('imagemin-pngquant');
 var $ = require('gulp-load-plugins')();
 
+// Dev task for optimizing images
 gulp.task('images', function() {
-  return gulp.src(path.join(config.paths.src, '/images/**'))
-    .pipe($.changed(path.join(config.paths.tmp, '/serve/images')))
-    .pipe($.imagemin({
-      progressive: true,
-      svgoPlugins: [{removeViewBox: false}],
-      use: [pngquant()]
-    }))
-    .pipe(gulp.dest(path.join(config.paths.tmp, '/serve/images')))
+  dest = path.join(config.paths.tmp, '/serve', config.paths.images)
+  return gulp.source(path.join(config.paths.src, config.paths.images, '/**'))
+    .pipe($.changed(dest))
+    .pipe($.imagemin(config.settings.imagemin))
+    .pipe(gulp.dest(dest))
     .pipe(browserSync.reload({stream:true}))
 })
+
+// Force optimize all images on the build
+gulp.task('build-images', function () {
+  return gulp.source(path.join(config.paths.src, config.paths.images, '/**'))
+    .pipe($.imagemin(config.settings.imagemin))
+    .pipe(gulp.dest(path.join(config.paths.build, config.paths.images)))
+});

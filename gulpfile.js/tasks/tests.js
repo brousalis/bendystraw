@@ -23,7 +23,7 @@ function runProtractor (done) {
   var params = process.argv;
   var args = params.length > 3 ? [params[3], params[4]] : [];
 
-  gulp.src(path.join(config.paths.tests, '/**/*.js'))
+  gulp.source(path.join(config.paths.tests, '/**/*.js'))
     .pipe($.protractor.protractor({
       configFile: 'protractor.conf.js',
       args: args
@@ -44,9 +44,9 @@ function runProtractor (done) {
 // gulp.task('webdriver-standalone', $.protractor.webdriver_standalone);
 
 // End to end testing
-// gulp.task('protractor', ['protractor:src']);
-// gulp.task('protractor:src', ['serve:e2e', 'webdriver-update'], runProtractor);
-// gulp.task('protractor:dist', ['serve:e2e-dist', 'webdriver-update'], runProtractor);
+// gulp.task('protractor', ['protractor:source']);
+// gulp.task('protractor:source', ['serve:e2e', 'webdriver-update'], runProtractor);
+// gulp.task('protractor:build', ['serve:e2e-build', 'webdriver-update'], runProtractor);
 
 // Karma testing
 // gulp.task('test', ['scripts'], function(done) {

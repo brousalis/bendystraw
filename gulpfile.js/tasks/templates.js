@@ -9,9 +9,9 @@ var $ = require('gulp-load-plugins')();
 // Takes the compiled html files, minifys them, then adds them to the
 // Angular template cache file.
 gulp.task('templates', ['markup'], function () {
-  return gulp.src([
-    path.join(config.paths.src, '/app/**/*.html'),
-    path.join(config.paths.tmp, '/serve/app/**/*.html')
+  return gulp.source([
+    path.join(config.paths.src, config.paths.scripts, '/**/*.html'),
+    path.join(config.paths.tmp, '/serve', config.paths.scripts, '/**/*.html')
   ])
     .pipe($.minifyHtml({
       empty: true,
@@ -20,7 +20,7 @@ gulp.task('templates', ['markup'], function () {
     }))
     .pipe($.angularTemplatecache('templateCacheHtml.js', {
       module: config.settings.module,
-      root: config.settings.root
+      root: config.paths.scripts
     }))
     .pipe(gulp.dest(config.paths.tmp + '/templates/'));
 });
@@ -31,10 +31,10 @@ gulp.task('markup', function() {
     path.extname = '.html';
   }
 
-  return gulp.src(path.join(config.paths.src, '/app/**/*.jade'))
-    .pipe($.changed(path.join(config.paths.tmp, '/serve/app/'), {extension: '.html'}))
+  return gulp.source(path.join(config.paths.src, config.paths.scripts, '/**/*.jade'))
+    .pipe($.changed(path.join(config.paths.tmp, '/serve', config.paths.scripts), {extension: '.html'}))
     .pipe($.consolidate('jade')).on('error', config.errorHandler('Jade'))
     .pipe($.rename(renameToHtml))
-    .pipe(gulp.dest(path.join(config.paths.tmp, '/serve/app/')))
+    .pipe(gulp.dest(path.join(config.paths.tmp, '/serve', config.paths.scripts)))
     .pipe(browserSync.reload({ stream: true }));
 });
