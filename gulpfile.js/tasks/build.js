@@ -15,7 +15,6 @@ gulp.task('compile', ['inject'], function () {
   var assets;
 
   var templatesInjectFile = gulp.src(path.join(config.paths.tmp, '/templates/templateCacheHtml.js'), { read: false });
-
   var templatesInjectOptions = {
     starttag: '<!-- inject:templates -->',
     ignorePath: path.join(config.paths.tmp, '/templates'),
@@ -23,9 +22,10 @@ gulp.task('compile', ['inject'], function () {
   };
 
   // This does a lot.
-  // - Uses ngAnnotate to correct the syntax of the Angular javascript
+  // - Injects the templates into Angulars templateCache, will be bundled with app.js later
+  // - Uses ngAnnotate to correct the syntax of the Angular dependency injection
   // - Minifies javascript files
-  // - Minifies CSS
+  // - Minifies css
   // - Uses useref to concat files into bundles using build: syntax in html
   // - Cachebusting for all assets using rev
   // - Minifies html files

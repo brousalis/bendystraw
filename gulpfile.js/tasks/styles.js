@@ -3,13 +3,9 @@
 var path = require('path');
 var gulp = require('gulp');
 var config = require('../config');
-
 var browserSync = require('browser-sync');
-
-var $ = require('gulp-load-plugins')();
-
 var wiredep = require('wiredep').stream;
-var _ = require('lodash');
+var $ = require('gulp-load-plugins')();
 
 gulp.task('styles', function () {
   var sassOptions = {
@@ -37,7 +33,7 @@ gulp.task('styles', function () {
     path.join(config.paths.src, '/stylesheets/main.sass')
   ])
     .pipe($.inject(injectFiles, injectOptions))
-    .pipe(wiredep(_.extend({}, config.wiredep)))
+    .pipe(wiredep({directory: 'bower_components'}))
     .pipe($.sourcemaps.init())
     .pipe($.sass(sassOptions)).on('error', config.errorHandler('Sass'))
     .pipe($.autoprefixer()).on('error', config.errorHandler('Autoprefixer'))
