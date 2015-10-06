@@ -10,8 +10,8 @@ angular.module('testApp.dashboard', [
     .state 'main.dashboard',
       url: '/dashboard'
       templateUrl: 'app/dashboard/dashboard.html'
-      controller: 'wccDashboardController'
+      controller: 'dashboardController'
 
-.controller 'wccDashboardController', ($q, $rootScope, $scope) ->
+.controller 'dashboardController', ($q, $rootScope, $scope) ->
   console.log 'dashboard controller'
   $scope.welcome = 'dashboard'

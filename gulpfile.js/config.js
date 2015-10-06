@@ -6,11 +6,9 @@ exports.paths = {
   src: 'source',
   dest: 'build',
   tests: 'tests',
-
   scripts: 'app',
   styles: 'stylesheets',
   images: 'images',
-
   fonts: 'fonts',
   tmp: '.tmp'
 };
@@ -18,9 +16,7 @@ exports.paths = {
 exports.settings = {
   module: process.env["ANGULAR_APP"],
   port: '4567',
-
   fonts: ['eot', 'svg', 'ttf', 'woff', 'woff2'],
-
   images: ['jpg', 'jpeg', 'png', 'svg', 'gif'],
   imagemin: {
     progressive: true,

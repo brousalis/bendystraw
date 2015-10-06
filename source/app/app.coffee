@@ -14,7 +14,7 @@ angular.module 'testApp', [
   .state 'main',
     abstract: true
     templateUrl: 'app/layouts/mainLayout.html'
-    controller: 'testAppController'
+    controller: 'appController'
 
   $urlRouterProvider.otherwise('/dashboard')
 
@@ -23,5 +23,5 @@ angular.module 'testApp', [
 .run ->
   console.log 'app run'
 
-.controller 'testAppController', ($rootScope, $scope) ->
+.controller 'appController', ($rootScope, $scope) ->
   console.log 'app controller'
