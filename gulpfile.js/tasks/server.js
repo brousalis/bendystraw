@@ -38,18 +38,18 @@ function browserSyncInit(baseDir, browser) {
   });
 }
 
-gulp.task('serve', ['watch'], function () {
+gulp.task('server', ['watch'], function () {
   browserSyncInit([path.join(config.paths.tmp, '/serve'), config.paths.src]);
 });
 
-gulp.task('serve:build', ['build'], function () {
+gulp.task('server:build', ['build'], function () {
   browserSyncInit(config.paths.dist);
 });
 
-gulp.task('serve:tests', ['inject'], function () {
+gulp.task('server:tests', ['inject'], function () {
   browserSyncInit([config.paths.tmp + '/serve', config.paths.src], []);
 });
 
-gulp.task('serve:tests:build', ['build'], function () {
+gulp.task('server:tests:build', ['build'], function () {
   browserSyncInit(config.paths.dist, []);
 });

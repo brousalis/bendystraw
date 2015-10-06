@@ -1,16 +1,3 @@
-/*
-  gulpfile.js
-  ===========
-  Rather than manage one giant configuration file responsible
-  for creating multiple tasks, each task has been broken out into
-  its own file in gulpfile.js/tasks. Any files in that directory get
-  automatically required below.
-
-  To add a new task, simply add a new task file that directory.
-  gulpfile.js/tasks/default.js specifies the default set of tasks to run
-  when you run `gulp`.
-*/
-
 var requireDir = require('require-dir')
 var gulp = require('gulp');
 
@@ -18,6 +5,4 @@ var gulp = require('gulp');
 requireDir('./tasks', { recurse: true })
 
 // Default task
-gulp.task('default', ['clean'], function () {
-  gulp.start('serve');
-});
+gulp.task('default', ['server']);

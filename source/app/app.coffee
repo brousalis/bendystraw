@@ -5,7 +5,6 @@ angular.module 'wccApp', [
   'ui.router'
 
   'wccApp.dashboard'
-  'wccApp.test'
 ]
 
 .config ($httpProvider, $provide, $urlRouterProvider, $stateProvider, RestangularProvider) ->
