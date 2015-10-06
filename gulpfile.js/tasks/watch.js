@@ -19,7 +19,7 @@ gulp.task('watch', ['inject', 'templates', 'images'], function () {
   gulp.watch(path.join(config.paths.src, config.paths.scripts, '/**/*.jade'), ['markup']);
 
   // When images are changed, optimize them
-  gulp.watch(path.join(config.paths.src, '**/*.{' + config.settings.extensions.join(',') + '}'), ['images']);
+  gulp.watch(path.join(config.paths.src, '**/*.{' + config.settings.images.join(',') + '}'), ['images']);
 
   // When Stylesheets are changed, recompile them
   gulp.watch([

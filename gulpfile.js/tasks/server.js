@@ -15,7 +15,7 @@ browserSync.use(browserSyncSpa({
 
 function browserSyncInit(baseDir) {
   var routes = null;
-  if(baseDir === config.paths.source || (util.isArray(baseDir) && baseDir.indexOf(config.paths.source) !== -1)) {
+  if(baseDir === config.paths.src || (util.isArray(baseDir) && baseDir.indexOf(config.paths.src) !== -1)) {
     routes = {
       '/bower_components': 'bower_components'
     };

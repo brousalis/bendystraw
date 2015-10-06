@@ -13,7 +13,7 @@ gulp.task('styles', function () {
     imagePath: 'images' // Used by the image-url helper
   };
 
-  var injectFiles = gulp.source([
+  var injectFiles = gulp.src([
     path.join(config.paths.src, config.paths.styles, '/**/*.sass'),
     path.join('!' + config.paths.src, config.paths.styles, '/main.sass')
   ], { read: false });
@@ -28,7 +28,7 @@ gulp.task('styles', function () {
     addRootSlash: false
   };
 
-  return gulp.source([
+  return gulp.src([
     path.join(config.paths.src, config.paths.styles, '/main.sass')
   ])
     .pipe($.inject(injectFiles, injectOptions))

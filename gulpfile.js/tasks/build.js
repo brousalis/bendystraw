@@ -18,7 +18,7 @@ gulp.task('compile', ['inject'], function () {
   var assets;
 
   // Angular templateCache injection into index.html
-  var templatesInjectFile = gulp.source(path.join(config.paths.tmp, '/templates/templateCacheHtml.js'), { read: false });
+  var templatesInjectFile = gulp.src(path.join(config.paths.tmp, '/templates/templateCacheHtml.js'), { read: false });
   var templatesInjectOptions = {
     starttag: '<!-- inject:templates -->',
     ignorePath: path.join(config.paths.tmp, '/templates'),
@@ -35,7 +35,7 @@ gulp.task('compile', ['inject'], function () {
   // - Minifies html files
   // - Copies all files into the build folder
   // - Prints out sizes of compiled files
-  return gulp.source(path.join(config.paths.tmp, '/serve/*.html'))
+  return gulp.src(path.join(config.paths.tmp, '/serve/*.html'))
     .pipe($.inject(templatesInjectFile, templatesInjectOptions))
     .pipe(assets = $.useref.assets())
     .pipe($.rev())
@@ -64,7 +64,7 @@ gulp.task('compile', ['inject'], function () {
 // Only applies to fonts from bower dependencies
 // Custom fonts are handled by the "other" task
 gulp.task('fonts', function () {
-  return gulp.source(mainBowerFiles())
+  return gulp.src(mainBowerFiles())
     .pipe($.filter('**/*.{' + config.settings.fonts.join(',') + '}'))
     .pipe($.flatten())
     .pipe(gulp.dest(path.join(config.paths.dest, '/fonts/')));
@@ -75,9 +75,9 @@ gulp.task('other', function () {
   var fileFilter = $.filter(function (file) {
     return file.stat.isFile();
   });
-  return gulp.source([
+  return gulp.src([
     path.join(config.paths.src, '/**/*'),
-    path.join('!' + config.paths.src, '/**/*.{html,css,js,sass,coffee,jade,' + config.settings.extensions.join(',') + '}')
+    path.join('!' + config.paths.src, '/**/*.{html,css,js,sass,coffee,jade,' + config.settings.images.join(',') + '}')
   ])
     .pipe(fileFilter)
     .pipe(gulp.dest(path.join(config.paths.dest, '/')));

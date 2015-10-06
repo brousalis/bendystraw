@@ -6,7 +6,6 @@ var config = require('../config');
 var $ = require('gulp-load-plugins')();
 
 gulp.task('deploy', function() {
-
   // create a new publisher using S3 options
   // http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#constructor-property
   var publisher = $.awspublish.create({

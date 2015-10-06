@@ -9,7 +9,7 @@ var $ = require('gulp-load-plugins')();
 // Takes the compiled html files, minifys them, then adds them to the
 // Angular template cache file.
 gulp.task('templates', ['markup'], function () {
-  return gulp.source([
+  return gulp.src([
     path.join(config.paths.src, config.paths.scripts, '/**/*.html'),
     path.join(config.paths.tmp, '/serve', config.paths.scripts, '/**/*.html')
   ])
@@ -31,7 +31,7 @@ gulp.task('markup', function() {
     path.extname = '.html';
   }
 
-  return gulp.source(path.join(config.paths.src, config.paths.scripts, '/**/*.jade'))
+  return gulp.src(path.join(config.paths.src, config.paths.scripts, '/**/*.jade'))
     .pipe($.changed(path.join(config.paths.tmp, '/serve', config.paths.scripts), {extension: '.html'}))
     .pipe($.consolidate('jade')).on('error', config.errorHandler('Jade'))
     .pipe($.rename(renameToHtml))

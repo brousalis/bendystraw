@@ -8,7 +8,7 @@ var $ = require('gulp-load-plugins')();
 
 // Compiles coffeescript files to javascript files, creates sourcemaps
 gulp.task('scripts', function () {
-  return gulp.source(path.join(config.paths.src, config.paths.scripts, '/**/*.coffee'))
+  return gulp.src(path.join(config.paths.src, config.paths.scripts, '/**/*.coffee'))
     .pipe($.sourcemaps.init())
     // .pipe($.coffeelint())
     // .pipe($.coffeelint.reporter())

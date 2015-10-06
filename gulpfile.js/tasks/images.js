@@ -7,7 +7,7 @@ var $ = require('gulp-load-plugins')();
 // Dev task for optimizing images
 gulp.task('images', function() {
   dest = path.join(config.paths.tmp, '/serve', config.paths.images)
-  return gulp.source(path.join(config.paths.src, config.paths.images, '/**'))
+  return gulp.src(path.join(config.paths.src, config.paths.images, '/**'))
     .pipe($.changed(dest))
     .pipe($.imagemin(config.settings.imagemin))
     .pipe(gulp.dest(dest))
@@ -16,7 +16,7 @@ gulp.task('images', function() {
 
 // Force optimize all images on the build
 gulp.task('build-images', function () {
-  return gulp.source(path.join(config.paths.src, config.paths.images, '/**'))
+  return gulp.src(path.join(config.paths.src, config.paths.images, '/**'))
     .pipe($.imagemin(config.settings.imagemin))
-    .pipe(gulp.dest(path.join(config.paths.build, config.paths.images)))
+    .pipe(gulp.dest(path.join(config.paths.dest, config.paths.images)))
 });
