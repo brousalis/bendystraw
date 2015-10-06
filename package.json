@@ -1,17 +1,17 @@
 {
-  "name": "webCommandCenter",
+  "name": "angularGulp",
   "version": "0.0.1",
-  "description": "Belly Web Command Center",
+  "description": "A set of Gulp tasks for building Angular apps",
   "engines": {
     "node": "0.12.2",
     "npm": "2.7.4"
   },
-  "homepage": "http://command.bellycard.com",
+  "homepage": "http://github.com/brousalis/angular-gulp",
   "repository": {
     "type": "git",
-    "url": "git://github.com/bellycard/web-command-center.git"
+    "url": "git://github.com/brousalis/angular-gulp.git"
   },
-  "license": "Top Secret",
+  "license": "top secret",
   "private": true,
   "scripts": {
     "deploy": "gulp deploy",
@@ -43,7 +43,6 @@
     "gulp-load-plugins": "~0.10.0",
     "gulp-minify-html": "~1.0.3",
     "gulp-ng-annotate": "~1.0.0",
-    "gulp-protractor": "~1.0.0",
     "gulp-rename": "~1.2.2",
     "gulp-replace": "~0.5.3",
     "gulp-rev": "~5.0.0",
