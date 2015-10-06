@@ -21,7 +21,8 @@ gulp.task('watch', ['inject'], function () {
   // When Stylesheets are changed, recompile them
   gulp.watch([
     path.join(config.paths.src, '/app/**/*.css'),
-    path.join(config.paths.src, '/app/**/*.sass')
+    path.join(config.paths.src, '/app/**/*.sass'),
+    path.join(config.paths.src, '/stylesheets/**/*.sass')
   ], function(event) {
     if(isOnlyChange(event)) {
       gulp.start('styles');
