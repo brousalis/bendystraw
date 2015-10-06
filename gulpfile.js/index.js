@@ -19,5 +19,5 @@ requireDir('./tasks', { recurse: true })
 
 // Default task
 gulp.task('default', ['clean'], function () {
-  gulp.start('build');
+  gulp.start('serve');
 });
