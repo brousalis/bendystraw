@@ -3,21 +3,20 @@
 var path = require('path');
 var gulp = require('gulp');
 var config = require('../config');
-
 var browserSync = require('browser-sync');
 
 function isOnlyChange(event) {
   return event.type === 'changed';
 }
 
-gulp.task('watch', ['markups', 'inject'], function () {
+gulp.task('watch', ['inject'], function () {
 
   // When HTML files are changed (or more bower components added), re-inject
   // files into index.html
   gulp.watch([path.join(config.paths.src, '/*.html'), 'bower.json'], ['inject']);
 
   // When Jade files are changed, recompile the templates. Causes a full reload
-  // gulp.watch(path.join(config.paths.src, '/app/**/*.jade'), ['markups']);
+  gulp.watch(path.join(config.paths.src, '/app/**/*.jade'), ['markups']);
 
   // When Stylesheets are changed, recompile them
   gulp.watch([
