@@ -17,6 +17,8 @@ angular.module 'wccApp', [
     templateUrl: 'app/layouts/mainLayout.html'
     controller: 'wccAppController'
 
+  $urlRouterProvider.otherwise('/dashboard')
+
   RestangularProvider.setDefaultHeaders('Content-Type': 'application/json')
 
 .run ->

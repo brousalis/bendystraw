@@ -5,6 +5,7 @@ angular.module('wccApp.dashboard', [
 ])
 
 .config ($stateProvider) ->
+  console.log 'dashboard config'
   $stateProvider
     .state 'main.dashboard',
       url: '/dashboard'
@@ -12,4 +13,5 @@ angular.module('wccApp.dashboard', [
       controller: 'wccDashboardController'
 
 .controller 'wccDashboardController', ($q, $rootScope, $scope) ->
-  console.log 'dashboard'
+  console.log 'dashboard controller'
+  $scope.welcome = 'dashboard'

@@ -3,9 +3,7 @@
 var path = require('path');
 var gulp = require('gulp');
 var config = require('../config');
-
 var $ = require('gulp-load-plugins')();
-
 var wiredep = require('wiredep').stream;
 var _ = require('lodash');
 
@@ -30,16 +28,7 @@ gulp.task('inject', ['scripts', 'styles', 'templates'], function () {
     addRootSlash: false
   };
 
-  var templatesInjectFile = gulp.src(path.join(config.paths.tmp, '/templates/templateCacheHtml.js'), { read: false });
-
-  var templatesInjectOptions = {
-    starttag: '<!-- inject:templates -->',
-    ignorePath: [config.paths.src, config.paths.tmp],
-    addRootSlash: false
-  };
-
   return gulp.src(path.join(config.paths.src, '/*.html'))
-    .pipe($.inject(templatesInjectFile, templatesInjectOptions))
     .pipe($.inject(injectStyles, injectOptions))
     .pipe($.inject(injectScripts, injectOptions))
     .pipe(wiredep(_.extend({}, config.wiredep)))

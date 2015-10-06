@@ -22,7 +22,7 @@ gulp.task('templates', ['markups'], function () {
       module: 'wccApp',
       root: 'app'
     }))
-    .pipe(gulp.dest(config.paths.tmp + '/serve/templates/'));
+    .pipe(gulp.dest(config.paths.tmp + '/templates/'));
 });
 
 // Compiles Jade files to html files
