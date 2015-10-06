@@ -6,7 +6,6 @@ var config = require('../config');
 var browserSync = require('browser-sync');
 var browserSyncSpa = require('browser-sync-spa');
 var util = require('util');
-var proxyMiddleware = require('http-proxy-middleware');
 
 // Better support for Angular and Browsersync
 browserSync.use(browserSyncSpa({
@@ -21,16 +20,12 @@ function browserSyncInit(baseDir) {
     };
   }
 
-  var server = {
-    baseDir: baseDir,
-    routes: routes
-  };
-
-  // server.middleware = proxyMiddleware('/api', {target: 'https://api.bellycard.com', proxyHost: 'api.bellycard.com'});
-
   browserSync.instance = browserSync.init({
     startPath: '/',
-    server: server,
+    server: {
+      baseDir: baseDir,
+      routes: routes
+    },
     port: config.settings.port
   });
 }

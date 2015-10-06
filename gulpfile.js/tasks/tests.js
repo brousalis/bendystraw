@@ -11,7 +11,7 @@ var $ = require('gulp-load-plugins')();
 
 function runTests (singleRun, done) {
   karma.server.start({
-    configFile: path.join(__dirname, '/../karma.conf.js'),
+    configFile: path.join(__dirname, '../../karma.conf.js'),
     singleRun: singleRun,
     autoWatch: !singleRun
   }, function() {
@@ -49,10 +49,10 @@ function runProtractor (done) {
 // gulp.task('protractor:build', ['serve:e2e-build', 'webdriver-update'], runProtractor);
 
 // Karma testing
-// gulp.task('test', ['scripts'], function(done) {
-//   runTests(true, done);
-// });
+gulp.task('test', ['scripts'], function(done) {
+  runTests(true, done);
+});
 
-// gulp.task('test:auto', ['watch'], function(done) {
-//   runTests(false, done);
-// });
+gulp.task('test:watch', ['watch'], function(done) {
+  runTests(false, done);
+});

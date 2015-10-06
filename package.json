@@ -15,10 +15,10 @@
   "private": true,
   "scripts": {
     "deploy": "gulp deploy",
-    "production": "gulp build:production && gulp server",
+    "production": "gulp server:build",
     "gulp": "gulp",
-    "development": "gulp",
-    "test": "gulp build:production && karma start --single-run"
+    "development": "gulp server",
+    "test": "gulp build && karma start --single-run"
   },
   "devDependencies": {
     "browser-sync": "~2.7.12",
@@ -57,13 +57,11 @@
     "gulp-uncss": "^1.0.4",
     "gulp-useref": "~1.2.0",
     "gulp-util": "~3.0.5",
-    "http-proxy-middleware": "~0.0.5",
     "imagemin-pngquant": "^4.2.0",
     "jade": "^1.11.0",
     "jshint-stylish": "~2.0.0",
     "lodash": "~3.9.3",
     "main-bower-files": "~2.8.0",
-    "merge-stream": "~0.1.7",
     "require-dir": "~0.3.0",
     "uglify-save-license": "~0.4.1",
     "wiredep": "~2.2.2",

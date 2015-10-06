@@ -9,8 +9,7 @@ var $ = require('gulp-load-plugins')();
 
 gulp.task('styles', function () {
   var sassOptions = {
-    indentedSyntax: true, // Enable .sass syntax!
-    imagePath: 'images' // Used by the image-url helper
+    indentedSyntax: true
   };
 
   var injectFiles = gulp.src([
@@ -21,16 +20,14 @@ gulp.task('styles', function () {
   var injectOptions = {
     transform: function(filePath) {
       filePath = filePath.replace(config.paths.src + config.paths.styles, '');
-      return '@import "' + filePath + '";';
+      return '@import ' + filePath;
     },
     starttag: '// injector',
     endtag: '// endinjector',
     addRootSlash: false
   };
 
-  return gulp.src([
-    path.join(config.paths.src, config.paths.styles, '/main.sass')
-  ])
+  return gulp.src([path.join(config.paths.src, config.paths.styles, '/main.sass')])
     .pipe($.inject(injectFiles, injectOptions))
     .pipe(wiredep({directory: 'bower_components'}))
     .pipe($.sourcemaps.init())
