@@ -1,11 +1,18 @@
 {
   "name": "bendystraw",
-  "version": "0.0.1",
-  "description": "A set of Gulp tasks for building Angular apps. Based on the angular-gulp yeoman generator",
+  "version": "0.0.2",
+  "description": "A set of Gulp tasks for building Angular apps",
   "engines": {
     "node": "0.12.2",
     "npm": "2.7.4"
   },
+  "keywords": "angular,gulp,gulptask",
+  "files": [
+    'gulpfile.js',
+    '.jshintrc',
+    '.coffelint.json',
+    'karma.conf.js'
+  ],
   "homepage": "http://github.com/brousalis/bendystraw",
   "repository": {
     "type": "git",
@@ -24,7 +31,7 @@
     "development": "gulp server",
     "test": "gulp build && karma start --single-run"
   },
-  "devDependencies": {
+  "dependencies": {
     "browser-sync": "~2.7.12",
     "browser-sync-spa": "~1.0.2",
     "concat-stream": "~1.5.0",
