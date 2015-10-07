@@ -1,18 +1,18 @@
 {
-  "name": "angularGulp",
+  "name": "bendystraw",
   "version": "0.0.1",
   "description": "A set of Gulp tasks for building Angular apps. Based on the angular-gulp yeoman generator",
   "engines": {
     "node": "0.12.2",
     "npm": "2.7.4"
   },
-  "homepage": "http://github.com/brousalis/angular-gulp",
+  "homepage": "http://github.com/brousalis/bendystraw",
   "repository": {
     "type": "git",
-    "url": "git://github.com/brousalis/angular-gulp.git"
+    "url": "git://github.com/brousalis/bendystraw.git"
   },
   "bugs": {
-    "url": "https://github.com/brousalis/angular-gulid-builderp/issues"
+    "url": "https://github.com/brousalis/bendystraw/issues"
   },
   "author": "Pete Brousalis <brousapg@gmail.com>",
   "license": "MIT",
