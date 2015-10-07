@@ -1,19 +1,9 @@
 {
   "name": "bendystraw",
   "version": "0.0.2",
-  "description": "A set of Gulp tasks for building Angular apps",
-  "engines": {
-    "node": "0.12.2",
-    "npm": "2.7.4"
-  },
-  "keywords": "angular,gulp,gulptask",
-  "files": [
-    'gulpfile.js',
-    '.jshintrc',
-    '.coffelint.json',
-    'karma.conf.js'
-  ],
+  "author": "Pete Brousalis <brousapg@gmail.com>",
   "homepage": "http://github.com/brousalis/bendystraw",
+  "description": "A set of Gulp tasks for building Angular apps",
   "repository": {
     "type": "git",
     "url": "git://github.com/brousalis/bendystraw.git"
@@ -21,9 +11,21 @@
   "bugs": {
     "url": "https://github.com/brousalis/bendystraw/issues"
   },
-  "author": "Pete Brousalis <brousapg@gmail.com>",
   "license": "MIT",
+  "keywords": [
+    "angular",
+    "gulp",
+    "gulp-task",
+    "coffeescript",
+    "jade"
+  ],
   "main": "index.js",
+  "files": [
+    "gulpfile.js",
+    ".jshintrc",
+    ".coffelint.json",
+    "karma.conf.js"
+  ],
   "scripts": {
     "deploy": "gulp deploy",
     "production": "gulp server:build",

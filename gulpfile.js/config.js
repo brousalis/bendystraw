@@ -14,7 +14,7 @@ exports.paths = {
 };
 
 exports.settings = {
-  module: process.env["ANGULAR_APP"],
+  module: process.env["ANGULAR_MODULE_NAME"],
   port: '4567',
   fonts: ['eot', 'svg', 'ttf', 'woff', 'woff2'],
   images: ['jpg', 'jpeg', 'png', 'svg', 'gif'],
