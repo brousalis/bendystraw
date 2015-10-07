@@ -1,7 +1,7 @@
 {
   "name": "angularGulp",
   "version": "0.0.1",
-  "description": "A set of Gulp tasks for building Angular apps",
+  "description": "A set of Gulp tasks for building Angular apps. Based on the angular-gulp yeoman generator",
   "engines": {
     "node": "0.12.2",
     "npm": "2.7.4"
@@ -11,8 +11,12 @@
     "type": "git",
     "url": "git://github.com/brousalis/angular-gulp.git"
   },
-  "license": "top secret",
-  "private": true,
+  "bugs": {
+    "url": "https://github.com/brousalis/angular-gulid-builderp/issues"
+  },
+  "author": "Pete Brousalis <brousapg@gmail.com>",
+  "license": "MIT",
+  "main": "index.js",
   "scripts": {
     "deploy": "gulp deploy",
     "production": "gulp server:build",
@@ -23,7 +27,6 @@
   "devDependencies": {
     "browser-sync": "~2.7.12",
     "browser-sync-spa": "~1.0.2",
-    "chalk": "~1.0.0",
     "concat-stream": "~1.5.0",
     "del": "~1.2.0",
     "dotenv": "^1.2.0",
@@ -59,9 +62,16 @@
     "gulp-util": "~3.0.5",
     "imagemin-pngquant": "^4.2.0",
     "jade": "^1.11.0",
+    "jasmine-core": "^2.3.4",
     "jshint-stylish": "~2.0.0",
+    "karma": "~0.12.36",
+    "karma-angular-filesort": "~0.1.0",
+    "karma-jasmine": "~0.3.5",
+    "karma-ng-html2js-preprocessor": "~0.1.2",
+    "karma-phantomjs-launcher": "~0.2.0",
     "lodash": "~3.9.3",
     "main-bower-files": "~2.8.0",
+    "phantomjs": "^1.9.18",
     "require-dir": "~0.3.0",
     "uglify-save-license": "~0.4.1",
     "wiredep": "~2.2.2",
