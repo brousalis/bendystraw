@@ -2,8 +2,6 @@
 
 var path = require('path');
 var config = require('./gulpfile.js/config');
-
-var _ = require('lodash');
 var wiredep = require('wiredep');
 
 function listFiles() {
