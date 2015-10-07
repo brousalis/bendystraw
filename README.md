@@ -31,13 +31,13 @@ the gulp tasks take care of:
 
 command | description
 ------- | ------------
-gulp    | runs the development server
-gulp server | also runs the development server
-gulp server:build | runs a server with the production build
-gulp build | builds the production app to `/build`
-gulp deploy | deploys to an AWS bucket. configure via `.env`
-gulp test | runs karma tests
-gulp clean | deletes the `/build` and `/.tmp` folders
+`gulp`    | runs the development server
+`gulp server` | also runs the development server
+`gulp server:build` | runs a server with the production build
+`gulp build` | builds the production app to `/build`
+`gulp deploy` | deploys to an AWS bucket. configure via `.env`
+`gulp test` | runs karma tests
+`gulp clean` | deletes the `/build` and `/.tmp` folders
 
 ### configuration
 
