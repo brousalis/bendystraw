@@ -1,6 +1,6 @@
-### bendystraw
+## bendystraw
 
-a set of development and build tasks for Angular apps. modified from Yeoman `generator-gulp-angular`. very much a work in progress
+a set of development and build tasks for Angular apps. WIP
 
     npm install --save-dev bendystraw
   
