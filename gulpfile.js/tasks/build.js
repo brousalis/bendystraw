@@ -77,7 +77,7 @@ gulp.task('other', function () {
   });
   return gulp.src([
     path.join(config.paths.src, '/**/*'),
-    path.join('!' + config.paths.src, '/**/*.{html,css,js,sass,coffee,jade,' + config.settings.images.join(',') + '}')
+    path.join('!' + config.paths.src, '/**/*.{html,css,js,sass,coffee,' + config.settings.images.join(',') + '}')
   ])
     .pipe(fileFilter)
     .pipe(gulp.dest(path.join(config.paths.dest, '/')));

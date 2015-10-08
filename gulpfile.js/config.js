@@ -10,7 +10,7 @@ exports.paths = {
   styles: 'stylesheets',
   images: 'images',
   fonts: 'fonts',
-  tmp: '.tmp'
+  tmp: '.dev'
 };
 
 exports.settings = {
