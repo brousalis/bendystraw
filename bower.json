@@ -8,7 +8,8 @@
     "angular-sanitize": "~1.3.16",
     "jquery": "~2.1.4",
     "restangular": "~1.5.1",
-    "angular-ui-router": "~0.2.15"
+    "angular-ui-router": "~0.2.15",
+    "rolodex": "git@github.com:brousalis/rolodex.git"
   },
   "devDependencies": {
     "angular-mocks": "~1.3.16"
