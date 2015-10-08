@@ -6,6 +6,11 @@ var config = require('../config');
 var $ = require('gulp-load-plugins')();
 
 gulp.task('deploy', function() {
+  if(process.env["AWS_BUCKET"] == "" || process.env["AWS_BUCKET"] == undefined) {
+    config.errorHandler('Deploy')(new Error('Missing AWS settings in .env'));
+    return false;
+  }
+
   // create a new publisher using S3 options
   // http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#constructor-property
   var publisher = $.awspublish.create({
@@ -33,6 +38,6 @@ gulp.task('deploy', function() {
     .pipe(publisher.cache())
 
      // print upload updates to console
-    .pipe(awspublish.reporter());
+    .pipe($.awspublish.reporter());
 });
 

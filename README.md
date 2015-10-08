@@ -3,16 +3,16 @@
 a set of development and build tasks for Angular apps. WIP
 
     npm install --save-dev bendystraw
-  
+
 in order to access the gulp tasks, run
 
     npm run bendystraw
-    
+
 which will create a `gulpfile.js` in your project
-    
+
 ### features
 
-to see an example of how an app could be structured, take a look at the `source` folder. 
+to see an example of how an app could be structured, take a look at the `source` folder.
 
 the gulp tasks take care of:
 
@@ -24,7 +24,7 @@ the gulp tasks take care of:
 - css autoprefixing
 - css minification
 - image optimization
-- template (jade or html) minification
+- html minification
 - injection of bower components through wiredep
 - karma testing
 - aws builds/gzip
@@ -49,3 +49,7 @@ create a `.env` file that includes:
     AWS_ACCESS_KEY_ID=
     AWS_SECRET_ACCESS_KEY=
     AWS_BUCKET=
+
+### jade/haml
+
+if you're set on using Haml or Jade for templating, check out the respective branches. we have stopped using both because of their issues compiling attributes with no values (ie: `%div(ui-view)`). jade allows it, but must be set to an empty string. which is annoying.

@@ -3,32 +3,34 @@ var dotenv = require('dotenv').load();
 var pngquant = require('imagemin-pngquant');
 
 exports.paths = {
-  src: 'source',
-  dest: 'build',
-  tests: 'tests',
-  scripts: 'app',
-  styles: 'stylesheets',
-  images: 'images',
-  fonts: 'fonts',
-  tmp: '.dev'
+  src: 'source', // source folder for the app
+  dest: 'build', // destination for the production build
+  tests: 'tests', // folder for end to end tests
+  scripts: 'app', // folder where main javascript files are located
+  styles: 'stylesheets', // stylesheets folder
+  images: 'images', // image folder
+  fonts: 'fonts', // fonts folder
+  tmp: '.dev' // temporary development build folder
 };
 
 exports.settings = {
-  module: process.env["ANGULAR_MODULE_NAME"],
-  port: '4567',
-  fonts: ['eot', 'svg', 'ttf', 'woff', 'woff2'],
-  images: ['jpg', 'jpeg', 'png', 'svg', 'gif'],
-  imagemin: {
+  module: process.env["ANGULAR_MODULE_NAME"] || 'testApp', // angular module name for template cache
+  port: '4567',  // port to run the server on
+  imagemin: { // configuration for image optimizer
     progressive: true,
     verbose: true,
     svgoPlugins: [{removeViewBox: false}],
     use: [pngquant()]
-  }
+  },
+  fonts: ['eot', 'svg', 'ttf', 'woff', 'woff2'], // font extensions
+  images: ['jpg', 'jpeg', 'png', 'svg', 'gif'] // image extensions
 }
 
 exports.errorHandler = function(title) {
   return function(err) {
     gutil.log(gutil.colors.red('[' + title + ']'), err.toString());
-    this.emit('end');
+
+    if (this.emit !== null && this.emit !== undefined)
+      this.emit('end');
   };
 };

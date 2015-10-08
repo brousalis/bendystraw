@@ -20,10 +20,12 @@ gulp.task('templates', ['markup'], function () {
     .pipe(gulp.dest(config.paths.tmp + '/templates/'));
 });
 
-// Compiles Jade files to html files
+// Compiles changed html files to the dev folder
 gulp.task('markup', function() {
+  var dest = path.join(config.paths.tmp, '/serve', config.paths.scripts)
+
   return gulp.src(path.join(config.paths.src, config.paths.scripts, '/**/*.html'))
-    .pipe($.changed(path.join(config.paths.tmp, '/serve', config.paths.scripts), {extension: '.html'}))
-    .pipe(gulp.dest(path.join(config.paths.tmp, '/serve', config.paths.scripts)))
+    .pipe($.changed(dest, {extension: '.html'}))
+    .pipe(gulp.dest(dest))
     .pipe(browserSync.reload({ stream: true }));
 });

@@ -18,7 +18,8 @@ gulp.task('inject', ['scripts', 'styles'], function () {
     path.join(config.paths.src, config.paths.scripts, '/**/*.js'),
     path.join(config.paths.tmp, '/serve/', config.paths.scripts, '/**/*.js'),
     path.join('!' + config.paths.src, config.paths.scripts, '/**/*.spec.js'),
-    path.join('!' + config.paths.src, config.paths.scripts, '/**/*.mock.js')
+    path.join('!' + config.paths.src, config.paths.scripts, '/**/*.mock.js'),
+    path.join('!' + config.paths.tmp, '/serve/', config.paths.scripts, '/**/*.spec.js'),
   ])
   .pipe($.angularFilesort()).on('error', config.errorHandler('AngularFilesort'));
 

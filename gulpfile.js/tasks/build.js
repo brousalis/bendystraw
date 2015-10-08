@@ -50,12 +50,7 @@ gulp.task('compile', ['inject'], function () {
     .pipe($.useref())
     .pipe($.revReplace())
     .pipe(htmlFilter)
-    .pipe($.minifyHtml({
-      empty: true,
-      spare: true,
-      quotes: true,
-      conditionals: true
-    }))
+    .pipe($.minifyHtml({ empty: true, spare: true, quotes: true, conditionals: true }))
     .pipe(htmlFilter.restore())
     .pipe(gulp.dest(path.join(config.paths.dest, '/')))
     .pipe($.size({ title: path.join(config.paths.dest, '/'), showFiles: true }));

@@ -6,7 +6,8 @@ var $ = require('gulp-load-plugins')();
 
 // Dev task for optimizing images
 gulp.task('images', function() {
-  dest = path.join(config.paths.tmp, '/serve', config.paths.images)
+  var dest = path.join(config.paths.tmp, '/serve', config.paths.images)
+
   return gulp.src(path.join(config.paths.src, config.paths.images, '/**'))
     .pipe($.changed(dest))
     .pipe($.imagemin(config.settings.imagemin))

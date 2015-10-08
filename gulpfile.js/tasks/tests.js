@@ -19,25 +19,25 @@ function runTests (singleRun, done) {
   });
 }
 
-function runProtractor (done) {
-  var params = process.argv;
-  var args = params.length > 3 ? [params[3], params[4]] : [];
+// function runProtractor (done) {
+//   var params = process.argv;
+//   var args = params.length > 3 ? [params[3], params[4]] : [];
 
-  gulp.src(path.join(config.paths.tests, '/**/*.js'))
-    .pipe($.protractor.protractor({
-      configFile: 'protractor.conf.js',
-      args: args
-    }))
-    .on('error', function (err) {
-      // Make sure failed tests cause gulp to exit non-zero
-      throw err;
-    })
-    .on('end', function () {
-      // Close browser sync server
-      browserSync.exit();
-      done();
-    });
-}
+//   gulp.src(path.join(config.paths.tests, '/**/*.js'))
+//     .pipe($.protractor.protractor({
+//       configFile: 'protractor.conf.js',
+//       args: args
+//     }))
+//     .on('error', function (err) {
+//       // Make sure failed tests cause gulp to exit non-zero
+//       throw err;
+//     })
+//     .on('end', function () {
+//       // Close browser sync server
+//       browserSync.exit();
+//       done();
+//     });
+// }
 
 // Downloads the selenium webdriver
 // gulp.task('webdriver-update', $.protractor.webdriver_update);

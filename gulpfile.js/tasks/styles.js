@@ -9,7 +9,8 @@ var $ = require('gulp-load-plugins')();
 
 gulp.task('styles', function () {
   var sassOptions = {
-    indentedSyntax: true
+    indentedSyntax: true,
+    imagePath: 'images'
   };
 
   var injectFiles = gulp.src([
