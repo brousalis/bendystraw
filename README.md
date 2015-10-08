@@ -4,9 +4,11 @@ a set of development and build tasks for Angular apps. modified from Yeoman `gen
 
     npm install --save-dev bendystraw
   
-haven't figured out a way around this, so for now:
+in order to access the gulp tasks, run
 
-    echo "require('bendystraw');" > gulpfile.js
+    npm run bendystraw
+    
+which will create a `gulpfile.js` in your project
     
 ### features
 
