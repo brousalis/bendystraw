@@ -16,6 +16,7 @@ exports.paths = {
 exports.settings = {
   module: process.env["ANGULAR_MODULE_NAME"] || 'testApp', // angular module name for template cache
   port: '4567',  // port to run the server on
+  imageFilter: '**', // ex: '**/icons/*' filter out any images imported from bower_components
   imagemin: { // configuration for image optimizer
     progressive: true,
     verbose: true,
