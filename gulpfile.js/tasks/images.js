@@ -16,8 +16,14 @@ gulp.task('images', function() {
 })
 
 // Force optimize all images on the build
-gulp.task('build-images', function () {
+gulp.task('images:build', function () {
   return gulp.src(path.join(config.paths.src, config.paths.images, '/**'))
     .pipe($.imagemin(config.settings.imagemin))
     .pipe(gulp.dest(path.join(config.paths.dest, config.paths.images)))
+});
+
+gulp.task('images:bower', function() {
+  return gulp.src($.mainBowerFiles(), { base: './bower_components' })
+    .pipe(filter([ '**/*.{' + config.settings.images.join(',') + '}' ]))
+    .pipe(gulp.dest(path.join(config.paths.dest, config.paths.images)));
 });

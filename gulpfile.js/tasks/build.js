@@ -8,7 +8,7 @@ var config = require('../config');
 var $ = require('gulp-load-plugins')();
 
 // Builds the app to be deployed to production.
-gulp.task('build', ['compile', 'build-images', 'fonts', 'other']);
+gulp.task('build', ['compile', 'images:build', 'fonts', 'other']);
 
 // Compiles/minifys the assets
 gulp.task('compile', ['inject'], function () {
