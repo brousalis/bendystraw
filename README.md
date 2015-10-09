@@ -1,33 +1,20 @@
-## bendystraw
+<img src="https://raw.githubusercontent.com/gulpjs/artwork/master/gulp-2x.png" width="48">
 
-a set of development and build tasks for Angular apps. WIP
+### bendystraw 
+
+a set of development and build tasks for Angular apps.
+
+### usage 
 
     npm install --save-dev bendystraw
 
-in order to access the gulp tasks, run
+in order to use the gulp tasks, run:
 
     npm run bendystraw
 
-which will create a `gulpfile.js` in your project
+which will create a `gulpfile.js` requiring bendystraw in your project. 
 
-### features
-
-to see an example of how an app could be structured, take a look at the `source` folder.
-
-the gulp tasks take care of:
-
-- angular templatecache for templates
-- angular annotation of dependency injection
-- coffeescript
-- js minification
-- .sass syntax
-- css autoprefixing
-- css minification
-- image optimization
-- html minification
-- injection of bower components through wiredep
-- karma testing
-- aws builds/gzip
+> you could also copy the `/gulpfile.js` folder and `package.json` into your own project
 
 ### tasks
 
@@ -41,6 +28,31 @@ command | description
 `gulp test` | runs karma tests
 `gulp clean` | deletes the `/build` and `/.tmp` folders
 
+### tasks
+
+the gulp tasks take care of:
+
+- angular templatecache for markup files
+- ng-annotate for proper dependency injection
+- coffeescript linting/compiling
+- sass linting/compiling
+- autoprefixing
+- html/js/css minification
+- image optimization
+- wiredep for bower_components
+- inject for bundling js/css
+- karma for testing
+- aws builds/gzip
+
+### assumptions
+
+- angular app
+- no html preprocessors 
+- .sass syntax
+- .coffee syntax
+- file structure similar to the `/source` folder
+- dotenv 
+
 ### configuration
 
 create a `.env` file that includes:
@@ -49,7 +61,3 @@ create a `.env` file that includes:
     AWS_ACCESS_KEY_ID=
     AWS_SECRET_ACCESS_KEY=
     AWS_BUCKET=
-
-### jade/haml
-
-if you're set on using Haml or Jade for templating, check out the respective branches. we have stopped using both because of their issues compiling attributes with no values (ie: `%div(ui-view)`). jade allows it, but must be set to an empty string. which is annoying.
