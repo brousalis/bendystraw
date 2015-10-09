@@ -12,9 +12,9 @@ in order to use the gulp tasks, run:
 
     npm run bendystraw
 
-which will create a `gulpfile.js` requiring bendystraw in your project. 
+which will create a `gulpfile.js` in your project that requires bendystraw.
 
-> you could also copy the `/gulpfile.js` folder and `package.json` into your own project
+you could also copy the `/gulpfile.js` folder and `package.json` into your own project.
 
 ### tasks
 
@@ -26,7 +26,7 @@ command | description
 `gulp build` | builds the production app to `/build`
 `gulp deploy` | deploys to an AWS bucket. configure via `.env`
 `gulp test` | runs karma tests
-`gulp clean` | deletes the `/build` and `/.tmp` folders
+`gulp clean` | deletes the `/build` and `/.dev` folders
 
 ### tasks
 
