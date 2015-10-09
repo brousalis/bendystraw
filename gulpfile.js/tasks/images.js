@@ -41,7 +41,7 @@ gulp.task('images:bower', function() {
   return gulp.src('./bower_components/**/*')
     .pipe($.filter('**/*.{' + config.settings.images.join(',') + '}'))
     .pipe($.rename(function (path) {
-      path.dirname = path.dirname.split(config.paths.images)[1]
+      path.dirname = "" + path.dirname.split(config.paths.images)[1] // nooo
       return path;
     }))
     .pipe(gulp.dest(path.join(config.paths.tmp, '/serve', config.paths.images)));
