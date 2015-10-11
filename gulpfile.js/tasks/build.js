@@ -1,24 +1,24 @@
 'use strict';
 
-var path = require('path');
 var gulp = require('gulp');
+var path = require('path');
 var del = require('del');
 var mainBowerFiles = require('main-bower-files');
 var config = require('../config');
 var $ = require('gulp-load-plugins')();
 
 // Builds the app to be deployed to production.
-gulp.task('build', ['compile', 'images:build', 'fonts', 'other']);
+gulp.task('build', ['compile', 'images', 'fonts', 'other']);
 
 // Compiles/minifys the assets
-gulp.task('compile', ['inject'], function () {
+gulp.task('compile', ['templates', 'inject'], function () {
   var htmlFilter = $.filter('*.html');
   var jsFilter = $.filter('**/*.js');
   var cssFilter = $.filter('**/*.css');
   var assets;
 
   // Angular templateCache injection into index.html
-  var templatesInjectFile = gulp.src(path.join(config.paths.tmp, '/templates/templateCacheHtml.js'), { read: false });
+  var templatesInjectFile = gulp.src(path.join(config.paths.tmp, '/templates/templates.js'), { read: false });
   var templatesInjectOptions = {
     starttag: '<!-- inject:templates -->',
     ignorePath: path.join(config.paths.tmp, '/templates'),
@@ -50,7 +50,8 @@ gulp.task('compile', ['inject'], function () {
     .pipe($.useref())
     .pipe($.revReplace())
     .pipe(htmlFilter)
-    .pipe($.minifyHtml({ empty: true, spare: true, quotes: true, conditionals: true }))
+    .pipe($.preprocess({context: {NODE_ENV: 'production'}}))
+    .pipe($.minifyHtml(config.settings.minifyHtml))
     .pipe(htmlFilter.restore())
     .pipe(gulp.dest(path.join(config.paths.dest, '/')))
     .pipe($.size({ title: path.join(config.paths.dest, '/'), showFiles: true }));

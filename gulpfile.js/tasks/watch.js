@@ -1,7 +1,7 @@
 'use strict';
 
-var path = require('path');
 var gulp = require('gulp');
+var path = require('path');
 var config = require('../config');
 var browserSync = require('browser-sync');
 
@@ -10,7 +10,6 @@ function isOnlyChange(event) {
 }
 
 gulp.task('watch', ['inject'], function () {
-
   // When HTML files are changed (or more bower components added)
   gulp.watch([
     path.join(config.paths.src, '/**/*.html'),

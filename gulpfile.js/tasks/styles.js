@@ -1,7 +1,7 @@
 'use strict';
 
-var path = require('path');
 var gulp = require('gulp');
+var path = require('path');
 var config = require('../config');
 var browserSync = require('browser-sync');
 var wiredep = require('wiredep').stream;

@@ -1,7 +1,7 @@
 'use strict';
 
-var path = require('path');
 var gulp = require('gulp');
+var path = require('path');
 var config = require('../config');
 var wiredep = require('wiredep').stream;
 var $ = require('gulp-load-plugins')();
@@ -29,6 +29,7 @@ gulp.task('inject', ['scripts', 'styles'], function () {
   };
 
   return gulp.src(path.join(config.paths.src, '/*.html'))
+    .pipe($.preprocess({context: {NODE_ENV: process.env['NODE_ENV']}}))
     .pipe($.inject(injectStyles, injectOptions))
     .pipe($.inject(injectScripts, injectOptions))
     .pipe(wiredep({directory: 'bower_components'}))

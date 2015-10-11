@@ -1,7 +1,7 @@
 'use strict';
 
-var path = require('path');
 var gulp = require('gulp');
+var path = require('path');
 var config = require('../config');
 var $ = require('gulp-load-plugins')();
 
@@ -28,7 +28,7 @@ gulp.task('deploy', function() {
 
   return gulp.src(path.join(config.paths.dest))
      // gzip, Set Content-Encoding headers and add .gz extension
-    .pipe($.awspublish.gzip({ ext: '.gz' }))
+    .pipe($.awspublish.gzip({ext: '.gz'}))
 
     // publisher will add Content-Length, Content-Type and headers specified above
     // If not specified it will set x-amz-acl to public-read by default
@@ -40,4 +40,3 @@ gulp.task('deploy', function() {
      // print upload updates to console
     .pipe($.awspublish.reporter());
 });
-

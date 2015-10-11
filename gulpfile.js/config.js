@@ -5,16 +5,17 @@ var pngquant = require('imagemin-pngquant');
 exports.paths = {
   src: 'source', // source folder for the app
   dest: 'build', // destination for the production build
-  tests: 'tests', // folder for end to end tests
+  tmp: '.dev', // temporary development build folder
+
   scripts: 'app', // folder where main javascript files are located
   styles: 'stylesheets', // stylesheets folder
   images: 'images', // image folder
   fonts: 'fonts', // fonts folder
-  tmp: '.dev' // temporary development build folder
+  tests: 'tests' // folder for end to end tests
 };
 
 exports.settings = {
-  module: process.env["ANGULAR_MODULE_NAME"] || 'testApp', // angular module name for template cache
+  module: 'templates', // angular module name for template cache
   port: '4567',  // port to run the server on
   imageFilter: '**', // ex: '**/icons/*' filter out any images imported from bower_components
   imagemin: { // configuration for image optimizer
@@ -23,9 +24,15 @@ exports.settings = {
     svgoPlugins: [{removeViewBox: false}],
     use: [pngquant()]
   },
+  minifyHtml: {
+    empty: true,
+    spare: true,
+    quotes: true,
+    conditionals: true
+  },
   fonts: ['eot', 'svg', 'ttf', 'woff', 'woff2'], // font extensions
   images: ['jpg', 'jpeg', 'png', 'svg', 'gif'] // image extensions
-}
+};
 
 exports.errorHandler = function(title) {
   return function(err) {

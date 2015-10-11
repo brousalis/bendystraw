@@ -3,7 +3,7 @@
 angular.module 'testApp', [
   'restangular'
   'ui.router'
-
+  'templates'
   'testApp.dashboard'
 ]
 
