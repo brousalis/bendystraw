@@ -1,0 +1,17 @@
+{
+  "development": {
+    "config": {
+      "api": "http://localhost/"
+    }
+  },
+  "staging": {
+    "config": {
+      "api": "https://api.staging.com/"
+    }
+  },
+  "production": {
+    "config": {
+      "api": "https://api.production.com/"
+    }
+  }
+}

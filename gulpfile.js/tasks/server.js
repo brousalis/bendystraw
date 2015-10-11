@@ -8,16 +8,12 @@ var browserSync = require('browser-sync');
 var browserSyncSpa = require('browser-sync-spa');
 
 // Better support for Angular and BrowserSync
-browserSync.use(browserSyncSpa({
-  selector: '[ng-app]'
-}));
+browserSync.use(browserSyncSpa({selector: '[ng-app]'}));
 
 function browserSyncInit(baseDir) {
   var routes = null;
   if(baseDir === config.paths.src || (util.isArray(baseDir) && baseDir.indexOf(config.paths.src) !== -1)) {
-    routes = {
-      '/bower_components': 'bower_components'
-    };
+    routes = {'/bower_components': 'bower_components'};
   }
 
   browserSync.instance = browserSync.init({
@@ -31,11 +27,10 @@ function browserSyncInit(baseDir) {
 }
 
 // Development server
-gulp.task('server', ['watch', 'images:copy'], function () {
-  process.env.NODE_ENV = 'development';
+gulp.task('server', ['set-development', 'watch'], function () {
   browserSyncInit([path.join(config.paths.tmp, '/serve'), config.paths.src]);
 });
-gulp.task('development', ['set-development', 'server']);
+gulp.task('development', ['server']);
 gulp.task('dev', ['server']);
 
 // Staging server
