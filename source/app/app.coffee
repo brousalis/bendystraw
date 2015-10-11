@@ -1,14 +1,15 @@
 'use strict'
 
 angular.module 'testApp', [
+  'templates'
   'restangular'
   'ui.router'
-  'templates'
   'testApp.dashboard'
 ]
 
-.config ($httpProvider, $provide, $urlRouterProvider, $stateProvider, RestangularProvider) ->
+.config ($httpProvider, $provide, $urlRouterProvider, $stateProvider, RestangularProvider, config) ->
   console.log 'app config'
+  console.log config
 
   $stateProvider
   .state 'main',

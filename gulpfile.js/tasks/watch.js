@@ -9,7 +9,10 @@ function isOnlyChange(event) {
   return event.type === 'changed';
 }
 
-gulp.task('watch', ['inject'], function () {
+// Task to watch files for changes, and reload them appropriately
+// Also copies images from bower_components folder to the dev folder
+gulp.task('watch', ['inject', 'images:copy'], function () {
+
   // When HTML files are changed (or more bower components added)
   gulp.watch([
     path.join(config.paths.src, '/**/*.html'),

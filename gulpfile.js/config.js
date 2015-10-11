@@ -1,5 +1,4 @@
 var gutil = require('gulp-util');
-var dotenv = require('dotenv').load();
 var pngquant = require('imagemin-pngquant');
 
 exports.paths = {
@@ -18,13 +17,13 @@ exports.settings = {
   module: 'templates', // angular module name for template cache
   port: '4567',  // port to run the server on
   imageFilter: '**', // ex: '**/icons/*' filter out any images imported from bower_components
-  imagemin: { // configuration for image optimizer
+  imagemin: { // options for image optimizer
     progressive: true,
     verbose: true,
     svgoPlugins: [{removeViewBox: false}],
     use: [pngquant()]
   },
-  minifyHtml: {
+  minifyHtml: { // options for html minification
     empty: true,
     spare: true,
     quotes: true,
