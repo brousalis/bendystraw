@@ -6,6 +6,7 @@ var del = require('del');
 var runSequence = require('run-sequence');
 var mainBowerFiles = require('main-bower-files');
 var config = require('../config');
+var util = require('../util');
 var $ = require('gulp-load-plugins')();
 
 // Builds the app to be deployed to production.
@@ -48,7 +49,7 @@ gulp.task('compile', ['templates', 'inject'], function () {
     .pipe($.rev())
     .pipe(jsFilter)
     .pipe($.ngAnnotate())
-    .pipe($.uglify({ preserveComments: $.uglifySaveLicense })).on('error', config.errorHandler('Uglify'))
+    .pipe($.uglify({ preserveComments: $.uglifySaveLicense })).on('error', util.errorHandler('Uglify'))
     .pipe(jsFilter.restore())
     .pipe(cssFilter)
     .pipe($.minifyCss())
@@ -57,7 +58,7 @@ gulp.task('compile', ['templates', 'inject'], function () {
     .pipe($.useref())
     .pipe($.revReplace())
     .pipe(htmlFilter)
-    .pipe($.preprocess({context: {NODE_ENV: 'production'}}))
+    .pipe($.preprocess({ context: { NODE_ENV: 'production' } }))
     .pipe($.minifyHtml(config.settings.minifyHtml))
     .pipe(htmlFilter.restore())
     .pipe(gulp.dest(path.join(config.paths.dest, '/')))

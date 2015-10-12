@@ -10,7 +10,10 @@ var $ = require('gulp-load-plugins')();
 // Creates a config.js Angular config module from env.json
 gulp.task('config', function() {
   return gulp.src('./env.json')
-    .pipe(gulpNgConfig('config', {environment: process.env['NODE_ENV']}))
+    .pipe(gulpNgConfig('env', {
+      environment: process.env['NODE_ENV'],
+      constants: { NODE_ENV: process.env['NODE_ENV'] }
+    }))
     .pipe(gulp.dest(path.join(config.paths.tmp, '/serve', config.paths.scripts)))
 });
 
