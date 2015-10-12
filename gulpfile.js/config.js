@@ -1,5 +1,8 @@
 var gutil = require('gulp-util');
+var dotenv = require('dotenv').load({path: 'config.json'});
 var pngquant = require('imagemin-pngquant');
+
+process.env.NODE_ENV = 'development';
 
 exports.paths = {
   src: 'source', // source folder for the app

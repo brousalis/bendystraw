@@ -1,7 +1,7 @@
 'use strict';
 
-var path = require('path');
 var gulp = require('gulp');
+var path = require('path');
 var config = require('../config');
 var browserSync = require('browser-sync');
 var $ = require('gulp-load-plugins')();
@@ -16,7 +16,6 @@ gulp.task('scripts', function () {
     // .pipe($.coffeelint())
     // .pipe($.coffeelint.reporter())
     .pipe($.coffee()).on('error', config.errorHandler('CoffeeScript'))
-    .pipe($.gulpNgConfig('config', {environment: process.env['NODE_ENV']}))
     .pipe($.ngAnnotate())
     .pipe($.sourcemaps.write())
     .pipe(gulp.dest(dest))
