@@ -7,9 +7,9 @@ var addStream = require('add-stream');
 var gulpNgConfig = require('gulp-ng-config');
 var $ = require('gulp-load-plugins')();
 
-// Creates a config.js Angular config module from env.json
+// Creates a config.js Angular config module from env file
 gulp.task('config', function() {
-  return gulp.src('./env.json')
+  return gulp.src(config.settings.env)
     .pipe(gulpNgConfig('env', {
       environment: process.env['NODE_ENV'],
       constants: { NODE_ENV: process.env['NODE_ENV'] }
