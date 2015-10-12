@@ -3,6 +3,7 @@
 var gulp = require('gulp');
 var path = require('path');
 var config = require('../config');
+var util = require('../util');
 var browserSync = require('browser-sync');
 var $ = require('gulp-load-plugins')();
 
@@ -11,11 +12,11 @@ gulp.task('scripts', function () {
   var dest = path.join(config.paths.tmp, '/serve', config.paths.scripts);
 
   return gulp.src(path.join(config.paths.src, config.paths.scripts, '/**/*.coffee'))
-    .pipe($.changed(dest, {extension: '.js'}))
+    .pipe($.changed(dest, { extension: '.js' }))
     .pipe($.sourcemaps.init())
     // .pipe($.coffeelint())
     // .pipe($.coffeelint.reporter())
-    .pipe($.coffee()).on('error', config.errorHandler('CoffeeScript'))
+    .pipe($.coffee()).on('error', util.errorHandler('CoffeeScript'))
     .pipe($.ngAnnotate())
     .pipe($.sourcemaps.write())
     .pipe(gulp.dest(dest))

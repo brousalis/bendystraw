@@ -13,6 +13,9 @@ function isOnlyChange(event) {
 // Also copies images from bower_components folder to the dev folder
 gulp.task('watch', ['inject', 'images:copy'], function () {
 
+  // When Config files are changed
+  gulp.watch(path.join(config.paths.src, 'env.json'), ['config'])
+
   // When HTML files are changed (or more bower components added)
   gulp.watch([
     path.join(config.paths.src, '/**/*.html'),

@@ -3,6 +3,7 @@
 var gulp = require('gulp');
 var path = require('path');
 var config = require('../config');
+var util = require('../util');
 var wiredep = require('wiredep').stream;
 var $ = require('gulp-load-plugins')();
 
@@ -21,7 +22,7 @@ gulp.task('inject', ['scripts', 'config', 'styles'], function () {
     path.join('!' + config.paths.src, config.paths.scripts, '/**/*.mock.js'),
     path.join('!' + config.paths.tmp, '/serve/', config.paths.scripts, '/**/*.spec.js'),
   ])
-  .pipe($.angularFilesort()).on('error', config.errorHandler('AngularFilesort'));
+  .pipe($.angularFilesort()).on('error', util.errorHandler('AngularFilesort'));
 
   var injectOptions = {
     ignorePath: [config.paths.src, path.join(config.paths.tmp, '/serve')],
@@ -29,9 +30,9 @@ gulp.task('inject', ['scripts', 'config', 'styles'], function () {
   };
 
   return gulp.src(path.join(config.paths.src, '/*.html'))
-    .pipe($.preprocess({context: {NODE_ENV: process.env['NODE_ENV']}}))
+    .pipe($.preprocess({ context: { NODE_ENV: process.env['NODE_ENV'] } }))
     .pipe($.inject(injectStyles, injectOptions))
     .pipe($.inject(injectScripts, injectOptions))
-    .pipe(wiredep({directory: 'bower_components'}))
+    .pipe(wiredep({ directory: 'bower_components' }))
     .pipe(gulp.dest(path.join(config.paths.tmp, '/serve')));
 });

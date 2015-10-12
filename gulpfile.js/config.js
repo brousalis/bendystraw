@@ -1,9 +1,3 @@
-var gutil = require('gulp-util');
-var dotenv = require('dotenv').load({path: 'env.json'});
-var pngquant = require('imagemin-pngquant');
-
-process.env.NODE_ENV = 'development';
-
 exports.paths = {
   src: 'source', // source folder for the app
   dest: 'build', // destination for the production build
@@ -17,14 +11,15 @@ exports.paths = {
 };
 
 exports.settings = {
+  env: 'env.json', // file for app specific config
   module: 'templates', // angular module name for template cache
   port: '4567',  // port to run the server on
   imageFilter: '**', // ex: '**/icons/*' filter out any images imported from bower_components
   imagemin: { // options for image optimizer
-    progressive: true,
     // verbose: true
-    svgoPlugins: [{removeViewBox: false}],
-    use: [pngquant()]
+    progressive: true,
+    svgoPlugins: [{ removeViewBox: false }],
+    use: [ require('imagemin-pngquant')() ]
   },
   minifyHtml: { // options for html minification
     empty: true,
@@ -36,11 +31,4 @@ exports.settings = {
   images: ['jpg', 'jpeg', 'png', 'svg', 'gif'] // image extensions
 };
 
-exports.errorHandler = function(title) {
-  return function(err) {
-    gutil.log(gutil.colors.red('[' + title + ']'), err.toString());
-
-    if (this.emit !== null && this.emit !== undefined)
-      this.emit('end');
-  };
-};
+require('dotenv').load({ path: exports.settings.env });

@@ -2,16 +2,19 @@
 
 angular.module 'testApp', [
   'templates'
-  'config'
+  'env'
 
   'restangular'
   'ui.router'
   'testApp.dashboard'
 ]
 
-.config ($httpProvider, $provide, $urlRouterProvider, $stateProvider, RestangularProvider, config) ->
+.constant 'CONFIG',
+  TEST: 'true'
+
+.config ($httpProvider, $provide, $urlRouterProvider, $stateProvider, RestangularProvider, CONFIG, ENV, NODE_ENV) ->
   console.log 'app config'
-  console.log config
+  console.log CONFIG, ENV, NODE_ENV
 
   $stateProvider
   .state 'main',
@@ -22,9 +25,6 @@ angular.module 'testApp', [
   $urlRouterProvider.otherwise('/dashboard')
 
   RestangularProvider.setDefaultHeaders('Content-Type': 'application/json')
-
-.run ->
-  console.log 'app run'
 
 .controller 'appController', ($rootScope, $scope) ->
   console.log 'app controller'

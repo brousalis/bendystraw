@@ -3,11 +3,12 @@
 var gulp = require('gulp');
 var path = require('path');
 var config = require('../config');
+var util = require('../util');
 var $ = require('gulp-load-plugins')();
 
 gulp.task('deploy', function() {
   if(process.env["AWS_BUCKET"] == "" || process.env["AWS_BUCKET"] == undefined) {
-    config.errorHandler('Deploy')(new Error('Missing AWS settings in .env'));
+    util.errorHandler('Deploy')(new Error('Missing AWS settings in env file.'));
     return false;
   }
 

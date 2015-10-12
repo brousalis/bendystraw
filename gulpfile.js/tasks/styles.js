@@ -3,6 +3,7 @@
 var gulp = require('gulp');
 var path = require('path');
 var config = require('../config');
+var util = require('../util');
 var browserSync = require('browser-sync');
 var wiredep = require('wiredep').stream;
 var $ = require('gulp-load-plugins')();
@@ -30,10 +31,10 @@ gulp.task('styles', function () {
 
   return gulp.src([path.join(config.paths.src, config.paths.styles, '/main.sass')])
     .pipe($.inject(injectFiles, injectOptions))
-    .pipe(wiredep({directory: 'bower_components'}))
+    .pipe(wiredep({ directory: 'bower_components' }))
     .pipe($.sourcemaps.init())
-    .pipe($.sass(sassOptions)).on('error', config.errorHandler('Sass'))
-    .pipe($.autoprefixer()).on('error', config.errorHandler('Autoprefixer'))
+    .pipe($.sass(sassOptions)).on('error', util.errorHandler('Sass'))
+    .pipe($.autoprefixer()).on('error', util.errorHandler('Autoprefixer'))
     .pipe($.sourcemaps.write())
     .pipe(gulp.dest(path.join(config.paths.tmp, '/serve', config.paths.scripts)))
     .pipe(browserSync.stream());

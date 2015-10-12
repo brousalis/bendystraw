@@ -25,8 +25,8 @@ gulp.task('markup', function() {
   var dest = path.join(config.paths.tmp, '/serve', config.paths.scripts)
 
   return gulp.src(path.join(config.paths.src, config.paths.scripts, '/**/*.html'))
-    .pipe($.changed(dest, {extension: '.html'}))
-    .pipe($.preprocess({context: {NODE_ENV: process.env['NODE_ENV']}}))
+    .pipe($.changed(dest, { extension: '.html' }))
+    .pipe($.preprocess({ context: { NODE_ENV: process.env['NODE_ENV'] } }))
     .pipe(gulp.dest(dest))
     .pipe(browserSync.reload({ stream: true }));
 });
