@@ -10,7 +10,11 @@ var $ = require('gulp-load-plugins')();
 
 // Builds the app to be deployed to production.
 gulp.task('build', function(callback) {
-  runSequence('set-production', 'clean', ['compile', 'images', 'fonts', 'other'], callback);
+  runSequence(
+    ['set-production', 'clean', ],
+    ['compile', 'images', 'fonts', 'other'],
+    callback
+  );
 })
 
 // Compiles/minifys the assets

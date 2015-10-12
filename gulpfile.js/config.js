@@ -22,7 +22,7 @@ exports.settings = {
   imageFilter: '**', // ex: '**/icons/*' filter out any images imported from bower_components
   imagemin: { // options for image optimizer
     progressive: true,
-    verbose: true,
+    // verbose: true
     svgoPlugins: [{removeViewBox: false}],
     use: [pngquant()]
   },
