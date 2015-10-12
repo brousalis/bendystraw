@@ -21,16 +21,15 @@
   "main": "index.js",
   "files": [
     "gulpfile.js",
-    ".jshintrc",
-    ".coffelint.json",
     "karma.conf.js"
   ],
   "scripts": {
-    "deploy": "gulp deploy",
-    "production": "gulp server:build",
     "gulp": "gulp",
+    "deploy": "gulp deploy",
+    "build": "gulp build",
+    "test": "gulp build && karma start --single-run",
     "development": "gulp server",
-    "test": "gulp build && karma start --single-run"
+    "production": "gulp server:production"
   },
   "dependencies": {
     "add-stream": "^1.0.0",
