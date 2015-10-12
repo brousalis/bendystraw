@@ -27,13 +27,18 @@ gulp.task('deploy', function() {
     'Cache-Control': 'max-age=315360000, no-transform, public'
   };
 
-  return gulp.src(path.join(config.paths.dest))
+  return gulp.src([
+    path.join(config.paths.dest, '*'),
+    path.join(config.paths.dest, '**/*'),
+  ])
      // gzip, Set Content-Encoding headers and add .gz extension
     .pipe($.awspublish.gzip({ext: '.gz'}))
 
     // Publisher will add Content-Length, Content-Type and headers specified above
     // If not specified it will set x-amz-acl to public-read by default
     .pipe(publisher.publish(headers))
+
+    .pipe(publisher.sync())
 
     // Create a cache file to speed up consecutive uploads
     .pipe(publisher.cache())
