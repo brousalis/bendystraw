@@ -3,12 +3,15 @@
 var gulp = require('gulp');
 var path = require('path');
 var del = require('del');
+var runSequence = require('run-sequence');
 var mainBowerFiles = require('main-bower-files');
 var config = require('../config');
 var $ = require('gulp-load-plugins')();
 
 // Builds the app to be deployed to production.
-gulp.task('build', ['compile', 'images', 'fonts', 'other']);
+gulp.task('build', function(callback) {
+  runSequence('set-production', 'clean', ['compile', 'images', 'fonts', 'other'], callback);
+})
 
 // Compiles/minifys the assets
 gulp.task('compile', ['templates', 'inject'], function () {

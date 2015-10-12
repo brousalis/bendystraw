@@ -2,6 +2,8 @@
 
 angular.module 'testApp', [
   'templates'
+  'config'
+
   'restangular'
   'ui.router'
   'testApp.dashboard'
