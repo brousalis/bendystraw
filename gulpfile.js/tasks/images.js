@@ -35,6 +35,7 @@ gulp.task('images:copy', function() {
 });
 
 // Grab images from bower_components, optimize them, then put them in the build folder
+// This is only used in the final build
 gulp.task('images:bower', function() {
   return gulp.src('./bower_components/**/*')
     .pipe($.filter('**/*.{' + config.settings.images.join(',') + '}'))
