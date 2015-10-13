@@ -31,8 +31,8 @@ gulp.task('deploy-s3', ['set-staging'], function() {
   var headers = { 'Cache-Control': 'max-age=315360000, no-transform, public' };
 
   var gzip = gulp.src([
-    path.join(config.paths.dest, '*'),
-    path.join(config.paths.dest, '**/*'),
+    path.join(config.paths.dest, '*.{html,js,css}'),
+    path.join(config.paths.dest, '**/*.{html,js,css}'),
   ]).pipe($.awspublish.gzip({ext: '.gz'}));
 
   var plain = gulp.src([
