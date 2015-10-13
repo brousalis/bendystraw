@@ -33,7 +33,7 @@ gulp.task('deploy-s3', ['set-staging'], function() {
   var gzip = gulp.src([
     path.join(config.paths.dest, '*'),
     path.join(config.paths.dest, '**/*'),
-  ]).pipe($.awspublish.gzip());
+  ]).pipe($.awspublish.gzip({ext: '.gz'}));
 
   var plain = gulp.src([
     path.join(config.paths.dest, '*'),
@@ -48,7 +48,6 @@ gulp.task('deploy-s3', ['set-staging'], function() {
 
   merge(gzip, plain)
     .pipe(publisher.publish(headers))
-    .pipe(publisher.sync())
     .pipe(publisher.cache())
     .pipe($.awspublish.reporter());
 });
