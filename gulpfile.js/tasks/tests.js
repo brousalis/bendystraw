@@ -9,7 +9,7 @@ var $ = require('gulp-load-plugins')();
 
 function runTests (singleRun, done) {
   karma.server.start({
-    configFile: path.join(__dirname, '../../../../karma.conf.js'),
+    configFile: path.resolve('karma.conf.js'),
     singleRun: singleRun,
     autoWatch: !singleRun
   }, function() {
