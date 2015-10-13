@@ -2,6 +2,7 @@ exports.paths = {
   src: 'source', // source folder for the app
   dest: 'build', // destination for the production build
   tmp: '.dev', // temporary development build folder
+  env: 'env.json', // file for app specific config
 
   scripts: 'app', // folder where main javascript files are located
   styles: 'stylesheets', // stylesheets folder
@@ -11,7 +12,6 @@ exports.paths = {
 };
 
 exports.settings = {
-  env: 'env.json', // file for app specific config
   module: 'templates', // angular module name for template cache
   port: '4567',  // port to run the server on
   imageFilter: '**', // ex: '**/icons/*' filter out any images imported from bower_components

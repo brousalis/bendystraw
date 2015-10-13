@@ -12,11 +12,14 @@ var $ = require('gulp-load-plugins')();
 // Builds the app to be deployed to production.
 gulp.task('build', function(callback) {
   runSequence(
-    ['set-production', 'clean', ],
+    'clean',
     ['compile', 'images', 'fonts', 'other'],
     callback
   );
 })
+
+gulp.task('build:staging', ['set-staging', 'build']);
+gulp.task('build:production', ['set-production', 'build']);
 
 // Compiles/minifys the assets
 gulp.task('compile', ['templates', 'inject'], function () {
@@ -79,6 +82,7 @@ gulp.task('other', function () {
   var fileFilter = $.filter(function (file) {
     return file.stat.isFile();
   });
+
   return gulp.src([
     path.join(config.paths.src, '/**/*'),
     path.join('!' + config.paths.src, '/**/*.{html,css,js,sass,coffee,' + config.settings.images.join(',') + '}')
@@ -88,6 +92,6 @@ gulp.task('other', function () {
 });
 
 // Cleans the build folder and tmp folder for development
-gulp.task('clean', function (done) {
-  del([path.join(config.paths.dest, '/'), path.join(config.paths.tmp, '/')], done);
+gulp.task('clean', function (callback) {
+  del([path.join(config.paths.dest, '/'), path.join(config.paths.tmp, '/')], callback);
 });

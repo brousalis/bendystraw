@@ -3,46 +3,51 @@
 var gulp = require('gulp');
 var path = require('path');
 var config = require('../config');
+var runSequence = require('run-sequence');
 var util = require('../util');
 var $ = require('gulp-load-plugins')();
 
-gulp.task('deploy', function() {
-  if(process.env["AWS_BUCKET"] == "" || process.env["AWS_BUCKET"] == undefined) {
+gulp.task('deploy', function(callback) {
+  runSequence('clean', 'build', 'deploy-s3', callback);
+});
+
+gulp.task('deploy:staging', ['set-staging', 'deploy']);
+gulp.task('deploy:production', ['set-production', 'deploy']);
+
+gulp.task('deploy-s3', function() {
+  var json = require(process.env.INIT_CWD + '/env.json')
+  var env = process.env['NODE_ENV']
+
+  conf = json[env]
+
+  if(conf['AWS_BUCKET'] == '' || conf['AWS_BUCKET'] == undefined) {
     util.errorHandler('Deploy')(new Error('Missing AWS settings in env file.'));
     return false;
   }
 
-  // Create a new publisher using S3 options
-  // http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#constructor-property
-  var publisher = $.awspublish.create({
-    params: {
-      Bucket: process.env['AWS_BUCKET']
-    },
-    accessKeyId: process.env['AWS_ACCESS_KEY_ID'],
-    secretAccessKey: process.env['AWS_SECRET_ACCESS_KEY']
-  });
-
-  // Define custom headers
   var headers = {
     'Cache-Control': 'max-age=315360000, no-transform, public'
   };
 
-  return gulp.src([
+  var gzip = gulp.src([
     path.join(config.paths.dest, '*'),
     path.join(config.paths.dest, '**/*'),
-  ])
-     // gzip, Set Content-Encoding headers and add .gz extension
-    .pipe($.awspublish.gzip({ext: '.gz'}))
+  ]).pipe($.awspublish.gzip());
 
-    // Publisher will add Content-Length, Content-Type and headers specified above
-    // If not specified it will set x-amz-acl to public-read by default
+  var plain = gulp.src([
+    path.join(config.paths.dest, '*'),
+    path.join(config.paths.dest, '**/*'),
+  ]);
+
+  var publisher = $.awspublish.create({
+    params: { Bucket: conf['AWS_BUCKET'] },
+    accessKeyId: conf['AWS_ACCESS_KEY_ID'],
+    secretAccessKey: conf['AWS_SECRET_ACCESS_KEY']
+  });
+
+  $.merge(gzip, plain)
     .pipe(publisher.publish(headers))
-
     .pipe(publisher.sync())
-
-    // Create a cache file to speed up consecutive uploads
     .pipe(publisher.cache())
-
-    // Print upload updates to console
     .pipe($.awspublish.reporter());
 });
