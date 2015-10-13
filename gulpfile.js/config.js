@@ -1,3 +1,5 @@
+process.env.NODE_ENV = 'development';
+
 exports.paths = {
   src: 'source', // source folder for the app
   dest: 'build', // destination for the production build
@@ -30,5 +32,3 @@ exports.settings = {
   fonts: ['eot', 'svg', 'ttf', 'woff', 'woff2'], // font extensions
   images: ['jpg', 'jpeg', 'png', 'svg', 'gif'] // image extensions
 };
-
-require('dotenv').load({ path: exports.settings.env });

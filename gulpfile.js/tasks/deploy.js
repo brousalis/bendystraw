@@ -4,6 +4,7 @@ var gulp = require('gulp');
 var path = require('path');
 var config = require('../config');
 var runSequence = require('run-sequence');
+var merge = require('merge-stream');
 var util = require('../util');
 var $ = require('gulp-load-plugins')();
 
@@ -14,20 +15,20 @@ gulp.task('deploy', function(callback) {
 gulp.task('deploy:staging', ['set-staging', 'deploy']);
 gulp.task('deploy:production', ['set-production', 'deploy']);
 
-gulp.task('deploy-s3', function() {
-  var json = require(process.env.INIT_CWD + '/env.json')
-  var env = process.env['NODE_ENV']
+gulp.task('deploy-s3', ['set-staging'], function() {
+  var json = require(process.env.INIT_CWD + '/env.json');
+  var conf = json[process.env.NODE_ENV];
 
-  conf = json[env]
+  // The first key is the module name, so skip it
+  var key = Object.keys(conf)[0];
+  var conf = conf[key];
 
   if(conf['AWS_BUCKET'] == '' || conf['AWS_BUCKET'] == undefined) {
     util.errorHandler('Deploy')(new Error('Missing AWS settings in env file.'));
     return false;
   }
 
-  var headers = {
-    'Cache-Control': 'max-age=315360000, no-transform, public'
-  };
+  var headers = { 'Cache-Control': 'max-age=315360000, no-transform, public' };
 
   var gzip = gulp.src([
     path.join(config.paths.dest, '*'),
@@ -45,7 +46,7 @@ gulp.task('deploy-s3', function() {
     secretAccessKey: conf['AWS_SECRET_ACCESS_KEY']
   });
 
-  $.merge(gzip, plain)
+  merge(gzip, plain)
     .pipe(publisher.publish(headers))
     .pipe(publisher.sync())
     .pipe(publisher.cache())
