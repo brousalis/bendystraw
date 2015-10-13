@@ -10,7 +10,7 @@ var util = require('../util');
 var $ = require('gulp-load-plugins')();
 
 // Builds the app to be deployed to production.
-gulp.task('build', function(callback) {
+gulp.task('make', function(callback) {
   runSequence(
     'clean',
     ['compile', 'images', 'fonts', 'other'],
@@ -18,8 +18,9 @@ gulp.task('build', function(callback) {
   );
 })
 
-gulp.task('build:staging', ['set-staging', 'build']);
-gulp.task('build:production', ['set-production', 'build']);
+gulp.task('build', ['set-production', 'make']);
+gulp.task('build:staging', ['set-staging', 'make']);
+gulp.task('build:production', ['set-production', 'make']);
 
 // Compiles/minifys the assets
 gulp.task('compile', ['templates', 'inject'], function () {

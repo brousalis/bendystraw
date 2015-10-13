@@ -1,10 +1,10 @@
 <img src="https://raw.githubusercontent.com/gulpjs/artwork/master/gulp-2x.png" width="48">
 
-### bendystraw 
+### bendystraw
 
 a set of development and build tasks for Angular apps.
 
-### usage 
+### usage
 
     npm install --save-dev bendystraw
 
@@ -16,22 +16,37 @@ which will create a `gulpfile.js` in your project that requires bendystraw.
 
 you could also copy the `/gulpfile.js` folder and `package.json` into your own project.
 
+to see an example of an Angular app using bendystraw, check out the [example](https://github.com/brousalis/bendystraw/tree/example) branch
+
 ### tasks
 
 command | description
 ------- | ------------
-`gulp`    | runs the development server
-`gulp server` | also runs the development server
-`gulp server:build` | runs a server with the production build
-`gulp build` | builds the production app to `/build`
-`gulp deploy` | deploys to an AWS bucket. configure via `.env`
-`gulp test` | runs karma tests
+`gulp` | runs the development server
+`gulp build` | builds the app to `/build`
+`gulp deploy` | deploys `/build` to an AWS bucket
+`gulp tests` | runs karma tests
 `gulp clean` | deletes the `/build` and `/.dev` folders
 
-### tasks
+### extra tasks
+
+command | description
+------- | ------------
+`gulp server` | also runs the development server
+`gulp server:staging` | runs a server with the staging build
+`gulp server:production` | runs a server with the production build
+`gulp build:staging` | builds the staging app to `/build`
+`gulp build:production` | builds the production app to `/build`
+`gulp deploy:staging` | builds and deploys staging build to an AWS bucket
+`gulp deploy:production` | builds and deploys production build to an AWS bucket
+`gulp images` | optimize images and put them in the build folder
+`gulp images:copy` | copy images from bower components into dev folder
+`gulp images:optimize` | optimizes images from source folder and into dev folder
+`gulp tests:watch` | runs karma tests and waits/watches for changes
 
 the gulp tasks take care of:
 
+- development, staging, and production environments
 - angular templatecache for markup files
 - ng-annotate for proper dependency injection
 - coffeescript linting/compiling
@@ -44,20 +59,21 @@ the gulp tasks take care of:
 - karma for testing
 - aws builds/gzip
 
-### assumptions
-
-- angular app
-- no html preprocessors 
-- .sass syntax
-- .coffee syntax
-- file structure similar to the `/source` folder
-- dotenv 
-
 ### configuration
 
-create a `.env` file that includes:
+create a `env.json` file is similar to:
 
-    ANGULAR_MODULE_NAME=
-    AWS_ACCESS_KEY_ID=
-    AWS_SECRET_ACCESS_KEY=
-    AWS_BUCKET=
+    {
+      "development": {
+        "ENV": {
+          "API_URL": "https://localhost:3000",
+        }
+      },
+      "production": {
+        "ENV": {
+          "API_URL": "https://localhost:3000",
+        }
+      }
+    }
+
+then in your Angular app, you can reference it by first requiring the `env` module, then adding a dependency of `ENV`.

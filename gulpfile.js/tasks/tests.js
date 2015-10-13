@@ -7,21 +7,21 @@ var karma = require('karma');
 var browserSync = require('browser-sync');
 var $ = require('gulp-load-plugins')();
 
-function runTests (singleRun, done) {
+function runTests (singleRun, callback) {
   karma.server.start({
     configFile: path.resolve('karma.conf.js'),
     singleRun: singleRun,
     autoWatch: !singleRun
   }, function() {
-    done();
+    callback();
   });
 }
 
 // Karma testing
-gulp.task('test', ['scripts'], function(done) {
-  runTests(true, done);
+gulp.task('tests', ['scripts'], function(callback) {
+  runTests(true, callback);
 });
 
-gulp.task('test:watch', ['watch'], function(done) {
-  runTests(false, done);
+gulp.task('tests:watch', ['watch'], function(callback) {
+  runTests(false, callback);
 });

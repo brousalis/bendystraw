@@ -8,12 +8,13 @@ var merge = require('merge-stream');
 var util = require('../util');
 var $ = require('gulp-load-plugins')();
 
-gulp.task('deploy', function(callback) {
+gulp.task('prepare', function(callback) {
   runSequence('clean', 'build', 'deploy-s3', callback);
 });
 
-gulp.task('deploy:staging', ['set-staging', 'deploy']);
-gulp.task('deploy:production', ['set-production', 'deploy']);
+gulp.task('deploy', ['set-production', 'prepare']);
+gulp.task('deploy:staging', ['set-staging', 'prepare']);
+gulp.task('deploy:production', ['set-production', 'prepare']);
 
 gulp.task('deploy-s3', ['set-staging'], function() {
   var json = require(process.env.INIT_CWD + '/env.json');
