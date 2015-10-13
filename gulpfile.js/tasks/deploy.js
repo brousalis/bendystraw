@@ -9,14 +9,14 @@ var util = require('../util');
 var $ = require('gulp-load-plugins')();
 
 gulp.task('prepare', function(callback) {
-  runSequence('clean', 'build', 'deploy-s3', callback);
+  runSequence('clean', 'make', 'deploy-s3', callback);
 });
 
 gulp.task('deploy', ['set-production', 'prepare']);
 gulp.task('deploy:staging', ['set-staging', 'prepare']);
 gulp.task('deploy:production', ['set-production', 'prepare']);
 
-gulp.task('deploy-s3', ['set-staging'], function() {
+gulp.task('deploy-s3', function() {
   var json = require(process.env.INIT_CWD + '/env.json');
   var conf = json[process.env.NODE_ENV];
 
