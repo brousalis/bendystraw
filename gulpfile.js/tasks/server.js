@@ -34,13 +34,13 @@ gulp.task('development', ['server']);
 gulp.task('dev', ['server']);
 
 // Staging server
-gulp.task('server:staging', ['set-staging', 'build'], function () {
+gulp.task('server:staging', ['set-staging', 'make'], function () {
   browserSyncInit(config.paths.dest);
 });
 gulp.task('staging', ['server:staging']);
 
 // Production server
-gulp.task('server:production', ['set-production', 'build'], function () {
+gulp.task('server:production', ['set-production', 'make'], function () {
   browserSyncInit(config.paths.dest);
 });
 gulp.task('production', ['server:production']);

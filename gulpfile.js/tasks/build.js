@@ -53,7 +53,7 @@ gulp.task('compile', ['templates', 'inject'], function () {
     .pipe($.rev())
     .pipe(jsFilter)
     .pipe($.ngAnnotate())
-    .pipe($.uglify({ preserveComments: $.uglifySaveLicense })).on('error', util.errorHandler('Uglify'))
+    .pipe($.uglify()).on('error', util.errorHandler('Uglify'))
     .pipe(jsFilter.restore())
     .pipe(cssFilter)
     .pipe($.minifyCss())

@@ -23,6 +23,8 @@ to see an example of an Angular app using bendystraw, check out the [example](ht
 command | description
 ------- | ------------
 `gulp` | runs the development server
+`gulp staging` | runs the server in staging context
+`gulp production` | runs the server in production context
 `gulp build` | builds the app to `/build`
 `gulp deploy` | deploys `/build` to an AWS bucket
 `gulp tests` | runs karma tests

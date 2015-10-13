@@ -77,7 +77,6 @@
     "phantomjs": "^1.9.18",
     "require-dir": "~0.3.0",
     "run-sequence": "^1.1.4",
-    "uglify-save-license": "~0.4.1",
     "wiredep": "~2.2.2"
   }
 }
