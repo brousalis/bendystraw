@@ -1,4 +1,4 @@
-<img src="https://raw.githubusercontent.com/gulpjs/artwork/master/gulp-2x.png" width="48">
+<img src="http://i.imgur.com/Pdmetdq.png">
 
 ### bendystraw
 
