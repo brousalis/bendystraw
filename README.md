@@ -1,8 +1,8 @@
-<img src="http://i.imgur.com/Pdmetdq.png">
+### bendystraw 
 
-### bendystraw
+![bendystraw](http://i.imgur.com/Pdmetdq.png)
 
-a set of development and build tasks for Angular apps.
+a set of [Gulp](https://github.com/gulpjs/gulp/) development and build tasks for Angular apps
 
 ### usage
 
