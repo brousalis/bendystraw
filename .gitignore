@@ -2,10 +2,12 @@
 node_modules/
 bower_components/
 build/
+source/
+env.json
+karma.conf.js
 .sass-cache/
 .idea/
 .tmp/
 .dev/
 .env*
 .aws*
-env.json
