@@ -17,12 +17,17 @@ gulp.task('deploy:staging', ['set-staging', 'prepare']);
 gulp.task('deploy:production', ['set-production', 'prepare']);
 
 gulp.task('deploy-s3', function() {
-  var json = require(path.resolve(config.paths.env));
-  var conf = json[process.env.NODE_ENV];
+  var conf = '';
+  var json = '';
   var key = '';
 
+  try {
+    json = require(path.resolve(config.paths.env));
+    conf = json[process.env.NODE_ENV];
+  } catch (e) {}
+
   // Fall back to ENV if env.json doesn't exist
-  if(conf != 'undefined') {
+  if(conf != '') {
     // The first key is the module name, so skip it
     key = Object.keys(conf)[0];
     conf = conf[key];

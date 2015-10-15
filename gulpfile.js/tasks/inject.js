@@ -10,7 +10,7 @@ var $ = require('gulp-load-plugins')();
 
 // Injects compiled CSS/JS/HTML files into the main index page using gulp-inject
 // Also uses wiredep to include libs from bower_components
-gulp.task('inject', ['env', 'scripts', 'styles', 'templates', 'images:copy'], function () {
+gulp.task('inject', ['scripts', 'styles', 'templates', 'env', 'images:copy'], function () {
   var injectStyles = gulp.src([
     path.join(config.paths.tmp, '/serve', config.paths.scripts, '/**/*.css')
   ], { read: false });
