@@ -7,7 +7,6 @@ var runSequence = require('run-sequence');
 var mainBowerFiles = require('main-bower-files');
 var config = require('../config');
 var util = require('../util');
-var rev = require('gulp-rev-all');
 var $ = require('gulp-load-plugins')();
 
 gulp.task('build', ['set-production', 'make']);
@@ -34,8 +33,6 @@ gulp.task('compile', ['inject'], function () {
     addRootSlash: false
   };
 
-  var revAll = rev();
-
   // This does a lot.
   // - Injects the templates into Angulars templateCache, will be bundled with app.js later
   // - Uses ngAnnotate to correct the syntax of the Angular dependency injection
@@ -49,8 +46,7 @@ gulp.task('compile', ['inject'], function () {
   return gulp.src(path.join(config.paths.tmp, '/serve/*.html'))
     .pipe($.inject(templatesInjectFile, templatesInjectOptions))
     .pipe(assets = $.useref.assets())
-    .pipe(revAll.revision())
-    // .pipe($.rev())
+    .pipe($.rev())
     .pipe(jsFilter)
     .pipe($.ngAnnotate())
     .pipe($.uglify()).on('error', util.errorHandler('Uglify'))
@@ -60,7 +56,7 @@ gulp.task('compile', ['inject'], function () {
     .pipe(cssFilter.restore())
     .pipe(assets.restore())
     .pipe($.useref())
-    // .pipe($.revReplace())
+    .pipe($.revReplace())
     .pipe(htmlFilter)
     .pipe($.preprocess({ context: { NODE_ENV: 'production' } }))
     .pipe($.minifyHtml(config.settings.minifyHtml))
