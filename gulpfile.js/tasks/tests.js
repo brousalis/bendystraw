@@ -2,10 +2,7 @@
 
 var gulp = require('gulp');
 var path = require('path');
-var config = require('../config');
 var karma = require('karma');
-var browserSync = require('browser-sync');
-var $ = require('gulp-load-plugins')();
 
 function runTests (singleRun, callback) {
   karma.server.start({

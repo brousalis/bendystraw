@@ -10,6 +10,7 @@ var browserSyncSpa = require('browser-sync-spa');
 // Better support for Angular and BrowserSync
 browserSync.use(browserSyncSpa({selector: '[ng-app]'}));
 
+// Init a browserSync server
 function browserSyncInit(baseDir) {
   var routes = null;
   if(baseDir === config.paths.src || (util.isArray(baseDir) && baseDir.indexOf(config.paths.src) !== -1)) {

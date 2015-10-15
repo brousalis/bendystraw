@@ -17,12 +17,18 @@ gulp.task('deploy:staging', ['set-staging', 'prepare']);
 gulp.task('deploy:production', ['set-production', 'prepare']);
 
 gulp.task('deploy-s3', function() {
-  var json = require(process.env.INIT_CWD + '/env.json');
+  var json = require(path.resolve(config.paths.env));
   var conf = json[process.env.NODE_ENV];
+  var key = '';
 
-  // The first key is the module name, so skip it
-  var key = Object.keys(conf)[0];
-  var conf = conf[key];
+  // Fall back to ENV if env.json doesn't exist
+  if(conf != 'undefined') {
+    // The first key is the module name, so skip it
+    key = Object.keys(conf)[0];
+    conf = conf[key];
+  } else {
+    conf = process.env
+  }
 
   if(conf['AWS_BUCKET'] == '' || conf['AWS_BUCKET'] == undefined) {
     util.errorHandler('Deploy')(new Error('Missing AWS settings in env file.'));
@@ -31,11 +37,13 @@ gulp.task('deploy-s3', function() {
 
   var headers = { 'Cache-Control': 'max-age=315360000, no-transform, public' };
 
+  // Grab text files and gzip them
   var gzip = gulp.src([
     path.join(config.paths.dest, '*.{html,js,css}'),
     path.join(config.paths.dest, '**/*.{html,js,css}'),
   ]).pipe($.awspublish.gzip({ext: '.gz'}));
 
+  // Grab all other files for upload
   var plain = gulp.src([
     path.join(config.paths.dest, '*'),
     path.join(config.paths.dest, '**/*'),
@@ -47,8 +55,14 @@ gulp.task('deploy-s3', function() {
     secretAccessKey: conf['AWS_SECRET_ACCESS_KEY']
   });
 
+  // Upload all files, including gziped, to S3 bucket
   merge(gzip, plain)
     .pipe(publisher.publish(headers))
     .pipe(publisher.cache())
-    .pipe($.awspublish.reporter());
+    .pipe($.awspublish.reporter())
+    .pipe($.cloudfront({
+      bucket: conf['AWS_BUCKET'],
+      key: conf['AWS_ACCSES_KEY_ID'],
+      secret: conf['AWS_SECRET_ACCESS_KEY']
+    }))
 });

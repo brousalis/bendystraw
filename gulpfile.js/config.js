@@ -16,7 +16,9 @@ exports.paths = {
 exports.settings = {
   module: 'templates', // angular module name for template cache
   port: '4567',  // port to run the server on
-  imageFilter: '**', // ex: '**/icons/*' filter out any images imported from bower_components
+  images: [ // images to copy into project from bower_components
+    'bower_components/rolodex/**/*'
+  ],
   imagemin: { // options for image optimizer
     // verbose: true
     progressive: true,
@@ -29,6 +31,9 @@ exports.settings = {
     quotes: true,
     conditionals: true
   },
+};
+
+exports.extensions = {
   fonts: ['eot', 'svg', 'ttf', 'woff', 'woff2'], // font extensions
   images: ['jpg', 'jpeg', 'png', 'svg', 'gif'] // image extensions
 };
