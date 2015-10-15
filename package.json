@@ -58,6 +58,7 @@
     "gulp-minify-html": "~1.0.3",
     "gulp-ng-annotate": "~1.0.0",
     "gulp-ng-config": "^1.2.1",
+    "gulp-notify": "^2.2.0",
     "gulp-plumber": "^1.0.1",
     "gulp-preprocess": "^1.2.0",
     "gulp-rename": "~1.2.2",
