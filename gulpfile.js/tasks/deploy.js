@@ -39,7 +39,7 @@ gulp.task('deploy-s3', function() {
 
   // If we're passing in --bucket=AWS_BUCKET_NAME, use that
   if(argv.bucket) {
-    conf['AWS_BUCKET'] = args.bucket
+    conf['AWS_BUCKET'] = argv.bucket
   }
 
   if(conf['AWS_BUCKET'] == '' || conf['AWS_BUCKET'] == undefined) {
