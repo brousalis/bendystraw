@@ -1,6 +1,7 @@
 'use strict';
 
 var gulp = require('gulp');
+var argv = require('yargs').argv;
 var path = require('path');
 var config = require('../config');
 var runSequence = require('run-sequence');
@@ -21,18 +22,24 @@ gulp.task('deploy-s3', function() {
   var json = '';
   var key = '';
 
+  // Try to load the env.json file to pull AWS settings from there
   try {
     json = require(path.resolve(config.paths.env));
     conf = json[process.env.NODE_ENV];
   } catch (e) {}
 
-  // Fall back to ENV if env.json doesn't exist
+  // Fall back to ENV variables if env.json doesn't exist
   if(conf != '') {
     // The first key is the module name, so skip it
     key = Object.keys(conf)[0];
     conf = conf[key];
   } else {
     conf = process.env
+  }
+
+  // If we're passing in --bucket=AWS_BUCKET_NAME, use that
+  if(args.bucket?) {
+    conf['AWS_BUCKET'] = args.bucket
   }
 
   if(conf['AWS_BUCKET'] == '' || conf['AWS_BUCKET'] == undefined) {

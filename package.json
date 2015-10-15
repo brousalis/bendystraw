@@ -82,7 +82,8 @@
     "phantomjs": "^1.9.18",
     "require-dir": "~0.3.0",
     "run-sequence": "^1.1.4",
-    "wiredep": "~2.2.2"
+    "wiredep": "~2.2.2",
+    "yargs": "^3.27.0"
   },
   "devDependencies": {
     "gulp-notify": "^2.2.0"
