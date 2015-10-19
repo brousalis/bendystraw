@@ -1,6 +1,6 @@
 {
   "name": "bendystraw",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "author": "Pete Brousalis <brousapg@gmail.com>",
   "homepage": "http://github.com/brousalis/bendystraw",
   "description": "A set of Gulp tasks for building Angular apps",
