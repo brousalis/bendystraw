@@ -49,18 +49,6 @@ gulp.task('deploy-s3', function() {
 
   var headers = { 'Cache-Control': 'max-age=315360000, no-transform, public' };
 
-  // Grab text files and gzip them
-  var gzip = gulp.src([
-    path.join(config.paths.dest, '*.{html,js,css}'),
-    path.join(config.paths.dest, '**/*.{html,js,css}'),
-  ]).pipe($.awspublish.gzip({ext: '.gz'}));
-
-  // Grab all other files for upload
-  var plain = gulp.src([
-    path.join(config.paths.dest, '*'),
-    path.join(config.paths.dest, '**/*'),
-  ]);
-
   var publisher = $.awspublish.create({
     params: { Bucket: conf['AWS_BUCKET'] },
     accessKeyId: conf['AWS_ACCESS_KEY_ID'],
@@ -68,7 +56,10 @@ gulp.task('deploy-s3', function() {
   });
 
   // Upload all files, including gziped, to S3 bucket
-  merge(gzip, plain)
+  gulp.src([
+    path.join(config.paths.dest, '*'),
+    path.join(config.paths.dest, '**/*'),
+  ])
     .pipe(publisher.publish(headers))
     .pipe(publisher.cache())
     .pipe($.awspublish.reporter())
