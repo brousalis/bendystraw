@@ -13,3 +13,10 @@ exports.errorHandler = function(title) {
     if (typeof this.emit === 'function') this.emit('end')
   };
 };
+
+exports.envFile = function() {
+  var s = '.env';
+  if(process.env.NODE_ENV != 'development')
+    s = s + '.' + process.env.NODE_ENV;
+  return s;
+}

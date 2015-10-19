@@ -1,10 +1,11 @@
 process.env.NODE_ENV = 'development';
 
+require('dotenv').config({path: '.env'});
+
 exports.paths = {
   src: 'source', // source folder for the app
   dest: 'build', // destination for the production build
   tmp: '.dev', // temporary development build folder
-  env: 'env.json', // file for app specific config
 
   scripts: 'app', // folder where main javascript files are located
   styles: 'stylesheets', // stylesheets folder
@@ -14,7 +15,9 @@ exports.paths = {
 };
 
 exports.settings = {
-  module: 'templates', // angular module name for template cache
+  templateModule: 'templates', // angular module name for template cache
+  envModule: 'env', // angular module name for the env file
+  envConstant: 'ENV', // angular constant name for env file
   port: '4567',  // port to run the server on
   images: [ // images to copy into project from bower_components
     'bower_components/rolodex/**/*'

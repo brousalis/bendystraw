@@ -14,7 +14,7 @@ gulp.task('templates', ['markup'], function () {
   ])
     .pipe($.minifyHtml(config.settings.minifyHtml))
     .pipe($.angularTemplatecache('templates.js', {
-      module: config.settings.module,
+      module: config.settings.templateModule,
       root: config.paths.scripts
     }))
     .pipe(gulp.dest(config.paths.tmp + '/templates/'));

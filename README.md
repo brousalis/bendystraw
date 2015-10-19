@@ -1,4 +1,4 @@
-### bendystraw 
+### bendystraw
 
 ![bendystraw](http://i.imgur.com/Pdmetdq.png)
 
@@ -61,21 +61,8 @@ the gulp tasks take care of:
 - karma for testing
 - aws builds/gzip
 
-### configuration
+### env configuration
 
-create a `env.json` file is similar to:
+uses [dotenv](https://github.com/motdotla/dotenv) for app specific configuration. if you want to override env variables per environment, create a `.env.staging` and `.env.production`.
 
-    {
-      "development": {
-        "ENV": {
-          "API_URL": "https://localhost:3000",
-        }
-      },
-      "production": {
-        "ENV": {
-          "API_URL": "https://localhost:3000",
-        }
-      }
-    }
-
-then in your Angular app, you can reference it by first requiring the `env` module, then adding a dependency of `ENV`.
+these variables will be dumped into an Angular module called `env` (can be configured). load that into your app, then you have access to the `ENV` and `NODE_ENV` constants.

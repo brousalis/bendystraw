@@ -18,26 +18,10 @@ gulp.task('deploy:staging', ['set-staging', 'prepare']);
 gulp.task('deploy:production', ['set-production', 'prepare']);
 
 gulp.task('deploy-s3', function() {
-  var conf = '';
-  var json = '';
-  var key = '';
-
-  // Try to load the env.json file to pull AWS settings from there
-  try {
-    json = require(path.resolve(config.paths.env));
-    conf = json[process.env.NODE_ENV];
-  } catch (e) {}
-
-  // Fall back to ENV variables if env.json doesn't exist
-  if(conf != '') {
-    // The first key is the module name, so skip it
-    key = Object.keys(conf)[0];
-    conf = conf[key];
-  } else {
-    conf = process.env
-  }
+  var conf = process.env;
 
   // If we're passing in --bucket=AWS_BUCKET_NAME, use that
+  // Useful for multiple environment CI deployments
   if(argv.bucket) {
     conf['AWS_BUCKET'] = argv.bucket
   }
