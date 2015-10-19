@@ -63,6 +63,7 @@ gulp.task('compile', ['inject'], function () {
     .pipe($.preprocess({ context: { NODE_ENV: 'production' } }))
     .pipe($.minifyHtml(config.settings.minifyHtml))
     .pipe(htmlFilter.restore())
+    .pipe(gulp.dest(path.join(config.paths.dest, '/')))
     .pipe($.gzip())
     .pipe(gulp.dest(path.join(config.paths.dest, '/')))
     .pipe($.size({ title: path.join(config.paths.dest, '/'), showFiles: true }));
