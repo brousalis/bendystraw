@@ -3,6 +3,8 @@
 var gulp = require('gulp');
 var path = require('path');
 var del = require('del');
+var fs = require('fs');
+var plumber = require('gulp-plumber');
 var runSequence = require('run-sequence');
 var mainBowerFiles = require('main-bower-files');
 var config = require('../config');
@@ -61,6 +63,7 @@ gulp.task('compile', ['inject'], function () {
     .pipe($.preprocess({ context: { NODE_ENV: 'production' } }))
     .pipe($.minifyHtml(config.settings.minifyHtml))
     .pipe(htmlFilter.restore())
+    .pipe($.gzip())
     .pipe(gulp.dest(path.join(config.paths.dest, '/')))
     .pipe($.size({ title: path.join(config.paths.dest, '/'), showFiles: true }));
 });
@@ -68,6 +71,9 @@ gulp.task('compile', ['inject'], function () {
 // Only applies to fonts from bower dependencies
 // Custom fonts are handled by the "other" task
 gulp.task('fonts', function () {
+  if(!fs.existsSync(path.resolve('bower.json')) || !fs.existsSync('bower_components'))
+    return
+
   return gulp.src(mainBowerFiles())
     .pipe($.filter('**/*.{' + config.extensions.fonts.join(',') + '}'))
     .pipe($.flatten())
