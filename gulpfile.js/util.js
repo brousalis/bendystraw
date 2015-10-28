@@ -1,6 +1,8 @@
 var notify = require('gulp-notify');
 var gutil = require('gulp-util');
+var fs = require('fs');
 var chalk = require('chalk');
+var dotenv = require('dotenv');
 var path = require('path');
 
 exports.errorHandler = function(title) {
@@ -22,19 +24,23 @@ exports.errorHandler = function(title) {
   };
 };
 
-exports.checkForEnv = function(env, where) {
-  if(path.resolve(env) !== 'undefined') {
-    exports.errorHandler(where)(new Error('Missing .env file.'));
+exports.fileExists = function(filename) {
+ return fs.existsSync(path.resolve(filename))
+};
+
+exports.checkForEnv = function(file, task) {
+  if(!exports.fileExists(file)) {
+    exports.errorHandler(task)(new Error('Missing .env file.'));
     return false;
   } else {
-    dotenv.load({path: env});
+    dotenv.load({path: file});
     return true;
   }
-}
+};
 
 exports.envFile = function() {
-  var s = '.env';
+  var filename = '.env';
   if(process.env.NODE_ENV !== 'development')
-    s = s + '.' + process.env.NODE_ENV;
-  return s;
-}
+    filename = filename + '.' + process.env.NODE_ENV;
+  return filename;
+};

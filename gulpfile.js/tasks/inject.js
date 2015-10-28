@@ -35,7 +35,7 @@ gulp.task('inject', ['scripts', 'styles', 'templates', 'env', 'images:copy'], fu
     .pipe($.preprocess({ context: { NODE_ENV: process.env['NODE_ENV'] } }))
     .pipe($.inject(injectStyles, injectOptions))
     .pipe($.inject(injectScripts, injectOptions))
-    .pipe(gulpif(path.resolve('bower.json') !== 'undefined', wiredep({ directory: 'bower_components' })))
+    .pipe(gulpif(util.fileExists('bower.json'), wiredep({ directory: 'bower_components' })))
     .on('error', util.errorHandler('wiredep'))
     .pipe(gulp.dest(path.join(config.paths.tmp, '/serve')));
 });

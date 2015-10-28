@@ -48,10 +48,11 @@ gulp.task('images:copy', function() {
 
 // Dev task for optimizing images in your source folder
 gulp.task('images:optimize', function() {
-  var images = path.join(config.paths.src, config.paths.images, '/**');
-
-  return gulp.src(images)
-    .pipe($.changed(images))
+  var dest = path.join(config.paths.src, config.paths.images);
+  var cache = path.join(config.paths.tmp, 'cache');
+  return gulp.src(path.join(config.paths.src, config.paths.images, '/**'))
+    .pipe($.changed(cache))
     .pipe($.imagemin(config.settings.imagemin))
-    .pipe(gulp.dest(images));
+    .pipe(gulp.dest(cache))
+    .pipe(gulp.dest(dest));
 });

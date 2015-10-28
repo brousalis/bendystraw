@@ -16,7 +16,8 @@ gulp.task('env', function() {
   var dest = path.join(config.paths.tmp, '/serve', config.paths.scripts);
 
   // Check if we even have a .env file to use
-  return util.checkForEnv(util.envFile(), 'env');
+  if(!util.checkForEnv(util.envFile(), 'env'))
+    return false
 
   // Gets the config settings for the current NODE_ENV, also stubs that in
   var ngConfig = {
