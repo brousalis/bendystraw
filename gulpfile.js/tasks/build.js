@@ -51,7 +51,7 @@ gulp.task('compile', ['inject'], function () {
     .pipe($.rev())
     .pipe(jsFilter)
     .pipe($.ngAnnotate())
-    .pipe($.uglify()).on('error', util.errorHandler('Uglify'))
+    .pipe($.uglify()).on('error', util.errorHandler('uglify'))
     .pipe(jsFilter.restore())
     .pipe(cssFilter)
     .pipe($.minifyCss())

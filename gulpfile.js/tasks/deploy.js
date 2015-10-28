@@ -18,6 +18,9 @@ gulp.task('deploy:staging', ['set-staging', 'prepare']);
 gulp.task('deploy:production', ['set-production', 'prepare']);
 
 gulp.task('deploy-s3', function() {
+  // Check if we even have a .env file to use
+  return util.checkForEnv(util.envFile(), 'deploy');
+
   var conf = process.env;
 
   // If we're passing in --bucket=AWS_BUCKET_NAME, use that
@@ -27,7 +30,7 @@ gulp.task('deploy-s3', function() {
   }
 
   if(conf['AWS_BUCKET'] === '' || conf['AWS_BUCKET'] === undefined) {
-    util.errorHandler('Deploy')(new Error('Missing AWS settings in env file.'));
+    util.errorHandler('deploy')(new Error('Missing AWS settings in env file.'));
     return false;
   }
 
@@ -46,10 +49,4 @@ gulp.task('deploy-s3', function() {
   ])
     .pipe(publisher.publish(headers))
     .pipe(publisher.cache())
-    .pipe($.awspublish.reporter())
-    .pipe($.cloudfront({
-      bucket: conf['AWS_BUCKET'],
-      key: conf['AWS_ACCSES_KEY_ID'],
-      secret: conf['AWS_SECRET_ACCESS_KEY']
-    }))
 });

@@ -12,8 +12,11 @@ var browserSync = require('browser-sync');
 var $ = require('gulp-load-plugins')();
 
 // Creates a config.js Angular config module from env file
-gulp.task('env', ['set-staging'], function() {
+gulp.task('env', function() {
   var dest = path.join(config.paths.tmp, '/serve', config.paths.scripts);
+
+  // Check if we even have a .env file to use
+  return util.checkForEnv(util.envFile(), 'env');
 
   // Gets the config settings for the current NODE_ENV, also stubs that in
   var ngConfig = {
@@ -29,8 +32,8 @@ gulp.task('env', ['set-staging'], function() {
 
   // Wrap the object in a main key, easier to include in angular
   var tmp = {}
-  tmp[config.settings.envConstant] = fileContent
-  fileContent = tmp
+  tmp[config.settings.envConstant] = fileContent;
+  fileContent = tmp;
 
   // Stringify the .env file
   fileContent = JSON.stringify(fileContent);
@@ -45,16 +48,16 @@ gulp.task('env', ['set-staging'], function() {
 
 // Helpers for setting the NODE_ENV before running a task
 gulp.task('set-development', function() {
-  dotenv.load({path: '.env'})
+  util.checkForEnv('.env', 'set-development');
   return process.env.NODE_ENV = 'development';
 });
 
 gulp.task('set-staging', function() {
-  dotenv.load({path: '.env.staging'})
+  util.checkForEnv('.env.staging', 'set-staging');
   return process.env.NODE_ENV = 'staging';
 });
 
 gulp.task('set-production', function() {
-  dotenv.load({path: '.env.production'})
+  util.checkForEnv('.env.production', 'set-production');
   return process.env.NODE_ENV = 'production';
 });

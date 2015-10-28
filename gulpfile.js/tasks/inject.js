@@ -24,7 +24,7 @@ gulp.task('inject', ['scripts', 'styles', 'templates', 'env', 'images:copy'], fu
     path.join('!' + config.paths.tmp, '/serve/', config.paths.scripts, '/**/*.spec.js'),
   ])
   .pipe($.angularFilesort())
-  .on('error', util.errorHandler('AngularFilesort'));
+  .on('error', util.errorHandler('angularFilesort'));
 
   var injectOptions = {
     ignorePath: [config.paths.src, path.join(config.paths.tmp, '/serve')],

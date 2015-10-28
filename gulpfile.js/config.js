@@ -1,7 +1,5 @@
 process.env.NODE_ENV = 'development';
 
-require('dotenv').config({path: '.env'});
-
 exports.paths = {
   src: 'source', // source folder for the app
   dest: 'build', // destination for the production build

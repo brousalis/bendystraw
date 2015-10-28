@@ -21,8 +21,8 @@ gulp.task('styles', function () {
     .pipe(gulpif(path.resolve('bower.json') !== 'undefined', wiredep({ directory: 'bower_components' })))
     .on('error', util.errorHandler('wiredep'))
     .pipe($.sourcemaps.init())
-    .pipe($.sass(sassOptions)).on('error', util.errorHandler('Sass'))
-    .pipe($.autoprefixer()).on('error', util.errorHandler('Autoprefixer'))
+    .pipe($.sass(sassOptions)).on('error', util.errorHandler('sass'))
+    .pipe($.autoprefixer()).on('error', util.errorHandler('autoprefixer'))
     .pipe($.sourcemaps.write())
     .pipe(gulp.dest(path.join(config.paths.tmp, '/serve', config.paths.scripts)))
     .pipe(browserSync.stream());

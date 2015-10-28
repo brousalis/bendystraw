@@ -14,7 +14,7 @@ gulp.task('scripts', function () {
   return gulp.src(path.join(config.paths.src, config.paths.scripts, '/**/*.coffee'))
     .pipe($.changed(dest, { extension: '.js' }))
     .pipe($.sourcemaps.init())
-    .pipe($.coffee()).on('error', util.errorHandler('CoffeeScript'))
+    .pipe($.coffee()).on('error', util.errorHandler('coffeescript'))
     .pipe($.ngAnnotate())
     .pipe($.sourcemaps.write())
     .pipe(gulp.dest(dest))
