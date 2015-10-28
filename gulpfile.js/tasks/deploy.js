@@ -26,7 +26,7 @@ gulp.task('deploy-s3', function() {
     conf['AWS_BUCKET'] = argv.bucket
   }
 
-  if(conf['AWS_BUCKET'] == '' || conf['AWS_BUCKET'] == undefined) {
+  if(conf['AWS_BUCKET'] === '' || conf['AWS_BUCKET'] === undefined) {
     util.errorHandler('Deploy')(new Error('Missing AWS settings in env file.'));
     return false;
   }

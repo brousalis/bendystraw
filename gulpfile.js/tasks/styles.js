@@ -18,7 +18,7 @@ gulp.task('styles', function () {
 
   return gulp.src([path.join(config.paths.src, config.paths.styles, '/main.sass')])
     .pipe(plumber())
-    .pipe(gulpif(path.resolve('bower.json') != 'undefined', wiredep({ directory: 'bower_components' })))
+    .pipe(gulpif(path.resolve('bower.json') !== 'undefined', wiredep({ directory: 'bower_components' })))
     .on('error', util.errorHandler('wiredep'))
     .pipe($.sourcemaps.init())
     .pipe($.sass(sassOptions)).on('error', util.errorHandler('Sass'))

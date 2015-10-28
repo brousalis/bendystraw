@@ -2,7 +2,6 @@
 
 var gulp = require('gulp');
 var path = require('path');
-var plumber = require('gulp-plumber');
 var config = require('../config');
 var util = require('../util');
 var browserSync = require('browser-sync');
@@ -13,7 +12,6 @@ gulp.task('scripts', function () {
   var dest = path.join(config.paths.tmp, '/serve', config.paths.scripts);
 
   return gulp.src(path.join(config.paths.src, config.paths.scripts, '/**/*.coffee'))
-    .pipe(plumber())
     .pipe($.changed(dest, { extension: '.js' }))
     .pipe($.sourcemaps.init())
     .pipe($.coffee()).on('error', util.errorHandler('CoffeeScript'))
