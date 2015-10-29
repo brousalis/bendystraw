@@ -48,7 +48,7 @@ gulp.task('deploy-s3', function() {
     params: { Bucket: conf['AWS_BUCKET'] },
     accessKeyId: conf['AWS_ACCESS_KEY_ID'],
     secretAccessKey: conf['AWS_SECRET_ACCESS_KEY'],
-    distributionId: 'E35IHXSKWYIUAS'
+    distributionId: conf['AWS_DISTRIBUTION_ID']
   };
 
   var revOptions = {
@@ -56,10 +56,8 @@ gulp.task('deploy-s3', function() {
     // dontRenameFile: [/^\/favicon.ico$/g, /^\/index.html/g]
   }
 
-  if(conf['AWS_CLOUDFRONT_DOMAIN'] !== '' && conf['AWS_CLOUDFRONT_DOMAIN'] !== undefined) {
-    console.log('IT EXISTS NIGGA');
+  if(conf['AWS_CLOUDFRONT_DOMAIN'] !== '' && conf['AWS_CLOUDFRONT_DOMAIN'] !== undefined)
     revOptions.prefix = 'https://' + conf['AWS_CLOUDFRONT_DOMAIN'] + '.cloudfront.net/';
-  }
 
   // Upload all files, revisioned, gzipped, to S3 bucket
   var revAll = new RevAll(revOptions);
