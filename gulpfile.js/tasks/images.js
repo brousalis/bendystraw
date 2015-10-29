@@ -8,8 +8,7 @@ var $ = require('gulp-load-plugins')();
 // Optimize all images (including those from bower) and put in the build folder
 gulp.task('images', ['images:bower'], function () {
   var dest = path.join(config.paths.dest, config.paths.images);
-  return gulp.src(path.join(config.paths.src, config.paths.images, '/**/*'))
-    .pipe($.changed(dest))
+  return gulp.src(path.join(config.paths.src, config.paths.images, '**/*'))
     .pipe($.imagemin(config.settings.imagemin))
     .pipe(gulp.dest(dest));
 });
@@ -29,8 +28,6 @@ gulp.task('images:bower', function() {
   return gulp.src(config.settings.images)
     .pipe($.filter('**/*.{' + config.extensions.images.join(',') + '}'))
     .pipe($.rename(imageFolder))
-    .pipe($.changed(dest))
-    .pipe($.imagemin(config.settings.imagemin))
     .pipe(gulp.dest(dest));
 });
 
@@ -41,8 +38,6 @@ gulp.task('images:copy', function() {
   return gulp.src(config.settings.images)
     .pipe($.filter('**/*.{' + config.extensions.images.join(',') + '}'))
     .pipe($.rename(imageFolder))
-    .pipe($.changed(dest))
-    .pipe($.imagemin(config.settings.imagemin))
     .pipe(gulp.dest(dest));
 });
 
@@ -50,7 +45,8 @@ gulp.task('images:copy', function() {
 gulp.task('images:optimize', function() {
   var dest = path.join(config.paths.src, config.paths.images);
   var cache = path.join(config.paths.tmp, 'cache');
-  return gulp.src(path.join(config.paths.src, config.paths.images, '/**'))
+
+  return gulp.src(path.join(config.paths.src, config.paths.images, '**/*'))
     .pipe($.changed(cache))
     .pipe($.imagemin(config.settings.imagemin))
     .pipe(gulp.dest(cache))

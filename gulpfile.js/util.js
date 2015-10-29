@@ -1,7 +1,6 @@
 var notify = require('gulp-notify');
 var gutil = require('gulp-util');
 var fs = require('fs');
-var chalk = require('chalk');
 var dotenv = require('dotenv');
 var path = require('path');
 
@@ -17,11 +16,15 @@ exports.errorHandler = function(title) {
 
     notify.onError({
       title: title,
-      message: chalk.stripColor(message)
+      message: gutil.colors.stripColor(message)
     }).apply(this, arguments)
 
     if (typeof this.emit === 'function') this.emit('end')
   };
+};
+
+exports.log = function(msg) {
+  gutil.log(gutil.colors.green('[bendystraw]'), gutil.colors.yellow(process.env.NODE_ENV), msg);
 };
 
 exports.fileExists = function(filename) {

@@ -48,7 +48,6 @@ gulp.task('compile', ['inject'], function () {
   return gulp.src(path.join(config.paths.tmp, '/serve/*.html'))
     .pipe($.inject(templatesInjectFile, templatesInjectOptions))
     .pipe(assets = $.useref.assets())
-    .pipe($.rev())
     .pipe(jsFilter)
     .pipe($.ngAnnotate())
     .pipe($.uglify()).on('error', util.errorHandler('uglify'))
@@ -58,7 +57,6 @@ gulp.task('compile', ['inject'], function () {
     .pipe(cssFilter.restore())
     .pipe(assets.restore())
     .pipe($.useref())
-    .pipe($.revReplace())
     .pipe(htmlFilter)
     .pipe($.preprocess({ context: { NODE_ENV: 'production' } }))
     .pipe($.minifyHtml(config.settings.minifyHtml))
@@ -87,6 +85,7 @@ gulp.task('other', function () {
     return file.stat.isFile();
   });
 
+  // This isn't a very good way of doing this :(
   return gulp.src([
     path.join(config.paths.src, '/**/*'),
     path.join('!' + config.paths.src, '/**/*.{html,haml,jade,css,sass,styl,scss,js,coffee,' + config.settings.images.join(',') + '}')
