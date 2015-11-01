@@ -20,14 +20,16 @@ in order to use the gulp tasks, create a `gulpfile.js` with:
 
 or if you're lazy
 
+```bash
     echo "require('bendystraw')" >> gulpfile.js
+```
 
 to see an example of an Angular app using bendystraw, check out the [example](https://github.com/brousalis/bendystraw/tree/example) branch
 
 ### config
 
 to configure settings and paths, pass an object into your require to bendystraw (most of the time in your gulpfile.js):
-
+```javascript
     require('bendystraw')({
       paths: {
         src: 'app', // override main app folder 
@@ -38,7 +40,7 @@ to configure settings and paths, pass an object into your require to bendystraw 
         port: '42' // port to launch the server on
       }
     })
-
+```
 check out the default config values [here](https://github.com/brousalis/bendystraw/blob/master/gulpfile.js/config.js)
 
 ### tasks
