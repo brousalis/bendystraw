@@ -3,7 +3,6 @@
 var gulp = require('gulp');
 var argv = require('yargs').argv;
 var path = require('path');
-var config = require('../config');
 var gutil = require('gulp-util');
 var runSequence = require('run-sequence');
 var RevAll = require('gulp-rev-all');
@@ -75,3 +74,5 @@ gulp.task('deploy-s3', function() {
     .pipe($.awspublish.reporter())
     .pipe($.cloudfront(cdn));
 });
+
+module.exports = function(){};

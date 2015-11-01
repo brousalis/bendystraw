@@ -3,7 +3,6 @@
 var gulp = require('gulp');
 var gulpif = require('gulp-if');
 var path = require('path');
-var config = require('../config');
 var util = require('../util');
 var wiredep = require('wiredep').stream;
 var $ = require('gulp-load-plugins')();
@@ -39,3 +38,5 @@ gulp.task('inject', ['scripts', 'styles', 'templates', 'env', 'images:copy'], fu
     .on('error', util.errorHandler('wiredep'))
     .pipe(gulp.dest(path.join(config.paths.tmp, '/serve')));
 });
+
+module.exports = function(){};

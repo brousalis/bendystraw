@@ -2,7 +2,6 @@
 
 var gulp = require('gulp');
 var path = require('path');
-var config = require('../config');
 var browserSync = require('browser-sync');
 
 function isOnlyChange(event) {
@@ -50,3 +49,5 @@ gulp.task('watch', ['inject'], function () {
     }
   });
 });
+
+module.exports = function(){};

@@ -3,7 +3,6 @@
 var gulp = require('gulp');
 var path = require('path');
 var util = require('util');
-var config = require('../config');
 var browserSync = require('browser-sync');
 var browserSyncSpa = require('browser-sync-spa');
 
@@ -45,3 +44,5 @@ gulp.task('server:production', ['set-production', 'make'], function () {
   browserSyncInit(config.paths.dest);
 });
 gulp.task('production', ['server:production']);
+
+module.exports = function(){};

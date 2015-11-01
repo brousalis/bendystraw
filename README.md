@@ -24,6 +24,20 @@ which will create a `gulpfile.js` in your project that requires bendystraw.
 
 again, to see an example of an Angular app using bendystraw, check out the [example](https://github.com/brousalis/bendystraw/tree/example) branch
 
+### config
+
+to configure settings and paths, pass an object into your require to bendystraw (most of the time in your gulpfile.js):
+
+    require('bendystraw')({
+      paths: {
+        src: 'app', // override main app folder
+        styles: 'css' // override stylesheet folder
+      },
+      settings: {
+        port: '42'
+      }
+    })
+
 ### tasks
 
 command | description

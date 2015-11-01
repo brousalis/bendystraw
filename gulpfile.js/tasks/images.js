@@ -2,7 +2,6 @@
 
 var gulp = require('gulp');
 var path = require('path');
-var config = require('../config');
 var $ = require('gulp-load-plugins')();
 
 // Optimize all images (including those from bower) and put in the build folder
@@ -52,3 +51,5 @@ gulp.task('images:optimize', function() {
     .pipe(gulp.dest(cache))
     .pipe(gulp.dest(dest));
 });
+
+module.exports = function(){};

@@ -3,7 +3,6 @@
 var gulp = require('gulp');
 var gulpif = require('gulp-if');
 var path = require('path');
-var config = require('../config');
 var util = require('../util');
 var plumber = require('gulp-plumber');
 var browserSync = require('browser-sync');
@@ -27,3 +26,5 @@ gulp.task('styles', function () {
     .pipe(gulp.dest(path.join(config.paths.tmp, '/serve', config.paths.scripts)))
     .pipe(browserSync.stream());
 });
+
+module.exports = function(){};

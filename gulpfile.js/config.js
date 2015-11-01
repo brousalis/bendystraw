@@ -18,7 +18,7 @@ exports.settings = {
   envConstant: 'ENV', // angular constant name for env file
   port: '4567',  // port to run the server on
   images: [ // images to copy into project from bower_components
-    'bower_components/rolodex/**/*'
+    // ex: 'bower_components/rolodex/**/*'
   ],
   imagemin: { // options for image optimizer
     // verbose: true

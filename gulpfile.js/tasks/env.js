@@ -2,7 +2,6 @@
 
 var gulp = require('gulp');
 var path = require('path');
-var config = require('../config');
 var util = require('../util');
 var b2v = require('buffer-to-vinyl');
 var dotenv = require('dotenv');
@@ -62,3 +61,5 @@ gulp.task('set-production', function() {
   util.loadEnv('.env.production', 'set-production');
   return process.env.NODE_ENV = 'production';
 });
+
+module.exports = function(){};

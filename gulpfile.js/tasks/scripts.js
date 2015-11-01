@@ -2,7 +2,6 @@
 
 var gulp = require('gulp');
 var path = require('path');
-var config = require('../config');
 var util = require('../util');
 var browserSync = require('browser-sync');
 var $ = require('gulp-load-plugins')();
@@ -20,3 +19,5 @@ gulp.task('scripts', function () {
     .pipe(gulp.dest(dest))
     .pipe(browserSync.reload({ stream: true }));
 });
+
+module.exports = function(){};

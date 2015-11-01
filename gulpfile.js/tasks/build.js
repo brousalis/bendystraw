@@ -7,7 +7,6 @@ var fs = require('fs');
 var plumber = require('gulp-plumber');
 var runSequence = require('run-sequence');
 var mainBowerFiles = require('main-bower-files');
-var config = require('../config');
 var util = require('../util');
 var $ = require('gulp-load-plugins')();
 
@@ -98,3 +97,5 @@ gulp.task('other', function () {
 gulp.task('clean', function (callback) {
   del([path.join(config.paths.dest, '/'), path.join(config.paths.tmp, '/')], callback);
 });
+
+module.exports = function(){};

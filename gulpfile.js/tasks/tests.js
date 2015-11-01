@@ -22,3 +22,5 @@ gulp.task('tests', ['scripts'], function(callback) {
 gulp.task('tests:watch', ['watch'], function(callback) {
   runTests(false, callback);
 });
+
+module.exports = function(){};
