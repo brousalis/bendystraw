@@ -14,15 +14,15 @@ to see an example of an Angular app using bendystraw, <br> check out the [exampl
 
     npm install --save-dev bendystraw
 
-in order to use the gulp tasks, run:
+in order to use the gulp tasks, create a `gulpfile.js` with:
+
+    require('bendystraw')
+
+or if you're lazy
 
     echo "require('bendystraw')" >> gulpfile.js
 
-which will create a `gulpfile.js` in your project that requires bendystraw.
-
-> you could also copy the `/gulpfile.js` folder and `package.json` into your own project.
-
-again, to see an example of an Angular app using bendystraw, check out the [example](https://github.com/brousalis/bendystraw/tree/example) branch
+to see an example of an Angular app using bendystraw, check out the [example](https://github.com/brousalis/bendystraw/tree/example) branch
 
 ### config
 
@@ -31,6 +31,7 @@ to configure settings and paths, pass an object into your require to bendystraw 
     require('bendystraw')({
       paths: {
         src: 'app', // override main app folder 
+        dest: 'public', // override the build folder
         styles: 'css' // override the stylesheet folder
       },
       settings: {
