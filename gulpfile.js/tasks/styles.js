@@ -15,7 +15,7 @@ gulp.task('styles', function () {
     imagePath: 'images'
   };
 
-  return gulp.src([path.join(config.paths.src, config.paths.styles, '/main.sass')])
+  return gulp.src([path.join(config.paths.src, config.paths.styles, '/*.{sass,scss}')])
     .pipe(plumber())
     .pipe(gulpif(util.fileExists('bower.json'), wiredep({ directory: 'bower_components' })))
     .on('error', util.errorHandler('wiredep'))

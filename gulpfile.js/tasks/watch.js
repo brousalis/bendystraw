@@ -27,8 +27,8 @@ gulp.task('watch', ['inject'], function () {
   // When stylesheets are changed
   gulp.watch([
     path.join(config.paths.src, config.paths.scripts, '/**/*.css'),
-    path.join(config.paths.src, config.paths.scripts, '/**/*.sass'),
-    path.join(config.paths.src, config.paths.styles, '/**/*.sass')
+    path.join(config.paths.src, config.paths.scripts, '/**/*.{sass,scss}'),
+    path.join(config.paths.src, config.paths.styles, '/**/*.{sass,scss}')
   ], function(event) {
     if(isOnlyChange(event)) {
       gulp.start('styles');
