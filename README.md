@@ -1,4 +1,5 @@
 ### bendystraw [![NPM version](https://img.shields.io/npm/v/bendystraw.svg?style=flat-square)](https://www.npmjs.com/package/bendystraw)
+<br>
 
 <img src="http://i.imgur.com/Pdmetdq.png" alt="bendystraw" align="left" />
 
@@ -7,7 +8,7 @@
 to see an example of an Angular app using bendystraw, <br> check out the [example](https://github.com/brousalis/bendystraw/tree/example) branch
 
 
-<br><br><br>
+<br><br>
 
 ### usage
 
