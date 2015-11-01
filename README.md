@@ -101,3 +101,7 @@ to utilize the `deploy` task, you'll need the following environment variables se
     // CDN
     AWS_DISTRIBUTION_ID=
     AWS_CLOUDFRONT_DOMAIN=
+
+### thanks
+
+bendystraw is inspired and based off of many Gulp projects. [gulp-starter](https://github.com/vigetlabs/gulp-starter/) by [vigetlabs](https://viget.com/extend) and [generator-gulp-angular](https://github.com/Swiip/generator-gulp-angular) for Yeoman by [Matthieu Lux](github.com/swiip). built at [Belly](http://github.com/bellycard)
