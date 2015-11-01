@@ -4,7 +4,9 @@ var fs = require('fs');
 var dotenv = require('dotenv');
 var path = require('path');
 
-exports.errorHandler = function(title) {
+exports.errorHandler = function(title, notify) {
+  notify = typeof notify !== 'undefined' ?  notify : true;
+
   return function(err) {
     gutil.log(gutil.colors.red('[' + title + ']'), err);
 
@@ -14,10 +16,12 @@ exports.errorHandler = function(title) {
       message = err.message
     }
 
-    notify.onError({
-      title: title,
-      message: gutil.colors.stripColor(message)
-    }).apply(this, arguments)
+    if(notify) {
+      notify.onError({
+        title: title,
+        message: gutil.colors.stripColor(message)
+      }).apply(this, arguments)
+    }
 
     if (typeof this.emit === 'function') this.emit('end')
   };
@@ -31,9 +35,13 @@ exports.fileExists = function(filename) {
  return fs.existsSync(path.resolve(filename))
 };
 
-exports.checkForEnv = function(file, task) {
+exports.checkForEnv = function() {
+  return exports.fileExists(exports.envFile())
+};
+
+exports.loadEnv = function(file, task) {
   if(!exports.fileExists(file)) {
-    exports.errorHandler(task)(new Error('Missing .env file.'));
+    exports.errorHandler(task, false)(new Error('Missing .env file.'));
     return false;
   } else {
     dotenv.load({path: file});

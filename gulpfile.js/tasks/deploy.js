@@ -21,7 +21,7 @@ gulp.task('deploy:production', ['set-production', 'prepare']);
 
 gulp.task('deploy-s3', function() {
   // Check if we even have a .env file to use
-  if(!util.checkForEnv(util.envFile(), 'env'))
+  if(!util.checkForEnv())
     return false;
 
   var conf = process.env;

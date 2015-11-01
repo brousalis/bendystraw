@@ -16,7 +16,7 @@ gulp.task('env', function() {
   var dest = path.join(config.paths.tmp, '/serve', config.paths.scripts);
 
   // Check if we even have a .env file to use
-  if(!util.checkForEnv(util.envFile(), 'env'))
+  if(!util.checkForEnv())
     return false
 
   // Gets the config settings for the current NODE_ENV, also stubs that in
@@ -49,16 +49,16 @@ gulp.task('env', function() {
 
 // Helpers for setting the NODE_ENV before running a task
 gulp.task('set-development', function() {
-  util.checkForEnv('.env', 'set-development');
+  util.loadEnv('.env', 'set-development');
   return process.env.NODE_ENV = 'development';
 });
 
 gulp.task('set-staging', function() {
-  util.checkForEnv('.env.staging', 'set-staging');
+  util.loadEnv('.env.staging', 'set-staging');
   return process.env.NODE_ENV = 'staging';
 });
 
 gulp.task('set-production', function() {
-  util.checkForEnv('.env.production', 'set-production');
+  util.loadEnv('.env.production', 'set-production');
   return process.env.NODE_ENV = 'production';
 });
