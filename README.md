@@ -30,13 +30,15 @@ to configure settings and paths, pass an object into your require to bendystraw 
 
     require('bendystraw')({
       paths: {
-        src: 'app', // override main app folder
-        styles: 'css' // override stylesheet folder
+        src: 'app', // override main app folder 
+        styles: 'css' // override the stylesheet folder
       },
       settings: {
-        port: '42'
+        port: '42' // port to launch the server on
       }
     })
+
+check out the default config values [here](https://github.com/brousalis/bendystraw/blob/master/gulpfile.js/config.js)
 
 ### tasks
 
@@ -59,8 +61,8 @@ command | description
 `gulp server:production` | runs a server with the production build
 `gulp build:staging` | builds the staging app to `/build`
 `gulp build:production` | builds the production app to `/build`
-`gulp deploy:staging` | builds and deploys staging build to an AWS bucket
-`gulp deploy:production` | builds and deploys production build to an AWS bucket
+`gulp deploy:staging` | builds and deploys staging build to an S3 bucket
+`gulp deploy:production` | builds and deploys production build to an S3 bucket
 `gulp images` | optimize images and put them in the build folder
 `gulp images:copy` | copy images from bower components into dev folder
 `gulp images:optimize` | optimizes images from source folder and into dev folder
@@ -71,18 +73,30 @@ the gulp tasks take care of:
 - development, staging, and production environments
 - angular templatecache for markup files
 - ng-annotate for proper dependency injection
-- coffeescript linting/compiling
-- sass linting/compiling
-- autoprefixing
+- coffeescript compiling
+- sass compiling
+- css vendor autoprefixing
 - html/js/css minification
 - image optimization
-- wiredep for bower_components
-- inject for bundling js/css
+- wiredep for injecting bower_components
+- gulp-inject for bundling js/css
 - karma for testing
 - aws builds/gzip
+- cloudfront integration and url replacement
 
 ### env configuration
 
 uses [dotenv](https://github.com/motdotla/dotenv) for app specific configuration. if you want to override env variables per environment, create a `.env.staging` and `.env.production`.
 
 these variables will be dumped into an Angular module called `env` (can be configured). load that into your app, then you have access to the `ENV` and `NODE_ENV` constants.
+
+to utilize the `deploy` task, you'll need the following environment variables set (through dotenv or however):
+
+    // s3 bucket
+    AWS_BUCKET=
+    AWS_ACCESS_KEY_ID=
+    AWS_SECRET_ACCESS_KEY=
+    
+    // CDN
+    AWS_DISTRIBUTION_ID=
+    AWS_CLOUDFRONT_DOMAIN=
