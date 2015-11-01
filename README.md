@@ -1,8 +1,13 @@
-### bendystraw
+### bendystraw [![NPM version](https://img.shields.io/npm/v/bendystraw.svg?style=flat-square)](https://www.npmjs.com/package/bendystraw)
 
-![bendystraw](http://i.imgur.com/Pdmetdq.png)
+<img src="http://i.imgur.com/Pdmetdq.png" alt="bendystraw" align="left" />
 
-a set of [Gulp](https://github.com/gulpjs/gulp/) development and build tasks for Angular apps
+> a set of [Gulp](https://github.com/gulpjs/gulp/) development and build tasks for Angular apps
+
+to see an example of an Angular app using bendystraw, <br> check out the [example](https://github.com/brousalis/bendystraw/tree/example) branch
+
+
+<br><br><br>
 
 ### usage
 
@@ -16,7 +21,7 @@ which will create a `gulpfile.js` in your project that requires bendystraw.
 
 you could also copy the `/gulpfile.js` folder and `package.json` into your own project.
 
-to see an example of an Angular app using bendystraw, check out the [example](https://github.com/brousalis/bendystraw/tree/example) branch
+again, to see an example of an Angular app using bendystraw, check out the [example](https://github.com/brousalis/bendystraw/tree/example) branch
 
 ### tasks
 
