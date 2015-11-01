@@ -28,4 +28,6 @@ init = function(options) {
   return gulp;
 };
 
+init();
+
 module.exports = init;
