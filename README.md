@@ -56,6 +56,7 @@ command | description
 `gulp deploy` | deploys `/build` to an AWS bucket
 `gulp tests` | runs karma tests
 `gulp clean` | deletes the `/build` and `/.dev` folders
+`gulp scaffold` | creates folders/files based on the config
 
 ### extra tasks
 
