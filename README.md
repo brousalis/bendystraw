@@ -16,29 +16,33 @@ to see an example of an Angular app using bendystraw, <br> check out the [exampl
 
 in order to use the gulp tasks, create a `gulpfile.js` with:
 
-    require('bendystraw')
+```javascript
+require('bendystraw')
+```
 
 or if you're lazy
 
-    echo "require('bendystraw')" >> gulpfile.js
+```bash
+echo "require('bendystraw')" >> gulpfile.js
+```
 
 to see an example of an Angular app using bendystraw, check out the [example](https://github.com/brousalis/bendystraw/tree/example) branch
 
 ### config
 
 to configure settings and paths, pass an object into your require to bendystraw (most of the time in your gulpfile.js):
-
-    require('bendystraw')({
-      paths: {
-        src: 'app', // override main app folder 
-        dest: 'public', // override the build folder
-        styles: 'css' // override the stylesheet folder
-      },
-      settings: {
-        port: '42' // port to launch the server on
-      }
-    })
-
+```javascript
+require('bendystraw')({
+  paths: {
+    src: 'app', // override main app folder 
+    dest: 'public', // override the build folder
+    styles: 'css' // override the stylesheet folder
+  },
+  settings: {
+    port: '42' // port to launch the server on
+  }
+})
+```
 check out the default config values [here](https://github.com/brousalis/bendystraw/blob/master/gulpfile.js/config.js)
 
 ### tasks
@@ -101,3 +105,7 @@ to utilize the `deploy` task, you'll need the following environment variables se
     // CDN
     AWS_DISTRIBUTION_ID=
     AWS_CLOUDFRONT_DOMAIN=
+
+### thanks
+
+bendystraw is inspired and based off of many Gulp projects. [gulp-starter](https://github.com/vigetlabs/gulp-starter/) by [vigetlabs](https://viget.com/extend) and [generator-gulp-angular](https://github.com/Swiip/generator-gulp-angular) for Yeoman by [Matthieu Lux](github.com/swiip). built at [Belly](http://github.com/bellycard)
