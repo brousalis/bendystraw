@@ -34,15 +34,14 @@ gulp.task('development', ['server']);
 gulp.task('dev', ['server']);
 
 // Staging server
-gulp.task('server:staging', ['set-staging', 'make'], function () {
-  browserSyncInit(config.paths.dest);
-});
+gulp.task('server:staging', ['set-staging', 'make'], browserSyncInit(config.paths.dest));
 gulp.task('staging', ['server:staging']);
+gulp.task('staging:run', ['set-staging'], browserSyncInit(config.paths.dest));
 
 // Production server
-gulp.task('server:production', ['set-production', 'make'], function () {
-  browserSyncInit(config.paths.dest);
-});
+gulp.task('server:build', ['set-production', 'make'], browserSyncInit(config.paths.dest));
+gulp.task('server:production', ['set-production', 'make'], browserSyncInit(config.paths.dest));
 gulp.task('production', ['server:production']);
+gulp.task('production:run', ['set-production'], browserSyncInit(config.paths.dest));
 
 module.exports = function(){};

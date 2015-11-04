@@ -21,7 +21,7 @@ gulp.task('deploy:production', ['set-production', 'prepare']);
 gulp.task('deploy-s3', function() {
   // Check if we even have a .env file to use
   if(!util.checkForEnv())
-    return false;
+    util.errorHandler('deploy')(new Error('Missing .env file, using ENV variables instead...'));
 
   var conf = process.env;
 
@@ -51,8 +51,8 @@ gulp.task('deploy-s3', function() {
   };
 
   var revOptions = {
-    dontSearchFile: [/^\/vendor.js$/g, /vendor.js$/g, 'vendor.js']
-    // dontRenameFile: [/^\/favicon.ico$/g, /^\/index.html/g]
+    dontSearchFile: [/^\/vendor.js$/g, /vendor.js$/g, 'vendor.js'],
+    dontRenameFile: [/^\/favicon.ico$/g, /^\/index.html/g]
   }
 
   if(conf['AWS_CLOUDFRONT_DOMAIN'] !== '' && conf['AWS_CLOUDFRONT_DOMAIN'] !== undefined)
