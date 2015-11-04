@@ -19,10 +19,6 @@ gulp.task('deploy:staging', ['set-staging', 'prepare']);
 gulp.task('deploy:production', ['set-production', 'prepare']);
 
 gulp.task('deploy-s3', function() {
-  // Check if we even have a .env file to use
-  if(!util.checkForEnv())
-    util.errorHandler('deploy')(new Error('Missing .env file, using ENV variables instead...'));
-
   var conf = process.env;
 
   // If we're passing in --bucket=AWS_BUCKET_NAME, use that
