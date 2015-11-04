@@ -10,6 +10,7 @@ var $ = require('gulp-load-plugins')();
 // Injects compiled CSS/JS/HTML files into the main index page using gulp-inject
 // Also uses wiredep to include libs from bower_components
 gulp.task('inject', ['scripts', 'styles', 'templates', 'env', 'images:copy'], function () {
+
   var injectStyles = gulp.src([
     path.join(config.paths.tmp, '/serve', config.paths.scripts, '/**/*.css')
   ], { read: false });
@@ -30,12 +31,21 @@ gulp.task('inject', ['scripts', 'styles', 'templates', 'env', 'images:copy'], fu
     addRootSlash: false
   };
 
+  // Angular templateCache injection into index.html
+  var injectTemplates = gulp.src(path.join(config.paths.tmp, '/templates/templates.js'), { read: false });
+  var injectTemplatesOptions = {
+    starttag: '<!-- inject:templates -->',
+    ignorePath: path.join(config.paths.tmp, '/templates'),
+    addRootSlash: false
+  };
+
   return gulp.src(path.join(config.paths.src, '/*.html'))
-    .pipe($.preprocess({ context: { NODE_ENV: process.env['NODE_ENV'] } }))
-    .pipe($.inject(injectStyles, injectOptions))
-    .pipe($.inject(injectScripts, injectOptions))
     .pipe(gulpif(util.fileExists('bower.json'), wiredep({ directory: 'bower_components' })))
     .on('error', util.errorHandler('wiredep'))
+    .pipe($.inject(injectStyles, injectOptions))
+    .pipe($.inject(injectScripts, injectOptions))
+    .pipe($.inject(injectTemplates, injectTemplatesOptions))
+    .pipe($.preprocess({ context: { NODE_ENV: process.env['NODE_ENV'] } }))
     .pipe(gulp.dest(path.join(config.paths.tmp, '/serve')));
 });
 

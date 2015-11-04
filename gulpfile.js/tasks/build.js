@@ -26,16 +26,7 @@ gulp.task('compile', ['inject'], function () {
   var cssFilter = $.filter('**/*.css');
   var assets;
 
-  // Angular templateCache injection into index.html
-  var templatesInjectFile = gulp.src(path.join(config.paths.tmp, '/templates/templates.js'), { read: false });
-  var templatesInjectOptions = {
-    starttag: '<!-- inject:templates -->',
-    ignorePath: path.join(config.paths.tmp, '/templates'),
-    addRootSlash: false
-  };
-
   // This does a lot.
-  // - Injects the templates into Angulars templateCache, will be bundled with app.js later
   // - Uses ngAnnotate to correct the syntax of the Angular dependency injection
   // - Minifies javascript files
   // - Minifies css
@@ -45,7 +36,6 @@ gulp.task('compile', ['inject'], function () {
   // - Copies all files into the build folder
   // - Prints out sizes of compiled files
   return gulp.src(path.join(config.paths.tmp, '/serve/*.html'))
-    .pipe($.inject(templatesInjectFile, templatesInjectOptions))
     .pipe(assets = $.useref.assets())
     .pipe(jsFilter)
     .pipe($.ngAnnotate())
