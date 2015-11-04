@@ -20,6 +20,11 @@ exports.settings = {
   images: [ // images to copy into project from bower_components
     // ex: 'bower_components/rolodex/**/*'
   ],
+  sass:  { // options for the sass compiler
+    indentedSyntax: true,
+    imagePath: 'images',
+    precision: 8
+  },
   imagemin: { // options for image optimizer
     // verbose: true
     progressive: true,

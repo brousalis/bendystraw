@@ -9,18 +9,14 @@ var browserSync = require('browser-sync');
 var wiredep = require('wiredep').stream;
 var $ = require('gulp-load-plugins')();
 
+// Compile the Sass files and autoprefix them
 gulp.task('styles', function () {
-  var sassOptions = {
-    indentedSyntax: true,
-    imagePath: 'images'
-  };
-
   return gulp.src([path.join(config.paths.src, config.paths.styles, '/*.{sass,scss}')])
     .pipe(plumber())
     .pipe(gulpif(util.fileExists('bower.json'), wiredep({ directory: 'bower_components' })))
     .on('error', util.errorHandler('wiredep'))
     .pipe($.sourcemaps.init())
-    .pipe($.sass(sassOptions)).on('error', util.errorHandler('sass'))
+    .pipe($.sass(config.settings.sass)).on('error', util.errorHandler('sass'))
     .pipe($.autoprefixer()).on('error', util.errorHandler('autoprefixer'))
     .pipe($.sourcemaps.write())
     .pipe(gulp.dest(path.join(config.paths.tmp, '/serve', config.paths.scripts)))
