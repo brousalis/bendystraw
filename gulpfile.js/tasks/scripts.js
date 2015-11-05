@@ -20,4 +20,9 @@ gulp.task('scripts', function () {
     .pipe(browserSync.reload({ stream: true }));
 });
 
+gulp.task('scripts:vendor', function() {
+  return gulp.src(path.join(config.paths.src, config.paths.vendor, '/**/*.js'))
+    .pipe(gulp.dest(path.join(config.paths.tmp, '/serve', config.paths.vendor)))
+});
+
 module.exports = function(){};

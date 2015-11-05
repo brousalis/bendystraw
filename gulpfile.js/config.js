@@ -6,6 +6,7 @@ exports.paths = {
   tmp: '.dev', // temporary development build folder
 
   scripts: 'app', // folder where main javascript files are located
+  vendor: 'vendor', // third party scripts that aren't bower components
   styles: 'stylesheets', // stylesheets folder
   images: 'images', // image folder
   fonts: 'fonts', // fonts folder
