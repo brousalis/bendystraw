@@ -1,9 +1,9 @@
 var _ = require('lodash');
 var gulp = require('gulp');
 var path = require('path');
-var fs = require('fs');
 var defaults = require('./config');
 var util = require('./util');
+var fs = require('fs');
 
 // Merge options with defaults
 init = function(options) {
@@ -27,7 +27,5 @@ init = function(options) {
 
   return gulp;
 };
-
-init();
 
 module.exports = init;
