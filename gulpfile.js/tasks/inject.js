@@ -44,21 +44,12 @@ gulp.task('inject', ['scripts', 'scripts:vendor', 'styles', 'templates', 'env', 
     addRootSlash: false
   };
 
-  // Angular templateCache injection into index.html
-  var injectTemplates = gulp.src(path.join(config.paths.tmp, '/templates/templates.js'), { read: false });
-  var injectTemplatesOptions = {
-    starttag: '<!-- inject:templates -->',
-    ignorePath: path.join(config.paths.tmp, '/templates'),
-    addRootSlash: false
-  };
-
   return gulp.src(path.join(config.paths.src, '/*.html'))
     .pipe(gulpif(util.fileExists('bower.json'), wiredep({ directory: 'bower_components' })))
     .on('error', util.errorHandler('wiredep'))
     .pipe($.inject(injectStyles, injectStylesOptions))
     .pipe($.inject(injectScripts, injectScriptsOptions))
     .pipe($.inject(injectVendor, injectVendorOptions))
-    .pipe($.inject(injectTemplates, injectTemplatesOptions))
     .pipe($.preprocess({ context: { NODE_ENV: process.env['NODE_ENV'] } }))
     .pipe(gulp.dest(path.join(config.paths.tmp, '/serve')));
 });
