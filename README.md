@@ -28,6 +28,19 @@ echo "require('bendystraw')()" >> gulpfile.js
 
 to see an example of an Angular app using bendystraw, check out the [example](https://github.com/brousalis/bendystraw/tree/example) branch
 
+### tasks
+
+command | description
+------- | ------------
+`gulp` | builds the app and runs the development server
+`gulp staging` | runs the server in staging context
+`gulp production` | runs the server in production context
+`gulp build` | builds the app to `/build`
+`gulp deploy` | deploys `/build` to an AWS bucket
+`gulp tests` | runs karma tests
+`gulp clean` | deletes the `/build` and `/.dev` folders
+`gulp scaffold` | creates folders/files based on the config
+
 ### config
 
 to configure settings and paths, pass an object into your require (most of the time in your gulpfile.js):
@@ -39,24 +52,44 @@ require('bendystraw')({
     styles: 'css' // override the stylesheet folder
   },
   settings: {
-    port: '42' // port to launch the server on
+    port: 42 // port to launch the server on
   }
 })
 ```
 check out the default config values [here](https://github.com/brousalis/bendystraw/blob/master/gulpfile.js/config.js)
 
-### tasks
-
-command | description
-------- | ------------
-`gulp` | runs the development server
-`gulp staging` | runs the server in staging context
-`gulp production` | runs the server in production context
-`gulp build` | builds the app to `/build`
-`gulp deploy` | deploys `/build` to an AWS bucket
-`gulp tests` | runs karma tests
-`gulp clean` | deletes the `/build` and `/.dev` folders
-`gulp scaffold` | creates folders/files based on the config
+### features
+- **js:** 
+  - built for Angular
+    - dependency injection annotations
+    - compiles html files to the template cache
+    - automatic file sort to avoid injection issues
+  - coffeescript support
+  - bower components injected automatically
+  - multiple bundles through useref
+  - sourcemaps
+- **css:** 
+  - sass support, indented or scss
+  - node-sass compiler
+  - autoprefixer
+  - sourcemaps
+- **images:**
+  - image compression
+  - bower_component support
+- **development:**
+  - browsersync reload
+  - server with multiple environments
+- **staging/production**
+  - support for multiple environments through dotenv
+  - dotenv configuration output to Angular constants for injection
+  - environment specific logic in the views
+- **deployment:**
+  - amazon S3 deploys
+  - asset revisioning (cache busting)
+  - cloudfront cdn support
+- **testing:**
+  - karma/phantomjs support
+  - `.spec.js` style and `/tests` folder
 
 ### extra tasks
 
@@ -73,22 +106,6 @@ command | description
 `gulp images:copy` | copy images from bower components into dev folder
 `gulp images:optimize` | optimizes images from source folder and into dev folder
 `gulp tests:watch` | runs karma tests and waits/watches for changes
-
-the gulp tasks take care of:
-
-- development, staging, and production environments
-- angular templatecache for markup files
-- ng-annotate for proper dependency injection
-- coffeescript compiling
-- sass compiling
-- css vendor autoprefixing
-- html/js/css minification
-- image optimization
-- wiredep for injecting bower_components
-- gulp-inject for bundling js/css
-- karma for testing
-- aws builds/gzip
-- cloudfront integration and url replacement
 
 ### env configuration
 
