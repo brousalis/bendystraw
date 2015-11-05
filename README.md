@@ -17,20 +17,20 @@ to see an example of an Angular app using bendystraw, <br> check out the [exampl
 in order to use the gulp tasks, create a `gulpfile.js` with:
 
 ```javascript
-require('bendystraw')
+require('bendystraw')()
 ```
 
 or if you're lazy
 
 ```bash
-echo "require('bendystraw')" >> gulpfile.js
+echo "require('bendystraw')()" >> gulpfile.js
 ```
 
 to see an example of an Angular app using bendystraw, check out the [example](https://github.com/brousalis/bendystraw/tree/example) branch
 
 ### config
 
-to configure settings and paths, pass an object into your require to bendystraw (most of the time in your gulpfile.js):
+to configure settings and paths, pass an object into your require (most of the time in your gulpfile.js):
 ```javascript
 require('bendystraw')({
   paths: {
