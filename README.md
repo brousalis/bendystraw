@@ -36,7 +36,7 @@ command | description
 `gulp staging` | runs the server in staging context
 `gulp production` | runs the server in production context
 `gulp build` | builds the app to `/build`
-`gulp deploy` | deploys `/build` to an AWS bucket
+`gulp deploy` | deploys `/build` to an S3 bucket
 `gulp tests` | runs karma tests
 `gulp clean` | deletes the `/build` and `/.dev` folders
 `gulp scaffold` | creates folders/files based on the config
@@ -113,16 +113,29 @@ uses [dotenv](https://github.com/motdotla/dotenv) for app specific configuration
 
 these variables will be dumped into an Angular module called `env` (can be configured). load that into your app, then you have access to the `ENV` and `NODE_ENV` constants.
 
+something like this:
+
+```coffeescript
+angular.module 'testApp', [
+  'env'
+]
+.config (ENV, NODE_ENV) ->
+  console.log 'app config', ENV, NODE_ENV
+
+```
+
 to utilize the `deploy` task, you'll need the following environment variables set (through dotenv or however):
 
-    // s3 bucket
-    AWS_BUCKET=
-    AWS_ACCESS_KEY_ID=
-    AWS_SECRET_ACCESS_KEY=
+```bash
+// S3 bucket
+AWS_BUCKET=
+AWS_ACCESS_KEY_ID=
+AWS_SECRET_ACCESS_KEY=
     
-    // CDN
-    AWS_DISTRIBUTION_ID=
-    AWS_CLOUDFRONT_DOMAIN=
+// CDN
+AWS_DISTRIBUTION_ID=
+AWS_CLOUDFRONT_DOMAIN=
+```
 
 ### thanks
 
