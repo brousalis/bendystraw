@@ -1,12 +1,11 @@
 var _ = require('lodash');
-var gulp = require('gulp');
 var path = require('path');
 var defaults = require('./config');
 var util = require('./util');
 var fs = require('fs');
 
 // Merge options with defaults
-init = function(options) {
+module.exports = function(options) {
   if (options === undefined) options = {};
 
   var folder = 'tasks';
@@ -24,8 +23,4 @@ init = function(options) {
   tasks.forEach(function(name) {
     require('./' + folder + '/' + name).bind(this, config);
   });
-
-  return gulp;
 };
-
-module.exports = init;
