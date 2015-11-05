@@ -1,6 +1,6 @@
 {
   "name": "bendystraw",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "author": "Pete Brousalis <brousapg@gmail.com>",
   "homepage": "http://github.com/brousalis/bendystraw",
   "description": "A set of Gulp tasks for building Angular apps",
@@ -81,7 +81,6 @@
     "phantomjs": "^1.9.18",
     "run-sequence": "^1.1.4",
     "wiredep": "~2.2.2",
-    "yargs": "^3.27.0",
-    "lodash": "^3.10.1"
+    "yargs": "^3.27.0"
   }
 }
