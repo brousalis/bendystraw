@@ -18,7 +18,7 @@ module.exports = function(options) {
         return file.replace('.js', '');
       });
 
-    var config = _.merge(defaults, options);
+    config = _.merge(defaults, options);
 
     // Load all the tasks and pass in config
     tasks.forEach(function(name) {
