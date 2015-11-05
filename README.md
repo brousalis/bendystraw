@@ -16,13 +16,13 @@ to see an example of an Angular app using bendystraw, <br> check out the [exampl
 
 in order to use the gulp tasks, create a `gulpfile.js` with:
 
-```javascript
+```
 require('bendystraw')()
 ```
 
 or if you're lazy
 
-```bash
+```
 echo "require('bendystraw')()" >> gulpfile.js
 ```
 
