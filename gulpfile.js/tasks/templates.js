@@ -11,9 +11,10 @@ gulp.task('templates', ['markup'], function () {
     .pipe($.minifyHtml(config.settings.minifyHtml))
     .pipe($.angularTemplatecache('templates.js', {
       module: config.settings.templateModule,
+      standalone: true,
       root: config.paths.scripts
     }))
-    .pipe(gulp.dest(config.paths.tmp + '/templates/'));
+    .pipe(gulp.dest(path.join(config.paths.tmp, '/serve', '/templates')));
 });
 
 // Compiles changed html files to the dev folder
@@ -22,7 +23,7 @@ gulp.task('markup', function() {
 
   return gulp.src(path.join(config.paths.src, config.paths.scripts, '/**/*.html'))
     .pipe($.changed(dest, { extension: '.html' }))
-    .pipe($.preprocess({ context: { NODE_ENV: process.env['NODE_ENV'] } }))
+    .pipe($.preprocess({ context: { NODE_ENV: process.env.NODE_ENV } }))
     .pipe(gulp.dest(dest))
     .pipe(browserSync.reload({ stream: true }));
 });

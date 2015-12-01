@@ -15,12 +15,12 @@ function runTests (singleRun, callback) {
 }
 
 // Karma testing
-gulp.task('tests', ['scripts'], function(callback) {
+gulp.task('test', ['scripts'], function(callback) {
   runTests(true, callback);
 });
 
-gulp.task('tests:watch', ['watch'], function(callback) {
+gulp.task('test:watch', ['watch'], function(callback) {
   runTests(false, callback);
 });
 
-module.exports = function(){};
+module.exports = runTests;

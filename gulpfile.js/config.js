@@ -1,5 +1,13 @@
 process.env.NODE_ENV = 'development';
 
+// pass in a custom environment
+if (process.argv.length > 2) {
+  process.argv.forEach(function(arg) {
+    if (arg.slice(0, 2) === '--')
+      process.env.NODE_ENV = arg.slice(2);
+  });
+}
+
 exports.paths = {
   src: 'source', // source folder for the app
   dest: 'build', // destination for the production build

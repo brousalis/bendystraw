@@ -1,13 +1,14 @@
 'use strict';
 
+var util = require('../util');
+
 var gulp = require('gulp');
 var path = require('path');
-var util = require('../util');
 var browserSync = require('browser-sync');
 var $ = require('gulp-load-plugins')();
 
 // Compiles coffeescript files to javascript files, creates sourcemaps
-gulp.task('scripts', function () {
+function scripts() {
   var dest = path.join(config.paths.tmp, '/serve', config.paths.scripts);
 
   return gulp.src(path.join(config.paths.src, config.paths.scripts, '/**/*.coffee'))
@@ -18,11 +19,8 @@ gulp.task('scripts', function () {
     .pipe($.sourcemaps.write())
     .pipe(gulp.dest(dest))
     .pipe(browserSync.reload({ stream: true }));
-});
+}
 
-gulp.task('scripts:vendor', function() {
-  return gulp.src(path.join(config.paths.src, config.paths.vendor, '/**/*.js'))
-    .pipe(gulp.dest(path.join(config.paths.tmp, '/serve', config.paths.vendor)))
-});
+gulp.task('scripts', scripts);
 
-module.exports = function(){};
+module.exports = scripts;

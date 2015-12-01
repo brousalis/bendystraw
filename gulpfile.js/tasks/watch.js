@@ -2,22 +2,15 @@
 
 var gulp = require('gulp');
 var path = require('path');
-var browserSync = require('browser-sync');
 
-function isOnlyChange(event) {
-  return event.type === 'changed';
-};
-
-// Task to watch files for changes, and reload them appropriately
-// Also copies images from bower_components folder to the dev folder
-gulp.task('watch', ['inject'], function () {
-
+// Task to watch files for changes, and reload them
+function watch() {
   // When HTML files are changed (or more bower components added)
   gulp.watch([
     path.join(config.paths.src, '/**/*.html'),
     'bower.json',
   ], function(event) {
-    if(isOnlyChange(event)) {
+    if(event.type === 'changed') {
       gulp.start('markup');
     } else {
       gulp.start('inject');
@@ -30,7 +23,7 @@ gulp.task('watch', ['inject'], function () {
     path.join(config.paths.src, config.paths.scripts, '/**/*.{sass,scss}'),
     path.join(config.paths.src, config.paths.styles, '/**/*.{sass,scss}')
   ], function(event) {
-    if(isOnlyChange(event)) {
+    if(event.type === 'changed') {
       gulp.start('styles');
     } else {
       gulp.start('inject');
@@ -39,15 +32,16 @@ gulp.task('watch', ['inject'], function () {
 
   // When javascript files are changed
   gulp.watch([
-    path.join(config.paths.src, config.paths.scripts, '/**/*.js'),
-    path.join(config.paths.src, config.paths.scripts, '/**/*.coffee')
+    path.join(config.paths.src, config.paths.scripts, '/**/*.{js,coffee}'),
   ], function(event) {
-    if(isOnlyChange(event)) {
+    if(event.type === 'changed') {
       gulp.start('scripts');
     } else {
       gulp.start('inject');
     }
   });
-});
+}
 
-module.exports = function(){};
+gulp.task('watch', ['inject'], watch);
+
+module.exports = watch;

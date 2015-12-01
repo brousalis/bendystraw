@@ -1,16 +1,16 @@
 'use strict';
 
+var util = require('../util');
+
 var gulp = require('gulp');
 var gulpif = require('gulp-if');
 var path = require('path');
-var util = require('../util');
 var wiredep = require('wiredep').stream;
 var $ = require('gulp-load-plugins')();
 
 // Injects compiled CSS/JS/HTML files into the main index page using gulp-inject
 // Also uses wiredep to include libs from bower_components
-gulp.task('inject', ['scripts', 'scripts:vendor', 'styles', 'templates', 'env', 'images:copy'], function () {
-
+function inject(callback) {
   var injectStyles = gulp.src([
     path.join(config.paths.tmp, '/serve', config.paths.scripts, '/**/*.css')
   ], { read: false });
@@ -37,21 +37,33 @@ gulp.task('inject', ['scripts', 'scripts:vendor', 'styles', 'templates', 'env', 
     addRootSlash: false
   };
 
-  // Non bower third party templates
-  var injectVendor = gulp.src(path.join(config.paths.src, config.paths.vendor), { read: false });
+  // Non Bower third party templates
+  var injectVendor = gulp.src(path.join(config.paths.tmp, '/serve', config.paths.vendor, '/**/*.js'), { read: false });
   var injectVendorOptions = {
     starttag: '<!-- inject:vendor -->',
+    ignorePath: [config.paths.src, path.join(config.paths.tmp, '/serve')],
+    addRootSlash: false
+  };
+
+  // Angular templateCache injection into index.html
+  var injectTemplates = gulp.src(path.join(config.paths.tmp, '/serve/templates/templates.js'), { read: false });
+  var injectTemplatesOptions = {
+    starttag: '<!-- inject:templates -->',
+    ignorePath: [config.paths.src, path.join(config.paths.tmp, '/serve')],
     addRootSlash: false
   };
 
   return gulp.src(path.join(config.paths.src, '/*.html'))
     .pipe(gulpif(util.fileExists('bower.json'), wiredep({ directory: 'bower_components' })))
     .on('error', util.errorHandler('wiredep'))
+    .pipe($.inject(injectTemplates, injectTemplatesOptions))
     .pipe($.inject(injectStyles, injectStylesOptions))
-    .pipe($.inject(injectScripts, injectScriptsOptions))
     .pipe($.inject(injectVendor, injectVendorOptions))
-    .pipe($.preprocess({ context: { NODE_ENV: process.env['NODE_ENV'] } }))
+    .pipe($.inject(injectScripts, injectScriptsOptions))
+    .pipe($.preprocess({ context: { NODE_ENV: process.env.NODE_ENV } }))
     .pipe(gulp.dest(path.join(config.paths.tmp, '/serve')));
-});
+}
 
-module.exports = function(){};
+gulp.task('inject', ['scripts', 'vendor', 'styles', 'templates', 'env', 'images'], inject);
+
+module.exports = inject;

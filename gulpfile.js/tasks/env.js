@@ -1,22 +1,27 @@
 'use strict';
 
+var util = require('../util');
+
 var gulp = require('gulp');
 var path = require('path');
-var util = require('../util');
+var fs = require('fs');
 var b2v = require('buffer-to-vinyl');
 var dotenv = require('dotenv');
-var fs = require('fs');
 var gulpNgConfig = require('gulp-ng-config');
-var browserSync = require('browser-sync');
 var $ = require('gulp-load-plugins')();
 
 // Creates a config.js Angular config module from env file
-gulp.task('env', function() {
+// TEST=test.com in .env becomes:
+//   angular.module('env', [])
+//   .constant('ENV', {"TEST":"test.com"})
+//   .constant('NODE_ENV', "development");
+// So you can access environment variables easier from your Angular app
+function env() {
   var dest = path.join(config.paths.tmp, '/serve', config.paths.scripts);
 
   // Check if we even have a .env file to use
   if(!util.checkForEnv())
-    return false
+    return false;
 
   // Gets the config settings for the current NODE_ENV, also stubs that in
   var ngConfig = {
@@ -31,7 +36,7 @@ gulp.task('env', function() {
   fileContent = dotenv.parse(fileContent);
 
   // Wrap the object in a main key, easier to include in angular
-  var tmp = {}
+  var tmp = {};
   tmp[config.settings.envConstant] = fileContent;
   fileContent = tmp;
 
@@ -39,27 +44,12 @@ gulp.task('env', function() {
   fileContent = JSON.stringify(fileContent);
 
   // Write the app config to an env file
-  return b2v.stream(new Buffer(fileContent), 'env.js')
+  b2v.stream(new Buffer(fileContent), 'env.js')
     .pipe(gulpNgConfig(config.settings.envModule, ngConfig)
     .on('error', util.errorHandler('ng-config')))
-    .pipe(gulp.dest(dest))
-    .pipe(browserSync.reload({ stream: true }))
-});
+    .pipe(gulp.dest(dest));
+}
 
-// Helpers for setting the NODE_ENV before running a task
-gulp.task('set-development', function() {
-  util.loadEnv('.env', 'set-development');
-  return process.env.NODE_ENV = 'development';
-});
+gulp.task('env', env);
 
-gulp.task('set-staging', function() {
-  util.loadEnv('.env.staging', 'set-staging');
-  return process.env.NODE_ENV = 'staging';
-});
-
-gulp.task('set-production', function() {
-  util.loadEnv('.env.production', 'set-production');
-  return process.env.NODE_ENV = 'production';
-});
-
-module.exports = function(){};
+module.exports = env;
