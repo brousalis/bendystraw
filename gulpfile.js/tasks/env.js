@@ -1,17 +1,23 @@
 'use strict';
 
+var util = require('../util');
+
 var gulp = require('gulp');
 var path = require('path');
-var util = require('../util');
+var fs = require('fs');
 var b2v = require('buffer-to-vinyl');
 var dotenv = require('dotenv');
-var fs = require('fs');
 var gulpNgConfig = require('gulp-ng-config');
-var browserSync = require('browser-sync');
 var $ = require('gulp-load-plugins')();
 
 // Creates a config.js Angular config module from env file
-gulp.task('env', function() {
+// TEST=test.com in .env becomes:
+//   angular.module('env', [])
+//   .constant('ENV', {"TEST":"test.com"})
+//   .constant('NODE_ENV', "development");
+// So you can access environment variables easier from your Angular app
+
+function env(callback) {
   var dest = path.join(config.paths.tmp, '/serve', config.paths.scripts);
 
   // Check if we even have a .env file to use
@@ -43,23 +49,8 @@ gulp.task('env', function() {
     .pipe(gulpNgConfig(config.settings.envModule, ngConfig)
     .on('error', util.errorHandler('ng-config')))
     .pipe(gulp.dest(dest))
-    .pipe(browserSync.reload({ stream: true }))
-});
+};
 
-// Helpers for setting the NODE_ENV before running a task
-gulp.task('set-development', function() {
-  util.loadEnv('.env', 'set-development');
-  return process.env.NODE_ENV = 'development';
-});
+gulp.task('env', env);
 
-gulp.task('set-staging', function() {
-  util.loadEnv('.env.staging', 'set-staging');
-  return process.env.NODE_ENV = 'staging';
-});
-
-gulp.task('set-production', function() {
-  util.loadEnv('.env.production', 'set-production');
-  return process.env.NODE_ENV = 'production';
-});
-
-module.exports = function(){};
+module.exports = env;

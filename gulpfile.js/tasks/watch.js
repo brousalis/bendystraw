@@ -10,8 +10,7 @@ function isOnlyChange(event) {
 
 // Task to watch files for changes, and reload them appropriately
 // Also copies images from bower_components folder to the dev folder
-gulp.task('watch', ['inject'], function () {
-
+function watch() {
   // When HTML files are changed (or more bower components added)
   gulp.watch([
     path.join(config.paths.src, '/**/*.html'),
@@ -48,6 +47,10 @@ gulp.task('watch', ['inject'], function () {
       gulp.start('inject');
     }
   });
+};
+
+gulp.task('watch', ['inject'], function() {
+  watch();
 });
 
-module.exports = function(){};
+module.exports = watch;

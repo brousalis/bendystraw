@@ -4,6 +4,14 @@ var gulp = require('gulp');
 var path = require('path');
 var $ = require('gulp-load-plugins')();
 
+// If /images/ is in the path for a bower_component image, strip it out
+// to avoid duplication
+function imageFolder(path) {
+  var imagesFolder = path.dirname.split(config.paths.images)[1];
+  if(imagesFolder) path.dirname = imagesFolder;
+  return path;
+};
+
 // Optimize all images (including those from bower) and put in the build folder
 gulp.task('images', ['images:bower'], function () {
   var dest = path.join(config.paths.dest, config.paths.images);
@@ -11,13 +19,6 @@ gulp.task('images', ['images:bower'], function () {
     .pipe($.imagemin(config.settings.imagemin))
     .pipe(gulp.dest(dest));
 });
-
-// If /images/ is in the path for a bower_component image, strip it out
-function imageFolder(path) {
-  var imagesFolder = path.dirname.split(config.paths.images)[1];
-  if(imagesFolder) path.dirname = imagesFolder;
-  return path;
-};
 
 // Grab images from bower_components, optimize them, then put them in the build folder
 // This is only used in the final build

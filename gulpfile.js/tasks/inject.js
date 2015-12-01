@@ -1,16 +1,16 @@
 'use strict';
 
+var util = require('../util');
+
 var gulp = require('gulp');
 var gulpif = require('gulp-if');
 var path = require('path');
-var util = require('../util');
 var wiredep = require('wiredep').stream;
 var $ = require('gulp-load-plugins')();
 
 // Injects compiled CSS/JS/HTML files into the main index page using gulp-inject
 // Also uses wiredep to include libs from bower_components
-gulp.task('inject', ['scripts', 'scripts:vendor', 'styles', 'templates', 'env', 'images:copy'], function () {
-
+function inject(callback) {
   var injectStyles = gulp.src([
     path.join(config.paths.tmp, '/serve', config.paths.scripts, '/**/*.css')
   ], { read: false });
@@ -52,6 +52,10 @@ gulp.task('inject', ['scripts', 'scripts:vendor', 'styles', 'templates', 'env', 
     .pipe($.inject(injectVendor, injectVendorOptions))
     .pipe($.preprocess({ context: { NODE_ENV: process.env['NODE_ENV'] } }))
     .pipe(gulp.dest(path.join(config.paths.tmp, '/serve')));
-});
+};
 
-module.exports = function(){};
+gulp.task('inject', ['scripts', 'vendor', 'styles', 'templates', 'env', 'images:copy'], function() {
+  inject();
+})
+
+module.exports = inject;
