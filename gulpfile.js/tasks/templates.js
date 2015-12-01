@@ -11,9 +11,10 @@ gulp.task('templates', ['markup'], function () {
     .pipe($.minifyHtml(config.settings.minifyHtml))
     .pipe($.angularTemplatecache('templates.js', {
       module: config.settings.templateModule,
+      standalone: true,
       root: config.paths.scripts
     }))
-    .pipe(gulp.dest(config.paths.tmp + '/templates/'));
+    .pipe(gulp.dest(path.join(config.paths.tmp, '/serve', '/templates')));
 });
 
 // Compiles changed html files to the dev folder

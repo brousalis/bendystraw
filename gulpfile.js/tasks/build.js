@@ -22,16 +22,7 @@ function build() {
   var cssFilter = $.filter('**/*.css');
   var assets;
 
-  // Angular templateCache injection into index.html
-  var injectTemplates = gulp.src(path.join(config.paths.tmp, '/templates/templates.js'), { read: false });
-  var injectTemplatesOptions = {
-    starttag: '<!-- inject:templates -->',
-    ignorePath: path.join(config.paths.tmp, '/templates'),
-    addRootSlash: false
-  };
-
   return gulp.src(path.join(config.paths.tmp, '/serve/*.html'))
-    .pipe($.inject(injectTemplates, injectTemplatesOptions))
     .pipe(assets = $.useref.assets())
     .pipe(jsFilter)
     .pipe($.ngAnnotate())
@@ -58,7 +49,7 @@ gulp.task('compile', ['inject'], function() {
 
 // Builds the app to be deployed to production.
 gulp.task('build', function(callback) {
-  runSequence('clean', ['compile', 'images', 'fonts', 'other'], callback);
+  runSequence('clean', ['compile', 'images:build', 'fonts', 'other'], callback);
 })
 
 module.exports = build;

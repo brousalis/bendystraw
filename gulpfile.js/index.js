@@ -5,23 +5,20 @@ var util = require('./util');
 var fs = require('fs');
 
 // Merge options with defaults
-// module.exports = function(options) {
-  // return function() {
-    options = {};
-    if (options === undefined) options = {};
+module.exports = function(options) {
+  if (options === undefined) options = {};
 
-    // Grab all the tasks
-    var tasks = fs
-      .readdirSync(path.join(__dirname, 'tasks'))
-      .map(function(file) {
-        return file.replace('.js', '');
-      });
-
-    config = _.merge(defaults, options);
-
-    // Load all the tasks and pass in config
-    tasks.forEach(function(name) {
-      require('./tasks/' + name).bind(this, config);
+  // Grab all the tasks
+  var tasks = fs
+    .readdirSync(path.join(__dirname, 'tasks'))
+    .map(function(file) {
+      return file.replace('.js', '');
     });
-  // }();
-// };
+
+  config = _.merge(defaults, options);
+
+  // Load all the tasks and pass in config
+  tasks.forEach(function(name) {
+    require('./tasks/' + name).bind(this, config);
+  });
+}();

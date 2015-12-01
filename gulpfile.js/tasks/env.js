@@ -16,8 +16,7 @@ var $ = require('gulp-load-plugins')();
 //   .constant('ENV', {"TEST":"test.com"})
 //   .constant('NODE_ENV', "development");
 // So you can access environment variables easier from your Angular app
-
-function env(callback) {
+function env() {
   var dest = path.join(config.paths.tmp, '/serve', config.paths.scripts);
 
   // Check if we even have a .env file to use
@@ -45,7 +44,7 @@ function env(callback) {
   fileContent = JSON.stringify(fileContent);
 
   // Write the app config to an env file
-  return b2v.stream(new Buffer(fileContent), 'env.js')
+  b2v.stream(new Buffer(fileContent), 'env.js')
     .pipe(gulpNgConfig(config.settings.envModule, ngConfig)
     .on('error', util.errorHandler('ng-config')))
     .pipe(gulp.dest(dest))

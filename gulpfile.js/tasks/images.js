@@ -12,8 +12,18 @@ function imageFolder(path) {
   return path;
 };
 
+// Move all of the images from bower components into the dev images folder
+gulp.task('images', function() {
+  var dest = path.join(config.paths.tmp, '/serve', config.paths.images);
+
+  return gulp.src(config.settings.images)
+    .pipe($.filter('**/*.{' + config.extensions.images.join(',') + '}'))
+    .pipe($.rename(imageFolder))
+    .pipe(gulp.dest(dest));
+});
+
 // Optimize all images (including those from bower) and put in the build folder
-gulp.task('images', ['images:bower'], function () {
+gulp.task('images:build', ['images:bower'], function () {
   var dest = path.join(config.paths.dest, config.paths.images);
   return gulp.src(path.join(config.paths.src, config.paths.images, '**/*'))
     .pipe($.imagemin(config.settings.imagemin))
@@ -24,16 +34,6 @@ gulp.task('images', ['images:bower'], function () {
 // This is only used in the final build
 gulp.task('images:bower', function() {
   var dest = path.join(config.paths.dest, config.paths.images);
-
-  return gulp.src(config.settings.images)
-    .pipe($.filter('**/*.{' + config.extensions.images.join(',') + '}'))
-    .pipe($.rename(imageFolder))
-    .pipe(gulp.dest(dest));
-});
-
-// Move all of the images from bower components into the dev images folder
-gulp.task('images:copy', function() {
-  var dest = path.join(config.paths.tmp, '/serve', config.paths.images);
 
   return gulp.src(config.settings.images)
     .pipe($.filter('**/*.{' + config.extensions.images.join(',') + '}'))
