@@ -28,18 +28,15 @@ echo "require('bendystraw')()" >> gulpfile.js
 
 to see an example of an Angular app using bendystraw, check out the [example](https://github.com/brousalis/bendystraw/tree/example) branch
 
-### tasks
+### main tasks
 
 command | description
 ------- | ------------
-`gulp` | builds the app and runs the development server
-`gulp staging` | runs the server in staging context
-`gulp production` | runs the server in production context
+`gulp` | defaults to server task
+`gulp server` | builds the app and runs the development server
 `gulp build` | builds the app to `/build`
 `gulp deploy` | deploys `/build` to an S3 bucket
-`gulp tests` | runs karma tests
-`gulp clean` | deletes the `/build` and `/.dev` folders
-`gulp scaffold` | creates folders/files based on the config
+`gulp test` | runs karma tests
 
 ### config
 
@@ -95,21 +92,20 @@ check out the default config values [here](https://github.com/brousalis/bendystr
 
 command | description
 ------- | ------------
-`gulp server` | also runs the development server
-`gulp server:staging` | runs a server with the staging build
-`gulp server:production` | runs a server with the production build
-`gulp build:staging` | builds the staging app to `/build`
-`gulp build:production` | builds the production app to `/build`
-`gulp deploy:staging` | builds and deploys staging build to an S3 bucket
-`gulp deploy:production` | builds and deploys production build to an S3 bucket
-`gulp images` | optimize images and put them in the build folder
-`gulp images:copy` | copy images from bower components into dev folder
+`gulp clean` | deletes the `/build` and `/.dev` folders
+`gulp scaffold` | creates folders/files based on the config
+`gulp images` | copy images from bower components into dev folder
+`gulp images:build` | optimize images and put them in the build folder
 `gulp images:optimize` | optimizes images from source folder and into dev folder
-`gulp tests:watch` | runs karma tests and waits/watches for changes
+`gulp env` | creates a env.js file from a .env file
+`gulp vendor` | copies third party libs from the `/vendor` folder into dev folder
+`gulp other` | copies extra folders/files in the source folder into build folder
+`gulp templates` | compiles the html files then creates a templates.js file
+`gulp fonts` | copies fonts from bower components into the build folder
 
 ### env configuration
 
-uses [dotenv](https://github.com/motdotla/dotenv) for app specific configuration. if you want to override env variables per environment, create a `.env.staging` and `.env.production`.
+uses [dotenv](https://github.com/motdotla/dotenv) for app specific configuration. if you want to override env variables per environment, create a `.env.staging` and `.env.production`, then run any command with `--environment`
 
 these variables will be dumped into an Angular module called `env` (can be configured). load that into your app, then you have access to the `ENV` and `NODE_ENV` constants.
 
