@@ -103,9 +103,23 @@ command | description
 `gulp templates` | compiles the html files then creates a templates.js file
 `gulp fonts` | copies fonts from bower components into the build folder
 
+### angular templatecache
+
+the template files in the project get minified, then output into a `templates.js` file, which looks something like this:
+
+```javascript
+angular.module("templates", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("app/layouts/layout.html","<div ui-view=\"\"></div>");
+}]);
+```
+
+this gets bundled into your compiled app.js on build.
+
+> WARNING! make sure you include the `templates` module into your Angular project before building production! you will be missing your template code if not.
+
 ### env configuration
 
-uses [dotenv](https://github.com/motdotla/dotenv) for app specific configuration. if you want to override env variables per environment, create a `.env.staging` and `.env.production`, then run any command with `--environment`
+uses [dotenv](https://github.com/motdotla/dotenv) for app specific configuration. if you want to override variables per environment, create a `.env.environment`, then run any Gulp command with `--environment` (the word environment can anything). `.env` will be picked up automatically.
 
 these variables will be dumped into an Angular module called `env` (can be configured). load that into your app, then you have access to the `ENV` and `NODE_ENV` constants.
 
