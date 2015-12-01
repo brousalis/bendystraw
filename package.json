@@ -68,6 +68,7 @@
     "gulp-useref": "~1.2.0",
     "gulp-util": "~3.0.5",
     "imagemin-pngquant": "^4.2.0",
+    "jasmine-core": "^2.3.4",
     "karma": "~0.12.36",
     "karma-angular-filesort": "~0.1.0",
     "karma-jasmine": "^0.3.6",
