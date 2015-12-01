@@ -1,9 +1,10 @@
 'use strict';
 
+var util = require('../util');
+
 var gulp = require('gulp');
 var path = require('path');
 var fs = require('fs');
-var util = require('../util');
 var $ = require('gulp-load-plugins')();
 
 gulp.task('scaffold', function () {
