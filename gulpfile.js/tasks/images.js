@@ -10,7 +10,7 @@ function imageFolder(path) {
   var imagesFolder = path.dirname.split(config.paths.images)[1];
   if(imagesFolder) path.dirname = imagesFolder;
   return path;
-};
+}
 
 // Move all of the images from bower components into the dev images folder
 gulp.task('images', function() {

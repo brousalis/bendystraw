@@ -21,7 +21,7 @@ function env() {
 
   // Check if we even have a .env file to use
   if(!util.checkForEnv())
-    return false
+    return false;
 
   // Gets the config settings for the current NODE_ENV, also stubs that in
   var ngConfig = {
@@ -36,7 +36,7 @@ function env() {
   fileContent = dotenv.parse(fileContent);
 
   // Wrap the object in a main key, easier to include in angular
-  var tmp = {}
+  var tmp = {};
   tmp[config.settings.envConstant] = fileContent;
   fileContent = tmp;
 
@@ -47,8 +47,8 @@ function env() {
   b2v.stream(new Buffer(fileContent), 'env.js')
     .pipe(gulpNgConfig(config.settings.envModule, ngConfig)
     .on('error', util.errorHandler('ng-config')))
-    .pipe(gulp.dest(dest))
-};
+    .pipe(gulp.dest(dest));
+}
 
 gulp.task('env', env);
 

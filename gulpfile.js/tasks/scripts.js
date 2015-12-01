@@ -19,7 +19,7 @@ function scripts() {
     .pipe($.sourcemaps.write())
     .pipe(gulp.dest(dest))
     .pipe(browserSync.reload({ stream: true }));
-};
+}
 
 gulp.task('scripts', scripts);
 

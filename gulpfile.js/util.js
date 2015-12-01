@@ -11,19 +11,19 @@ exports.errorHandler = function(title, notify) {
     gutil.log(gutil.colors.red('[' + title + ']'), err);
 
     if(err.stack !== 'undefined') {
-      message = err.stack
+      message = err.stack;
     } else {
-      message = err.message
+      message = err.message;
     }
 
     if(notify) {
       notify.onError({
         title: title,
         message: gutil.colors.stripColor(message)
-      }).apply(this, arguments)
+      }).apply(this, arguments);
     }
 
-    if (typeof this.emit === 'function') this.emit('end')
+    if (typeof this.emit === 'function') this.emit('end');
   };
 };
 
@@ -32,21 +32,11 @@ exports.log = function(msg) {
 };
 
 exports.fileExists = function(filename) {
- return fs.existsSync(path.resolve(filename))
+ return fs.existsSync(path.resolve(filename));
 };
 
 exports.checkForEnv = function() {
-  return exports.fileExists(exports.envFile())
-};
-
-exports.loadEnv = function(file, task) {
-  if(!exports.fileExists(file)) {
-    exports.errorHandler(task, false)(new Error('Missing .env file.'));
-    return false;
-  } else {
-    dotenv.load({path: file});
-    return true;
-  }
+  return exports.fileExists(exports.envFile());
 };
 
 exports.envFile = function() {

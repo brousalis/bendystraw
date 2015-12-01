@@ -4,7 +4,7 @@ process.env.NODE_ENV = 'development';
 if (process.argv.length > 2) {
   process.argv.forEach(function(arg) {
     if (arg.slice(0, 2) === '--')
-      process.env.NODE_ENV = arg.slice(2)
+      process.env.NODE_ENV = arg.slice(2);
   });
 }
 

@@ -13,7 +13,7 @@ var $ = require('gulp-load-plugins')();
 function deploy() {
   var conf = process.env;
 
-  if(conf['AWS_BUCKET'] === '' || conf['AWS_BUCKET'] === undefined) {
+  if(conf.AWS_BUCKET === '' || conf.AWS_BUCKET === undefined) {
     util.errorHandler('deploy')(new Error('Missing AWS settings in env file.'));
     return false;
   }
@@ -21,30 +21,30 @@ function deploy() {
   var headers = { 'Cache-Control': 'max-age=315360000, no-transform, public' };
 
   var publisher = $.awspublish.create({
-    params: { Bucket: conf['AWS_BUCKET'] },
-    accessKeyId: conf['AWS_ACCESS_KEY_ID'],
-    secretAccessKey: conf['AWS_SECRET_ACCESS_KEY']
+    params: { Bucket: conf.AWS_BUCKET },
+    accessKeyId: conf.AWS_ACCESS_KEY_ID,
+    secretAccessKey: conf.AWS_SECRET_ACCESS_KEY
   });
 
   var cdn = {
-    params: { Bucket: conf['AWS_BUCKET'] },
-    accessKeyId: conf['AWS_ACCESS_KEY_ID'],
-    secretAccessKey: conf['AWS_SECRET_ACCESS_KEY'],
-    distributionId: conf['AWS_DISTRIBUTION_ID']
+    params: { Bucket: conf.AWS_BUCKET },
+    accessKeyId: conf.AWS_ACCESS_KEY_ID,
+    secretAccessKey: conf.AWS_SECRET_ACCESS_KEY,
+    distributionId: conf.AWS_DISTRIBUTION_ID
   };
 
   var revOptions = {
     dontSearchFile: [/^\/vendor.js$/g, /vendor.js$/g, 'vendor.js'],
     dontRenameFile: [/^\/favicon.ico$/g, /^\/index.html/g]
-  }
+  };
 
-  if(conf['AWS_CLOUDFRONT_DOMAIN'] !== '' && conf['AWS_CLOUDFRONT_DOMAIN'] !== undefined)
-    revOptions.prefix = 'https://' + conf['AWS_CLOUDFRONT_DOMAIN'] + '.cloudfront.net/';
+  if(conf.AWS_CLOUDFRONT_DOMAIN !== '' && conf.AWS_CLOUDFRONT_DOMAIN !== undefined)
+    revOptions.prefix = 'https://' + conf.AWS_CLOUDFRONT_DOMAIN + '.cloudfront.net/';
 
   // Upload all files, revisioned, gzipped, to S3 bucket
   var revAll = new RevAll(revOptions);
 
-  util.log('deploying to S3 bucket ' + gutil.colors.red(conf['AWS_BUCKET']));
+  util.log('deploying to S3 bucket ' + gutil.colors.red(conf.AWS_BUCKET));
 
   gulp.src([
     path.join(config.paths.dest, '*'),
@@ -56,7 +56,7 @@ function deploy() {
     // .pipe(publisher.sync())
     .pipe($.awspublish.reporter())
     .pipe($.cloudfront(cdn));
-};
+}
 
 gulp.task('deploy', ['build'], deploy);
 

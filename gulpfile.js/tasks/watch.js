@@ -40,7 +40,7 @@ function watch() {
       gulp.start('inject');
     }
   });
-};
+}
 
 gulp.task('watch', ['inject'], watch);
 

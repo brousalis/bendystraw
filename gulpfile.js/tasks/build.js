@@ -41,7 +41,7 @@ function build() {
     .pipe($.gzip())
     .pipe(gulp.dest(path.join(config.paths.dest, '/')))
     .pipe($.size({ title: path.join(config.paths.dest, '/'), showFiles: true }));
-};
+}
 
 gulp.task('compile', ['inject'], function() {
   build();
@@ -50,6 +50,6 @@ gulp.task('compile', ['inject'], function() {
 // Builds the app to be deployed to production.
 gulp.task('build', function(callback) {
   runSequence('clean', ['compile', 'images:build', 'fonts', 'other'], callback);
-})
+});
 
 module.exports = build;

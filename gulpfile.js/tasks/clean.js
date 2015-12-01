@@ -12,7 +12,7 @@ function clean(callback) {
   ];
 
   del(folders, callback);
-};
+}
 
 gulp.task('clean', clean);
 

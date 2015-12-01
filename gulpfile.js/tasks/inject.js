@@ -60,9 +60,9 @@ function inject(callback) {
     .pipe($.inject(injectStyles, injectStylesOptions))
     .pipe($.inject(injectVendor, injectVendorOptions))
     .pipe($.inject(injectScripts, injectScriptsOptions))
-    .pipe($.preprocess({ context: { NODE_ENV: process.env['NODE_ENV'] } }))
+    .pipe($.preprocess({ context: { NODE_ENV: process.env.NODE_ENV } }))
     .pipe(gulp.dest(path.join(config.paths.tmp, '/serve')));
-};
+}
 
 gulp.task('inject', ['scripts', 'vendor', 'styles', 'templates', 'env', 'images'], inject);
 

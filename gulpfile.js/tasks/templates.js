@@ -23,7 +23,7 @@ gulp.task('markup', function() {
 
   return gulp.src(path.join(config.paths.src, config.paths.scripts, '/**/*.html'))
     .pipe($.changed(dest, { extension: '.html' }))
-    .pipe($.preprocess({ context: { NODE_ENV: process.env['NODE_ENV'] } }))
+    .pipe($.preprocess({ context: { NODE_ENV: process.env.NODE_ENV } }))
     .pipe(gulp.dest(dest))
     .pipe(browserSync.reload({ stream: true }));
 });
