@@ -58,10 +58,6 @@ function deploy() {
     .pipe($.cloudfront(cdn));
 };
 
-gulp.task('deploy', function(callback) {
-  runSequence('clean', 'build', 'deploy-s3', function() {
-    deploy();
-  }, callback);
-});
+gulp.task('deploy', ['build'], deploy);
 
 module.exports = deploy;
