@@ -16,7 +16,7 @@ function deploy() {
 
   var options = {
     aws_bucket: conf.AWS_BUCKET,
-    aws_access_key: conf.AWS_ACCESS_KEY_ID,
+    aws_access_key_id: conf.AWS_ACCESS_KEY_ID,
     aws_secret_access_key: conf.AWS_SECRET_ACCESS_KEY,
     aws_distribution_id: conf.AWS_DISTRIBUTION_ID,
     aws_cloudfront_domain: conf.AWS_CLOUDFRONT_DOMAIN
@@ -28,8 +28,6 @@ function deploy() {
       options[key] = conf[env.toUpperCase() + '_' + key.toUpperCase()];
     }
   }
-
-  console.log(options)
 
   if (options.aws_bucket === '' || options.aws_bucket === undefined) {
     util.errorHandler('deploy')(new Error('Missing AWS settings in env file.'));
