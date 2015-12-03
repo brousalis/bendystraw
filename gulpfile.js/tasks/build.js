@@ -17,6 +17,8 @@ var $ = require('gulp-load-plugins')();
 // - Copies all files into the build folder
 // - Prints out sizes of compiled files
 function build() {
+  util.log('building app');
+
   var htmlFilter = $.filter('*.html');
   var jsFilter = $.filter('**/*.js');
   var cssFilter = $.filter('**/*.css');

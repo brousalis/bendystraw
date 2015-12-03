@@ -10,7 +10,7 @@ function watch() {
     path.join(config.paths.src, '/**/*.html'),
     'bower.json',
   ], function(event) {
-    if(event.type === 'changed') {
+    if (event.type === 'changed') {
       gulp.start('markup');
     } else {
       gulp.start('inject');
@@ -23,7 +23,7 @@ function watch() {
     path.join(config.paths.src, config.paths.scripts, '/**/*.{sass,scss}'),
     path.join(config.paths.src, config.paths.styles, '/**/*.{sass,scss}')
   ], function(event) {
-    if(event.type === 'changed') {
+    if (event.type === 'changed') {
       gulp.start('styles');
     } else {
       gulp.start('inject');
@@ -34,7 +34,7 @@ function watch() {
   gulp.watch([
     path.join(config.paths.src, config.paths.scripts, '/**/*.{js,coffee}'),
   ], function(event) {
-    if(event.type === 'changed') {
+    if (event.type === 'changed') {
       gulp.start('scripts');
     } else {
       gulp.start('inject');

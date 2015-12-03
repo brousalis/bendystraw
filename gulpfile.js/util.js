@@ -10,13 +10,13 @@ exports.errorHandler = function(title, showNotify) {
   return function(err) {
     gutil.log(gutil.colors.red('[' + title + ']'), err);
 
-    if(err.stack !== 'undefined') {
+    if (err.stack !== 'undefined') {
       message = err.stack;
     } else {
       message = err.message;
     }
 
-    if(showNotify) {
+    if (showNotify) {
       notify.onError({
         title: title,
         message: gutil.colors.stripColor(message)
@@ -41,7 +41,7 @@ exports.checkForEnv = function() {
 
 exports.envFile = function() {
   var filename = '.env';
-  if(process.env.NODE_ENV !== 'development')
+  if (process.env.NODE_ENV !== 'development')
     filename = filename + '.' + process.env.NODE_ENV;
   return filename;
 };

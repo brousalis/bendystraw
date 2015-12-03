@@ -8,7 +8,7 @@ var $ = require('gulp-load-plugins')();
 // to avoid duplication
 function imageFolder(path) {
   var imagesFolder = path.dirname.split(config.paths.images)[1];
-  if(imagesFolder) path.dirname = imagesFolder;
+  if (imagesFolder) path.dirname = imagesFolder;
   return path;
 }
 

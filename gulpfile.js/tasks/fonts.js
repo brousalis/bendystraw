@@ -10,7 +10,7 @@ var $ = require('gulp-load-plugins')();
 // Only applies to fonts from bower dependencies
 // Custom fonts are handled by the "other" task
 function fonts() {
-  if(!util.fileExists('bower.json')) return;
+  if (!util.fileExists('bower.json')) return;
 
   return gulp.src(mainBowerFiles())
     .pipe($.filter('**/*.{' + config.extensions.fonts.join(',') + '}'))
