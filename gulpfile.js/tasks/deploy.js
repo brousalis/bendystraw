@@ -38,13 +38,13 @@ function deploy() {
 
   var publisher = $.awspublish.create({
     params: { Bucket: options.aws_bucket },
-    accessKeyId: options.aws_access_key,
+    accessKeyId: options.aws_access_key_id,
     secretAccessKey: options.aws_secret_access_key
   });
 
   var cdn = {
     params: { Bucket: options.aws_bucket },
-    accessKeyId: options.aws_access_key,
+    accessKeyId: options.aws_access_key_id,
     secretAccessKey: options.aws_secret_access_key,
     distributionId: options.aws_distribution_id
   };
