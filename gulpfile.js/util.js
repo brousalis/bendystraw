@@ -4,8 +4,8 @@ var fs = require('fs');
 var dotenv = require('dotenv');
 var path = require('path');
 
-exports.errorHandler = function(title, notify) {
-  notify = typeof notify !== 'undefined' ?  notify : true;
+exports.errorHandler = function(title, showNotify) {
+  showNotify = typeof showNotify !== 'undefined' ?  showNotify : true;
 
   return function(err) {
     gutil.log(gutil.colors.red('[' + title + ']'), err);
@@ -16,7 +16,7 @@ exports.errorHandler = function(title, notify) {
       message = err.message;
     }
 
-    if(notify) {
+    if(showNotify) {
       notify.onError({
         title: title,
         message: gutil.colors.stripColor(message)
