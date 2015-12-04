@@ -84,11 +84,15 @@ check out the default config values [here](https://github.com/brousalis/bendystr
 
 ### extra tasks
 
-these tasks are used in the primary tasks accordingly. but if you want to run them on their own, feel free.
+these tasks are used in the primary tasks, but you can run them manually.
 
 command | description
 ------- | ------------
 `gulp clean` | deletes the `/build` and `/.dev` folders
+`gulp scripts` | compiles coffeescript files to javascript into the `./dev`
+`gulp styles` | compiles sass files to css into the `/.dev`
+`gulp templates` | compiles the html files then creates a templates.js file
+`gulp fonts` | copies fonts from bower components into the build folder
 `gulp scaffold` | creates folders/files based on the config
 `gulp images` | copy images from bower components into dev folder
 `gulp images:build` | optimize images and put them in the build folder
@@ -96,26 +100,27 @@ command | description
 `gulp env` | creates a env.js file from a .env file
 `gulp vendor` | copies third party libs from the `/vendor` folder into dev folder
 `gulp other` | copies extra folders/files in the source folder into build folder
-`gulp templates` | compiles the html files then creates a templates.js file
-`gulp fonts` | copies fonts from bower components into the build folder
 
-### angular templatecache
+### templates and templatecache
 
 the template files in the project get minified, then output into a `templates.js` file, which looks something like this:
 
 ```javascript
-angular.module("templates", []).run(["$templateCache", function($templateCache) {
+angular.module("templates", [])
+.run(["$templateCache", function($templateCache) {
   $templateCache.put("app/layouts/layout.html","<div ui-view=\"\"></div>");
 }]);
 ```
 
-this gets bundled into your compiled app.js on build.
+you then reference the template using `templateUrl` and the full path (including .html)
 
-> WARNING! make sure you include the `templates` module into your Angular project before building production! you will be missing your template code if not.
+this file gets bundled into your compiled app.js on build.
+
+> **WARNING!** make sure you include the `templates` module into your Angular project before building production! you will be missing your template code if not.
 
 ### env configuration
 
-uses [dotenv](https://github.com/motdotla/dotenv) for app specific configuration. if you want to override variables per environment, create a `.env.environment`, then run any Gulp command with `--environment` (the word environment can anything). `.env` will be picked up automatically.
+bendystraw uses [dotenv](https://github.com/motdotla/dotenv) for app specific configuration. if you want to override variables per environment, create a `.env.environment`, then run any Gulp command with `--environment` (the word environment can anything). `.env` will be picked up automatically.
 
 these variables will be dumped into an Angular module called `env` (can be configured). load that into your app, then you have access to the `ENV` and `NODE_ENV` constants.
 
@@ -123,14 +128,18 @@ something like this:
 
 ```coffeescript
 angular.module 'testApp', [
+  'templates'
   'env'
 ]
 .config (ENV, NODE_ENV) ->
   console.log 'app config', ENV, NODE_ENV
-
 ```
 
-to utilize the `deploy` task, you'll need the following environment variables set (through dotenv or however):
+> **WARNING!** do not put anything in this file you wouldn't want exposed to everyone! `.env` gets compiled and included in your source app.js. I realize this isn't the best way to handle this, and I'll hopefully improve it in the future.
+
+### deployments
+
+to utilize the `deploy` task, you'll need the following environment variables set:
 
 ```bash
 // S3 bucket
@@ -138,10 +147,20 @@ AWS_BUCKET=
 AWS_ACCESS_KEY_ID=
 AWS_SECRET_ACCESS_KEY=
     
-// CDN
+// CDN (optional)
 AWS_DISTRIBUTION_ID=
 AWS_CLOUDFRONT_DOMAIN=
 ```
+
+if you want to deploy a different environment, say `staging`, you need to configure your variables like this:
+
+```bash
+STAGING_AWS_BUCKET=
+STAGING_AWS_ACCESS_KEY_ID=
+STAGING_AWS_SECRET_ACCESS_KEY=
+```
+
+then you would run: `gulp deploy --staging`
 
 ### thanks
 
