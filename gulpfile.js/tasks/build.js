@@ -45,9 +45,7 @@ function build() {
     .pipe($.size({ title: path.join(config.paths.dest, '/'), showFiles: true }));
 }
 
-gulp.task('compile', ['inject'], function() {
-  build();
-});
+gulp.task('compile', ['inject'], build);
 
 // Builds the app to be deployed to production.
 gulp.task('build', function(callback) {
