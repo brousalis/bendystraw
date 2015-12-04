@@ -112,7 +112,7 @@ angular.module("templates", [])
 }]);
 ```
 
-you then reference the template using `templateUrl` and the full path (including .html)
+you then reference the template in Angular using `templateUrl` and the full path (including .html)
 
 this file gets bundled into your compiled app.js on build.
 
