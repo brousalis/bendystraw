@@ -20,12 +20,6 @@ in order to use the gulp tasks, create a `gulpfile.js` with:
 require('bendystraw')()
 ```
 
-or if you're lazy
-
-```
-echo "require('bendystraw')()" >> gulpfile.js
-```
-
 to see an example of an Angular app using bendystraw, check out the [example](https://github.com/brousalis/bendystraw/tree/example) branch
 
 ### main tasks
@@ -89,6 +83,8 @@ check out the default config values [here](https://github.com/brousalis/bendystr
   - `.spec.js` style and `/tests` folder
 
 ### extra tasks
+
+these tasks are used in the primary tasks accordingly. but if you want to run them on their own, feel free.
 
 command | description
 ------- | ------------
