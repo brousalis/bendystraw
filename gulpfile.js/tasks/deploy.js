@@ -62,7 +62,7 @@ function deploy() {
 
   util.log('deploying to S3 bucket ' + gutil.colors.red(options.aws_bucket));
 
-  gulp.src([
+  return gulp.src([
     path.join(config.paths.dest, '*'),
     path.join(config.paths.dest, '**/*'),
   ])

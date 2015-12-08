@@ -6,6 +6,7 @@ source/
 env.json
 bower.json
 karma.conf.js
+.backup
 .sass-cache/
 .idea/
 .tmp/
