@@ -37,15 +37,15 @@ function env() {
 
   // Wrap the object in a main key, easier to include in angular
   var tmp = {};
-  tmp[config.settings.envConstant] = fileContent;
+  tmp[config.envConstant] = fileContent;
   fileContent = tmp;
 
   // Stringify the .env file
   fileContent = JSON.stringify(fileContent);
 
   // Write the app config to an env file
-  b2v.stream(new Buffer(fileContent), 'env.js')
-    .pipe(gulpNgConfig(config.settings.envModule, ngConfig)
+  return b2v.stream(new Buffer(fileContent), 'env.js')
+    .pipe(gulpNgConfig(config.envModule, ngConfig)
     .on('error', util.errorHandler('ng-config')))
     .pipe(gulp.dest(dest));
 }

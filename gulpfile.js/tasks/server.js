@@ -4,6 +4,7 @@ var util = require('../util');
 
 var gulp = require('gulp');
 var path = require('path');
+var runSequence = require('run-sequence');
 var browserSync = require('browser-sync');
 var browserSyncSpa = require('browser-sync-spa');
 
@@ -18,11 +19,13 @@ function server() {
       baseDir: [path.join(config.paths.tmp, '/serve'), config.paths.src],
       routes: {'/bower_components': 'bower_components'}
     },
-    port: config.settings.port
+    port: config.port
   });
 }
 
-gulp.task('server', ['watch'], server);
+gulp.task('server', function(callback) {
+  runSequence('clean', ['watch'], server);
+});
 
 gulp.task('default', ['server']);
 

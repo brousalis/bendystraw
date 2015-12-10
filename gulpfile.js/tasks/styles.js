@@ -15,7 +15,7 @@ function styles() {
     .pipe(gulpif(util.fileExists('bower.json'), wiredep({ directory: 'bower_components' })))
     .on('error', util.errorHandler('wiredep'))
     .pipe($.sourcemaps.init())
-    .pipe($.sass(config.settings.sass)).on('error', util.errorHandler('sass'))
+    .pipe($.sass(config.sass)).on('error', util.errorHandler('sass'))
     .pipe($.autoprefixer()).on('error', util.errorHandler('autoprefixer'))
     .pipe($.sourcemaps.write())
     .pipe(gulp.dest(path.join(config.paths.tmp, '/serve', config.paths.scripts)))

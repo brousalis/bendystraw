@@ -8,9 +8,9 @@ var $ = require('gulp-load-plugins')();
 // Takes the compiled html files, minifys them, then adds them to the Angular template cache file.
 gulp.task('templates', ['markup'], function () {
   return gulp.src(path.join(config.paths.tmp, '/serve', config.paths.scripts, '/**/*.html'))
-    .pipe($.minifyHtml(config.settings.minifyHtml))
+    .pipe($.minifyHtml(config.settings.html))
     .pipe($.angularTemplatecache('templates.js', {
-      module: config.settings.templateModule,
+      module: config.templateModule,
       standalone: true,
       root: config.paths.scripts
     }))

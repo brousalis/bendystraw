@@ -19,7 +19,7 @@ function other() {
   // This isn't a very good way of doing this :(
   return gulp.src([
     path.join(config.paths.src, '/**/*'),
-    path.join('!' + config.paths.src, '/**/*.{html,haml,jade,css,sass,styl,scss,js,coffee,' + config.settings.images.join(',') + '}')
+    path.join('!' + config.paths.src, '/**/*.{html,haml,jade,css,sass,styl,scss,js,coffee,' + config.extensions.images.join(',') + '}')
   ])
     .pipe(fileFilter)
     .pipe(gulp.dest(path.join(config.paths.dest, '/')));

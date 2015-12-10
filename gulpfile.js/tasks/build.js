@@ -37,7 +37,7 @@ function build() {
     .pipe($.useref())
     .pipe(htmlFilter)
     .pipe($.preprocess({ context: { NODE_ENV: 'production' } }))
-    .pipe($.minifyHtml(config.settings.minifyHtml))
+    .pipe($.minifyHtml(config.html))
     .pipe(htmlFilter.restore())
     .pipe(gulp.dest(path.join(config.paths.dest, '/')))
     .pipe($.gzip())

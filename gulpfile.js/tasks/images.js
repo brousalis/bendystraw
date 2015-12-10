@@ -16,7 +16,7 @@ function imageFolder(path) {
 gulp.task('images', function() {
   var dest = path.join(config.paths.tmp, '/serve', config.paths.images);
 
-  return gulp.src(config.settings.images)
+  return gulp.src(config.bowerImages)
     .pipe($.filter('**/*.{' + config.extensions.images.join(',') + '}'))
     .pipe($.rename(imageFolder))
     .pipe(gulp.dest(dest));
@@ -26,7 +26,7 @@ gulp.task('images', function() {
 gulp.task('images:build', ['images:bower'], function () {
   var dest = path.join(config.paths.dest, config.paths.images);
   return gulp.src(path.join(config.paths.src, config.paths.images, '**/*'))
-    .pipe($.imagemin(config.settings.imagemin))
+    .pipe($.imagemin(config.images))
     .pipe(gulp.dest(dest));
 });
 
@@ -35,7 +35,7 @@ gulp.task('images:build', ['images:bower'], function () {
 gulp.task('images:bower', function() {
   var dest = path.join(config.paths.dest, config.paths.images);
 
-  return gulp.src(config.settings.images)
+  return gulp.src(config.bowerImages)
     .pipe($.filter('**/*.{' + config.extensions.images.join(',') + '}'))
     .pipe($.rename(imageFolder))
     .pipe(gulp.dest(dest));
@@ -48,7 +48,7 @@ gulp.task('images:optimize', function() {
 
   return gulp.src(path.join(config.paths.src, config.paths.images, '**/*'))
     .pipe($.changed(cache))
-    .pipe($.imagemin(config.settings.imagemin))
+    .pipe($.imagemin(config.images))
     .pipe(gulp.dest(cache))
     .pipe(gulp.dest(dest));
 });
