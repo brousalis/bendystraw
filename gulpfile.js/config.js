@@ -35,7 +35,6 @@ var settings = {
 
   images: { // options for image optimizer
     progressive: true,
-    svgoPlugins: [{ removeViewBox: false }],
     use: [ require('imagemin-pngquant')() ]
   },
 
@@ -51,6 +50,9 @@ var settings = {
   ],
 
   extensions: { // used as a reference in a couple tasks
+    scripts: ['js', 'coffee'], // js preprocessor extensions
+    templates: ['html', 'haml', 'jade', 'slim'], // html preprocessor extensions
+    styles: ['css', 'scss', 'sass', 'style'], // css preprocessor extensions
     fonts: ['eot', 'svg', 'ttf', 'woff', 'woff2'], // font extensions
     images: ['jpg', 'jpeg', 'png', 'svg', 'gif'] // image extensions
   }

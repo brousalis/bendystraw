@@ -6,7 +6,10 @@ var $ = require('gulp-load-plugins')();
 
 // Used for non-Bower third party libraries
 function vendor() {
-  return gulp.src(path.join(config.paths.src, config.paths.vendor, '/**/*.js'))
+  return gulp.src([
+    path.join(config.paths.src, config.paths.vendor, '/**/*.js'),
+    path.join(config.paths.src, config.paths.vendor, '/**/*.css'),
+  ])
     .pipe(gulp.dest(path.join(config.paths.tmp, '/serve', config.paths.vendor)));
 }
 
@@ -19,7 +22,11 @@ function other() {
   // This isn't a very good way of doing this :(
   return gulp.src([
     path.join(config.paths.src, '/**/*'),
-    path.join('!' + config.paths.src, '/**/*.{html,haml,jade,css,sass,styl,scss,js,coffee,' + config.extensions.images.join(',') + '}')
+    path.join('!' + config.paths.src, '/**/*.{' + config.extensions.templates.join(',') + '}'),
+    path.join('!' + config.paths.src, '/**/*.{' + config.extensions.styles.join(',') + '}'),
+    path.join('!' + config.paths.src, '/**/*.{' + config.extensions.scripts.join(',') + '}'),
+    path.join('!' + config.paths.src, '/**/*.{' + config.extensions.fonts.join(',') + '}'),
+    path.join('!' + config.paths.src, '/**/*.{' + config.extensions.images.join(',') + '}')
   ])
     .pipe(fileFilter)
     .pipe(gulp.dest(path.join(config.paths.dest, '/')));
