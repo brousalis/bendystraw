@@ -14,7 +14,7 @@ function imageFolder(path) {
 
 // Move all of the images from bower components into the dev images folder
 gulp.task('images', function() {
-  var dest = path.join(config.paths.tmp, '/serve', config.paths.images);
+  var dest = path.join(config.paths.tmp, config.paths.images);
 
   return gulp.src(config.bowerImages)
     .pipe($.filter('**/*.{' + config.extensions.images.join(',') + '}'))

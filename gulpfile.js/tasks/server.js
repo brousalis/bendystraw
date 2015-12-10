@@ -16,7 +16,7 @@ function server() {
   browserSync.instance = browserSync.init({
     startPath: '/',
     server: {
-      baseDir: [path.join(config.paths.tmp, '/serve'), config.paths.src],
+      baseDir: [config.paths.tmp, config.paths.src],
       routes: {'/bower_components': 'bower_components'}
     },
     port: config.port

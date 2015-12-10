@@ -18,7 +18,7 @@ function styles() {
     .pipe($.sass(config.sass)).on('error', util.errorHandler('sass'))
     .pipe($.autoprefixer()).on('error', util.errorHandler('autoprefixer'))
     .pipe($.sourcemaps.write())
-    .pipe(gulp.dest(path.join(config.paths.tmp, '/serve', config.paths.scripts)))
+    .pipe(gulp.dest(path.join(config.paths.tmp, config.paths.scripts)))
     .pipe(browserSync.stream());
 }
 

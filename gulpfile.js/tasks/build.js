@@ -24,7 +24,7 @@ function build() {
   var cssFilter = $.filter('**/*.css');
   var assets;
 
-  return gulp.src(path.join(config.paths.tmp, '/serve/*.html'))
+  return gulp.src(path.join(config.paths.tmp, '*.html'))
     .pipe(assets = $.useref.assets())
     .pipe(jsFilter)
     .pipe($.ngAnnotate())

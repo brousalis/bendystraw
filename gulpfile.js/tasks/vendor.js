@@ -10,7 +10,7 @@ function vendor() {
     path.join(config.paths.src, config.paths.vendor, '/**/*.js'),
     path.join(config.paths.src, config.paths.vendor, '/**/*.css'),
   ])
-    .pipe(gulp.dest(path.join(config.paths.tmp, '/serve', config.paths.vendor)));
+    .pipe(gulp.dest(path.join(config.paths.tmp, config.paths.vendor)));
 }
 
 // Used for custom fonts, folders, files in the other folders, etc...

@@ -12,44 +12,45 @@ var $ = require('gulp-load-plugins')();
 // Also uses wiredep to include libs from bower_components
 function inject(callback) {
   var injectStyles = gulp.src([
-    path.join(config.paths.tmp, '/serve', config.paths.scripts, '/**/*.css')
+    path.join(config.paths.tmp, config.paths.scripts, '/**/*.css')
   ], { read: false });
 
   var injectStylesOptions = {
-    ignorePath: [config.paths.src, path.join(config.paths.tmp, '/serve')],
+    ignorePath: [config.paths.src, path.join(config.paths.tmp)],
     addRootSlash: false
   };
 
   // Sort the JS files so Angular dependency injection doesn't freak out
   var injectScripts = gulp.src([
     path.join(config.paths.src, config.paths.scripts, '/**/*.js'),
-    path.join(config.paths.tmp, '/serve/', config.paths.scripts, '/**/*.js'),
+    path.join(config.paths.tmp, config.paths.scripts, '/**/*.js'),
     path.join('!' + config.paths.src, config.paths.scripts, '/**/*.spec.js'),
     path.join('!' + config.paths.src, config.paths.scripts, '/**/*.mock.js'),
-    path.join('!' + config.paths.tmp, '/serve/', config.paths.scripts, '/**/*.spec.js'),
+    path.join('!' + config.paths.tmp, config.paths.scripts, '/**/*.spec.js'),
+    path.join('!' + config.paths.tmp, config.paths.scripts, '/**/*.mock.js'),
     path.join('!' + config.paths.src, config.paths.vendor)
   ])
   .pipe($.angularFilesort())
   .on('error', util.errorHandler('angularFilesort'));
 
   var injectScriptsOptions = {
-    ignorePath: [config.paths.src, path.join(config.paths.tmp, '/serve')],
+    ignorePath: [config.paths.src, config.paths.tmp],
     addRootSlash: false
   };
 
   // Non Bower third party templates
-  var injectVendor = gulp.src(path.join(config.paths.tmp, '/serve', config.paths.vendor, '/**/*.js'), { read: false });
+  var injectVendor = gulp.src(path.join(config.paths.tmp, config.paths.vendor, '/**/*.js'), { read: false });
   var injectVendorOptions = {
     starttag: '<!-- inject:vendor -->',
-    ignorePath: [config.paths.src, path.join(config.paths.tmp, '/serve')],
+    ignorePath: [config.paths.src, config.paths.tmp],
     addRootSlash: false
   };
 
   // Angular templateCache injection into index.html
-  var injectTemplates = gulp.src(path.join(config.paths.tmp, '/serve/templates/templates.js'), { read: false });
+  var injectTemplates = gulp.src(path.join(config.paths.tmp, '/templates/templates.js'), { read: false });
   var injectTemplatesOptions = {
     starttag: '<!-- inject:templates -->',
-    ignorePath: [config.paths.src, path.join(config.paths.tmp, '/serve')],
+    ignorePath: [config.paths.src, config.paths.tmp],
     addRootSlash: false
   };
 
@@ -61,7 +62,7 @@ function inject(callback) {
     .pipe($.inject(injectVendor, injectVendorOptions))
     .pipe($.inject(injectScripts, injectScriptsOptions))
     .pipe($.preprocess({ context: { NODE_ENV: process.env.NODE_ENV } }))
-    .pipe(gulp.dest(path.join(config.paths.tmp, '/serve')));
+    .pipe(gulp.dest(config.paths.tmp));
 }
 
 gulp.task('inject', ['scripts', 'vendor', 'styles', 'templates', 'env', 'images'], inject);

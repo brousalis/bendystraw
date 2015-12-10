@@ -9,7 +9,7 @@ var $ = require('gulp-load-plugins')();
 
 // Compiles coffeescript files to javascript files, creates sourcemaps
 function scripts() {
-  var dest = path.join(config.paths.tmp, '/serve', config.paths.scripts);
+  var dest = path.join(config.paths.tmp, config.paths.scripts);
 
   return gulp.src(path.join(config.paths.src, config.paths.scripts, '/**/*.coffee'))
     .pipe($.changed(dest, { extension: '.js' }))
