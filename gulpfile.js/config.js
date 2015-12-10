@@ -50,7 +50,7 @@ var settings = {
     // 'bower_components/rolodex/**/*'
   ],
 
-  extensions: {
+  extensions: { // used as a reference in a couple tasks
     fonts: ['eot', 'svg', 'ttf', 'woff', 'woff2'], // font extensions
     images: ['jpg', 'jpeg', 'png', 'svg', 'gif'] // image extensions
   }
