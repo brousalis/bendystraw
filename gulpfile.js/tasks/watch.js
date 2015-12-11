@@ -19,8 +19,8 @@ function watch() {
 
   // When stylesheets are changed
   gulp.watch([
-    path.join(config.paths.src, config.paths.scripts, '/**/*.{sass,scss,css}'),
-    path.join(config.paths.src, config.paths.styles, '/**/*.{sass,scss,css}')
+    path.join(config.paths.src, config.paths.scripts, '/**/*.{' + config.extensions.styles + '}'),
+    path.join(config.paths.src, config.paths.styles, '/**/*.{' + config.extensions.styles + '}')
   ], function(event) {
     if (event.type === 'changed') {
       gulp.start('styles');

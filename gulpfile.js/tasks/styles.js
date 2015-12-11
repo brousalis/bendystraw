@@ -12,8 +12,8 @@ var $ = require('gulp-load-plugins')();
 // Compile the Sass files and autoprefix them
 function styles() {
   return gulp.src([path.join(config.paths.src, config.paths.styles, '/*.{sass,scss}')])
-    .pipe(gulpif(util.fileExists('bower.json'), wiredep({ directory: 'bower_components' })))
-    .on('error', util.errorHandler('wiredep'))
+    // .pipe(gulpif(util.fileExists('bower.json'), wiredep({ directory: 'bower_components' })))
+    // .on('error', util.errorHandler('wiredep'))
     .pipe($.sourcemaps.init())
     .pipe($.sass(config.sass)).on('error', util.errorHandler('sass'))
     .pipe($.autoprefixer()).on('error', util.errorHandler('autoprefixer'))
