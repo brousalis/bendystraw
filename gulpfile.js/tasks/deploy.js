@@ -5,6 +5,7 @@ var util = require('../util');
 var gulp = require('gulp');
 var gulpif = require('gulp-if');
 var gutil = require('gulp-util');
+var request = require('request');
 var path = require('path');
 var RevAll = require('gulp-rev-all');
 var $ = require('gulp-load-plugins')();

@@ -6,7 +6,7 @@ var browserSync = require('browser-sync');
 var $ = require('gulp-load-plugins')();
 
 // Takes the compiled html files, minifys them, then adds them to the Angular template cache file.
-gulp.task('templates', ['markup'], function () {
+gulp.task('templates', ['markup'], function(callback) {
   return gulp.src(path.join(config.paths.tmp, config.paths.scripts, '/**/*.html'))
     .pipe($.minifyHtml(config.html))
     .pipe($.angularTemplatecache('templates.js', {
@@ -18,7 +18,7 @@ gulp.task('templates', ['markup'], function () {
 });
 
 // Compiles changed html files to the dev folder
-gulp.task('markup', function() {
+gulp.task('markup', function(callback) {
   var dest = path.join(config.paths.tmp, config.paths.scripts);
 
   return gulp.src(path.join(config.paths.src, config.paths.scripts, '/**/*.html'))
