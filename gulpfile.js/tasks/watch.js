@@ -11,7 +11,7 @@ function watch() {
     'bower.json',
   ], function(event) {
     if (event.type === 'changed') {
-      gulp.start('markup');
+      gulp.start('templates');
     } else {
       gulp.start('inject');
     }
