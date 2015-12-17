@@ -88,9 +88,9 @@ function slack(message) {
 gulp.task('release', function(callback) {
  runSequence(
     'bump',
+    'tag',
     'commit',
     'push',
-    'tag',
     'release',
     function (error) {
       if (error) {
