@@ -30,7 +30,7 @@ gulp.task('commit', function(callback) {
 
   return gulp.src('./package.json')
     .pipe(git.add())
-    .pipe(git.commit('[Release] Version ' + version()));
+    .pipe(git.commit('[Release] v' + version()));
 });
 
 // Pushes changes to master
@@ -41,9 +41,9 @@ gulp.task('push', function(callback) {
 
 // Tags new version and pushes master
 gulp.task('tag', function(callback) {
-  util.log('tagging version ' + gutil.colors.red(version()));
+  util.log('tagging version v' + gutil.colors.red(version()));
 
-  git.tag(version(), '[Release] Version: ' + version(), function (error) {
+  git.tag('v' + version(), '[Release] v' + version(), function (error) {
     if (error) {
       return callback(error);
     }
@@ -58,7 +58,7 @@ gulp.task('release', function(callback) {
     return false;
   }
 
-  util.log('zipping and releasing version ' + version() + ' to github');
+  util.log('zipping and releasing version ' + gutil.colors.red(version()) + ' to GitHub');
 
   return gulp.src([
     path.join(config.paths.dest, '*'),
