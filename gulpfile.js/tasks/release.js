@@ -15,18 +15,16 @@ var runSequence = require('run-sequence');
 
 var version = JSON.parse(fs.readFileSync('./package.json', 'utf8')).version;
 
+// Bumps the version number based on the package.json
 gulp.task('bump', function(callback) {
-  // We hardcode the version change type to 'patch' but it may be a good idea to
-  // use minimist (https://www.npmjs.com/package/minimist) to determine with a
-  // command argument whether you are doing a 'major', 'minor' or a 'patch' change.
-
-  util.log('bumping app version to ' + gutil.colors.red(version));
+  util.log('bumping version to ' + gutil.colors.red(version));
 
   return gulp.src('./package.json')
     .pipe(bump({type: "patch"}).on('error', util.errorHandler('version bump')))
     .pipe(gulp.dest('./'));
 });
 
+// Commits the changes to the version number
 gulp.task('commit', function(callback) {
   util.log('committing updated manifest');
 
@@ -35,11 +33,13 @@ gulp.task('commit', function(callback) {
     .pipe(git.commit('[Release] Version ' + version));
 });
 
+// Pushes changes to master
 gulp.task('push', function(callback) {
   util.log('pushing changes to master');
   git.push('origin', 'master', callback);
 });
 
+// Tags new version and pushes master
 gulp.task('tag', function(callback) {
   util.log('tagging version ' + gutil.colors.red(version));
 
@@ -51,6 +51,7 @@ gulp.task('tag', function(callback) {
   });
 });
 
+// Zips up the build and creates a GitHub release
 gulp.task('release', function(callback) {
   if (process.env.GITHUB_TOKEN === '' || process.env.GITHUB_TOKEN === undefined) {
     util.errorHandler('deploy')(new Error('Missing GITHUB_TOKEN environment variable'));
@@ -70,6 +71,7 @@ gulp.task('release', function(callback) {
     }));
 });
 
+// Posts to a Slack webhook url
 function slack(message) {
   if (process.env.SLACK_WEBHOOK_URL === undefined || process.env.SLACK_WEBHOOK_URL === '')
     return;
