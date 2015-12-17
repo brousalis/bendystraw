@@ -13,11 +13,13 @@ var request = require('request');
 var path = require('path');
 var runSequence = require('run-sequence');
 
-var version = JSON.parse(fs.readFileSync('./package.json', 'utf8')).version;
+function version() {
+  return JSON.parse(fs.readFileSync('./package.json', 'utf8')).version;
+}
 
 // Bumps the version number based on the package.json
 gulp.task('bump', function(callback) {
-  util.log('bumping version to ' + gutil.colors.red(version));
+  util.log('bumping version to ' + gutil.colors.red(version()));
 
   return gulp.src('./package.json')
     .pipe(bump({type: "patch"}).on('error', util.errorHandler('version bump')))
@@ -30,7 +32,7 @@ gulp.task('commit', function(callback) {
 
   return gulp.src('./package.json')
     .pipe(git.add())
-    .pipe(git.commit('[Release] Version ' + version));
+    .pipe(git.commit('[Release] Version ' + version()));
 });
 
 // Pushes changes to master
@@ -41,9 +43,9 @@ gulp.task('push', function(callback) {
 
 // Tags new version and pushes master
 gulp.task('tag', function(callback) {
-  util.log('tagging version ' + gutil.colors.red(version));
+  util.log('tagging version ' + gutil.colors.red(version()));
 
-  git.tag(version, '[Release] Version: ' + version, function (error) {
+  git.tag(version, '[Release] Version: ' + version(), function (error) {
     if (error) {
       return callback(error);
     }
@@ -58,7 +60,7 @@ gulp.task('release', function(callback) {
     return false;
   }
 
-  util.log('zipping and releasing version ' + version + ' to github');
+  util.log('zipping and releasing version ' + version() + ' to github');
 
   return gulp.src([
     path.join(config.paths.dest, '*'),
@@ -95,9 +97,9 @@ gulp.task('release', function(callback) {
     function (error) {
       if (error) {
         util.errorHandler('release')(error);
-        slack('deployment version ' + gutil.colors.red(version) + ' failed! ' + error.message);
+        slack('deployment version ' + gutil.colors.red(version()) + ' failed! ' + error.message);
       } else {
-        var message = 'released version ' + gutil.colors.red(version) + ' successfully';
+        var message = 'released version ' + gutil.colors.red(version()) + ' successfully';
         util.log(message);
         slack(message);
       }
