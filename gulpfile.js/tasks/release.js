@@ -19,8 +19,6 @@ function version() {
 
 // Bumps the version number based on the package.json
 gulp.task('bump', function(callback) {
-  util.log('bumping version to ' + gutil.colors.red(version()));
-
   return gulp.src('./package.json')
     .pipe(bump({type: "patch"}).on('error', util.errorHandler('version bump')))
     .pipe(gulp.dest('./'));
@@ -45,7 +43,7 @@ gulp.task('push', function(callback) {
 gulp.task('tag', function(callback) {
   util.log('tagging version ' + gutil.colors.red(version()));
 
-  git.tag(version, '[Release] Version: ' + version(), function (error) {
+  git.tag(version(), '[Release] Version: ' + version(), function (error) {
     if (error) {
       return callback(error);
     }
