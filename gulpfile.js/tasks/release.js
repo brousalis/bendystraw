@@ -95,9 +95,9 @@ gulp.task('release', function(callback) {
     function (error) {
       if (error) {
         util.errorHandler('release')(error);
-        slack('deployment version ' + gutil.colors.red(version()) + ' failed! ' + error.message);
+        slack('deployment version ' + version() + ' failed! ' + error.message);
       } else {
-        var message = 'released version ' + gutil.colors.red(version()) + ' successfully';
+        var message = 'released version ' + version() + ' successfully';
         util.log(message);
         slack(message);
       }

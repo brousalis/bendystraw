@@ -21,4 +21,4 @@ module.exports = function(options) {
   tasks.forEach(function(name) {
     require('./tasks/' + name).bind(this, config);
   });
-}();
+};
