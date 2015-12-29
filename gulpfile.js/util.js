@@ -1,5 +1,3 @@
-var manifest = require('lib/manifest');
-
 var path = require('path');
 var fs = require('fs');
 
