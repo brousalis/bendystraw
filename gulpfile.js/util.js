@@ -1,3 +1,4 @@
+// Check if a dotenv file exists for the current environment
 var path = require('path');
 var fs = require('fs');
 
@@ -57,17 +58,18 @@ exports.envFile = function() {
 };
 
 // Getters for various aspects of the manifest (package.json)
-function manifest() {
+exports.manifest = function() {
   return JSON.parse(fs.readFileSync('./package.json', 'utf8'));
 }
 
 exports.version = function() {
-  return manifest().version
+  return exports.manifest().version
 }
 
 function repo() {
-  var repo = manifest().repository && /git@github\.com:([\w-]+)\/([\w-]+)\.git/.exec(manifest().repository.url);
-  if (!repo) repo = /git\:\/\/github\.com\/([\w-]+)\/([\w-]+)\.git/.exec(manifest().repository.url);
+  var manifest = exports.manifest();
+  var repo = manifest.repository && /git@github\.com:([\w-]+)\/([\w-]+)\.git/.exec(manifest.repository.url);
+  if (!repo) repo = /git\:\/\/github\.com\/([\w-]+)\/([\w-]+)\.git/.exec(manifest.repository.url);
   return repo;
 }
 

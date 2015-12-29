@@ -33,9 +33,7 @@ function changelog(version, callback) {
   var range = version.replace(/^\s+|\s+$/g, '') + '..HEAD';
 
   var formatOptions = [
-    '___', '"sha":"%H"', '"authorName":"%an"', '"authorEmail":"%ae"', '"authorDate":"%aD"',
-    '"committerName":"%cn"', '"committerEmail":"%ce"', '"committerDate":"%cD"',
-    '"title":"%s"'
+    '___', '%H', '%an', '%s'
   ].join(',');
 
   var gitArgs = [
@@ -58,9 +56,13 @@ function changelog(version, callback) {
     allCommits += data;
   });
 
+  function removeLines(string) {
+    return string.replace(/\r\n?|[\n\u2028\u2029]/g, '\n').replace(/^\uFEFF/, '')
+  }
+
   gitLog.on('exit', function(code) {
     if (code === 0) {
-      allCommits = allCommits.replace(/\r\n?|[\n\u2028\u2029]/g, '\n').replace(/^\uFEFF/, '');
+      allCommits = removeLines(allCommits);
 
       var stream = allCommits.split('___,');
       var commits = {
@@ -70,28 +72,29 @@ function changelog(version, callback) {
 
       stream.forEach(function(commit) {
         if (commit === '' || commit === undefined) return
-        commit = JSON.parse('{' + commit + '}')
+        var data = commit.split(',')
+        var author = data[1];
+        var title = data[2].replace(/\[|\]/g,"`");
+        var sha = '<https://github.com/' + util.owner()+ '/' + util.repo() + '/commit/' + data[0].slice(0,5) + '>';
 
-        var title = commit.title.replace(/\[|\]/g,"`");
-        var sha = '<https://github.com/' + util.owner()+ '/' + util.repo() + '/commit/' + commit.sha + '|' + commit.sha.slice(0,5) + '>';
-
-        commits.markdown += commit.authorName + ': ' + title + ' (' + sha + ')\n';
-        commits.raw += commit.authorName + ': ' + commit.title + ' (' + commit.sha.slice(0,5) + ')\n';
+        commits.markdown += author + ': ' + removeLines(title) + ' (' + removeLines(sha) + ')\n';
+        commits.raw += author + ': ' + title + ' (' + data[0].slice(0,5) + ')\n';
       });
 
       callback && callback(commits);
     } else {
-      util.errorHandler('changelog')(new Error('Could not find the previous version of the app. Please check your tags/releases'));
+      util.log('If this is your first release, ignore this error. If not, the changelog can\'t find a previous tag to compare to, the changelog will default to the date.')
+      callback && callback('');
     }
   });
 }
 
 module.exports = function(previous, callback) {
-  if (previous === true) {
+  if (previous) {
     getPreviousVersion(function(version) {
       changelog(version, callback);
     })
   } else {
-    changelog(util.version(), callback);
+    changelog('v' + util.version(), callback);
   }
 };

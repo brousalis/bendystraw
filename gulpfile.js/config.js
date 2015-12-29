@@ -37,10 +37,6 @@ var settings = {
   },
 
   html: { // options for html minification
-    empty: true,
-    spare: true,
-    quotes: true,
-    conditionals: true
   },
 
   bowerImages: [ // images to copy into project from bower_components
