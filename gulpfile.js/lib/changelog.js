@@ -56,15 +56,12 @@ function changelog(version, callback) {
     allCommits += data;
   });
 
-  function removeLines(string) {
-    return string.replace(/\r\n?|[\n\u2028\u2029]/g, '\n').replace(/^\uFEFF/, '')
-  }
-
   gitLog.on('exit', function(code) {
     if (code === 0) {
-      allCommits = removeLines(allCommits);
+      allCommits = allCommits.replace(/\r\n?|[\n\u2028\u2029]/g, '\n').replace(/^\uFEFF/, '');
 
       var stream = allCommits.split('___,');
+
       var commits = {
         markdown: '',
         raw: ''
@@ -72,13 +69,16 @@ function changelog(version, callback) {
 
       stream.forEach(function(commit) {
         if (commit === '' || commit === undefined) return
+        // sha,author,title
         var data = commit.split(',')
-        var author = data[1];
-        var title = data[2].replace(/\[|\]/g,"`");
-        var sha = '<https://github.com/' + util.owner()+ '/' + util.repo() + '/commit/' + data[0].slice(0,5) + '>';
 
-        commits.markdown += author + ': ' + removeLines(title) + ' (' + removeLines(sha) + ')\n';
-        commits.raw += author + ': ' + title + ' (' + data[0].slice(0,5) + ')\n';
+        var author = data[1];
+        var title = data[2].replace(/\[|\]/g,"`").replace(/(\r\n|\n|\r)/gm,"");
+        var sha = data[0].slice(0,5);
+        var shaUrl = '<https://github.com/' + util.owner()+ '/' + util.repo() + '/commit/' + sha + '>';
+
+        commits.markdown += '* ' + author + ': ' + title + ' (' + shaUrl + ')\n';
+        commits.raw += author + ': ' + title + ' (' + sha + ')\n';
       });
 
       callback && callback(commits);
