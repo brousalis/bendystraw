@@ -5,7 +5,6 @@ var fs = require('fs');
 var _ = require('lodash');
 var notify = require('gulp-notify');
 var gutil = require('gulp-util');
-var through = require('through2');
 
 // Handles error messaging in the stream. Will post a Mac toast if errors.
 exports.errorHandler = function(title) {
@@ -30,13 +29,6 @@ exports.errorHandler = function(title) {
 // Generic log for bendystraw
 exports.log = function(msg) {
   gutil.log(gutil.colors.green('[bendystraw]'), msg);
-};
-
-// Generic log for bendystraw
-exports.streamLog = function(msg) {
-  return through.obj(function(file, enc, cb) {
-    gutil.log(gutil.colors.green('[bendystraw]'), msg);
-  });
 };
 
 // Check if a file exists
