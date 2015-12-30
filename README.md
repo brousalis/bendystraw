@@ -161,9 +161,6 @@ export AWS_SECRET_ACCESS_KEY=
 // Cloudfront CDN - optional
 export AWS_DISTRIBUTION_ID=
 export AWS_CLOUDFRONT_DOMAIN=xxxxx.cloudfront.net
-
-// Region used for Slack message link to S3 bucket - optional
-export AWS_REGION=us-east-1
 ```
 
 If you have `AWS_CLOUDFRONT_DOMAIN` set, bendystraw will replace all asset urls with the CDN version on deployment.

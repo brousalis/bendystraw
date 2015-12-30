@@ -24,7 +24,6 @@ function deploy(commits) {
     aws_access_key_id: conf.AWS_ACCESS_KEY_ID,
     aws_secret_access_key: conf.AWS_SECRET_ACCESS_KEY,
     aws_distribution_id: conf.AWS_DISTRIBUTION_ID,
-    aws_region: conf.AWS_REGION,
     aws_cloudfront_domain: conf.AWS_CLOUDFRONT_DOMAIN
   };
 
@@ -87,7 +86,7 @@ function deploy(commits) {
         owner + ' deployed ' +
         '<https://github.com/' + util.owner()+ '/' + util.repo() + '/releases/tag/' + version + '|' + version + '> ' +
         ' of <https://github.com/' + util.owner() + '/' + util.repo() + '|' + util.repo() + '> to ' +
-        ' S3 bucket <https://console.aws.amazon.com/s3/home?region=' + options.aws_region || 'us-east-1' + '&bucket=' + options.aws_bucket + '|' + options.aws_bucket + '>',
+        ' S3 bucket <https://console.aws.amazon.com/s3/home?&bucket=' + options.aws_bucket + '|' + options.aws_bucket + '>',
         {
           attachments: [
             {
