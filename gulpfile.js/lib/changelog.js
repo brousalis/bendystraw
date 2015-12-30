@@ -78,7 +78,7 @@ function changelog(version, callback) {
         var label = title.replace(/\[|\]/g,"`"); // convert [] to `` for markdown
         var sha = data[0].slice(0,5); // only need first 5 of sha
         var shaUrl = '<https://github.com/' + util.owner()+ '/' + util.repo() + '/commit/' + sha + '>';
-        var shaUrl = '<https://github.com/' + util.owner()+ '/' + util.repo() + '/commit/' + sha + '|' + sha + '>';
+        var slackUrl = '<https://github.com/' + util.owner()+ '/' + util.repo() + '/commit/' + sha + '|' + sha + '>';
 
         commits.slack += author + ': ' + label + ' (' + slackUrl + ')\n';
         commits.markdown += '* ' + author + ': ' + label + ' (' + shaUrl + ')\n';
