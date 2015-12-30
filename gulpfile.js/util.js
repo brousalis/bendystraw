@@ -63,7 +63,7 @@ exports.manifest = function() {
 }
 
 exports.version = function() {
-  return exports.manifest().version
+  return 'v' + exports.manifest().version
 }
 
 function repo() {
