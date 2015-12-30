@@ -66,6 +66,7 @@
     "minimist": "^1.2.0",
     "request": "^2.67.0",
     "run-sequence": "^1.1.4",
+    "through2": "^2.0.0",
     "wiredep": "~2.2.2"
   }
 }
