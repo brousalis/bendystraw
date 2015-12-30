@@ -66,7 +66,7 @@ gulp.task('github-release', function(callback) {
   util.log(gutil.colors.yellow('Tag and releasing version v' + util.version() + ' to GitHub'));
 
   var date = new Date().toJSON().slice(0,10);
-  var message = date + ' Release\n' + (allCommits.markdown || '');
+  var message = '###' + date + ' Release\n' + (allCommits.markdown || '');
 
   return gulp.src(path.join(config.paths.dest, 'build.zip'))
     .pipe(githubRelease({
@@ -84,6 +84,11 @@ function release(callback) {
       process.env.GITHUB_TOKEN === undefined) {
     util.errorHandler('deploy')(new Error('Missing GITHUB_TOKEN environment variable'));
     return false;
+  }
+
+  if (!util.fileExists('build/build.zip')) {
+    util.errorHandler('deploy')(new Error('You need to build the application first. Run `gulp build`'));
+    return;
   }
 
   runSequence(

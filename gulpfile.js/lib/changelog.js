@@ -73,11 +73,12 @@ function changelog(version, callback) {
         var data = commit.split(',')
 
         var author = data[1];
-        var title = data[2].replace(/\[|\]/g,"`").replace(/(\r\n|\n|\r)/gm,"");
-        var sha = data[0].slice(0,5);
+        var title = data[2].replace(/(\r\n|\n|\r)/gm,""); // trim newlines
+        var label = title.replace(/\[|\]/g,"`"); // convert [] to `` for markdown
+        var sha = data[0].slice(0,5); // only need first 5 of sha
         var shaUrl = '<https://github.com/' + util.owner()+ '/' + util.repo() + '/commit/' + sha + '>';
 
-        commits.markdown += '* ' + author + ': ' + title + ' (' + shaUrl + ')\n';
+        commits.markdown += author + ': ' + label + ' (' + shaUrl + ')\n';
         commits.raw += author + ': ' + title + ' (' + sha + ')\n';
       });
 

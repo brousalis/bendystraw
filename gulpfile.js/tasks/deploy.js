@@ -83,9 +83,9 @@ function deploy(commits) {
     .pipe(gulpif(options.aws_distribution_id !== undefined, cloudfront(cdn)))
     .pipe(
       slack(
-        owner + ' deployed version ' +
+        owner + ' deployed ' +
         '<https://github.com/' + util.owner()+ '/' + util.repo() + '/releases/tag/' + version + '|' + version + '> ' +
-        ' of *<https://github.com/' + util.owner() + '/' + util.repo() + '|' + util.repo() + '>* to S3 bucket `' + options.aws_bucket + '`',
+        ' of <https://github.com/' + util.owner() + '/' + util.repo() + '|' + util.repo() + '> to S3 bucket `' + options.aws_bucket + '`',
         {
           attachments: [
             {
@@ -98,6 +98,11 @@ function deploy(commits) {
 }
 
 gulp.task('deploy', function(callback) {
+  if (!util.fileExists('build/build.zip')) {
+    util.errorHandler('deploy')(new Error('You need to build the application first. Run `gulp build`'));
+    return;
+  }
+
   // have to wait until changelog hits the disk to call deploy
   changelog(true, function(commits) {
     deploy(commits);
