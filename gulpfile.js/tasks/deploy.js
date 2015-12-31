@@ -92,7 +92,7 @@ function deploy(commits) {
             {
               color: '#63bbe9',
               mrkdwn_in: ['text', 'pretext'],
-              text: commits.markdown
+              text: commits.slack
             }
           ]
         }))
