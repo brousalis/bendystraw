@@ -14,6 +14,14 @@ var runSequence = require('run-sequence');
 var awspublish = require('gulp-awspublish');
 var cloudfront = require('gulp-cloudfront');
 
+var silent = false;
+
+// Pass in a custom environment
+if (process.argv.length > 2) {
+  var argv = require('minimist')(process.argv.slice(2));
+  silent = argv.silent;
+}
+
 // Deploy the build folder to an S3 bucket
 function deploy(commits) {
   var conf = process.env;
@@ -81,7 +89,8 @@ function deploy(commits) {
     .pipe(publisher.cache())
     .pipe(awspublish.reporter())
     .pipe(gulpif(options.aws_distribution_id !== undefined, cloudfront(cdn)))
-    .pipe(
+    .pipe(gulpif(
+      !silent,
       slack(
         owner + ' deployed ' +
         '<https://github.com/' + util.owner()+ '/' + util.repo() + '/releases/tag/' + version + '|' + version + '> ' +
@@ -95,7 +104,9 @@ function deploy(commits) {
               text: commits.slack
             }
           ]
-        }))
+        }
+      )
+    ));
 }
 
 gulp.task('deploy', function(callback) {
