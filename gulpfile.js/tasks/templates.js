@@ -18,7 +18,8 @@ gulp.task('templates', ['markup'], function(callback) {
       root: config.paths.scripts,
       standalone: true
     }))
-    .pipe(gulp.dest(path.join(config.paths.tmp, '/templates')));
+    .pipe(gulp.dest(path.join(config.paths.tmp, '/templates')))
+    .pipe(browserSync.reload({ stream: true }));
 });
 
 // Compiles changed html files to the dev folder
@@ -28,8 +29,7 @@ gulp.task('markup', function(callback) {
   return gulp.src(path.join(config.paths.src, config.paths.scripts, '/**/*.html'))
     .pipe(changed(dest, { extension: '.html' }))
     .pipe(preprocess({ context: { NODE_ENV: process.env.NODE_ENV } }))
-    .pipe(gulp.dest(dest))
-    .pipe(browserSync.reload({ stream: true }));
+    .pipe(gulp.dest(dest));
 });
 
 module.exports = function(){};
