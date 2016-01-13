@@ -34,6 +34,6 @@ function other() {
 }
 
 gulp.task('other', other);
-gulp.task('vendor', vendor);
+gulp.task('vendor', ['other'], vendor);
 
 module.exports = vendor;
