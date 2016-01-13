@@ -15,7 +15,7 @@ var coffee = require('gulp-coffee');
 function scripts() {
   var dest = path.join(config.paths.tmp, config.paths.scripts);
 
-  return gulp.src(path.join(config.paths.src, config.paths.scripts, '/**/*.coffee'))
+  return gulp.src(path.join(config.paths.src, config.paths.scripts, '/**/*.{js,coffee}'))
     .pipe(changed(dest, { extension: '.js' }))
     .pipe(sourcemaps.init())
     .pipe(coffee()).on('error', util.errorHandler('coffeescript'))
