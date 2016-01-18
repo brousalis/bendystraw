@@ -8,7 +8,8 @@ function watch() {
   // When HTML files are changed (or more bower components added)
   gulp.watch([
     path.join(config.paths.src, '/**/*.html'),
-    'bower.json',
+    path.join(config.paths.src, '/*.html'),
+    'bower.json'
   ], function(event) {
     if (event.type === 'changed') {
       gulp.start('templates');
