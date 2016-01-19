@@ -5,11 +5,9 @@ var path = require('path');
 
 // Task to watch files for changes, and reload them
 function watch() {
-  // When HTML files are changed (or more bower components added)
+  // When template HTML files are changed
   gulp.watch([
     path.join(config.paths.src, '/**/*.html'),
-    path.join(config.paths.src, '/*.html'),
-    'bower.json'
   ], function(event) {
     if (event.type === 'changed') {
       gulp.start('templates');

@@ -3,7 +3,7 @@
 var path = require('path');
 
 var gulp = require('gulp');
-var browserSync = require('browser-sync');
+var browserSync = require('browser-sync').create();
 var minifyHtml = require('gulp-minify-html');
 var angularTemplatecache = require('gulp-angular-templatecache');
 var changed = require('gulp-changed');
@@ -19,7 +19,7 @@ gulp.task('templates', ['markup'], function(callback) {
       standalone: true
     }))
     .pipe(gulp.dest(path.join(config.paths.tmp, '/templates')))
-    .pipe(browserSync.reload({ stream: true }));
+    .pipe(browserSync.stream());
 });
 
 // Compiles changed html files to the dev folder
