@@ -20,7 +20,7 @@ function env() {
   var dest = path.join(config.paths.tmp, config.paths.scripts);
 
   // Check if we even have a .env file to use
-  if (!util.checkForEnv())
+  if (!util.fileExists(util.envFile()))
     return false;
 
   // Gets the config settings for the current NODE_ENV, also stubs that in

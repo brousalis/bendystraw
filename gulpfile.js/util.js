@@ -1,8 +1,6 @@
-// Check if a dotenv file exists for the current environment
 var path = require('path');
 var fs = require('fs');
 
-var _ = require('lodash');
 var notify = require('gulp-notify');
 var gutil = require('gulp-util');
 
@@ -36,39 +34,10 @@ exports.fileExists = function(filename) {
  return fs.existsSync(path.resolve(filename));
 };
 
-// Check if a dotenv file exists for the current environment
-exports.checkForEnv = function() {
-  return exports.fileExists(exports.envFile());
-};
-
 // Return the dotenv filename for the current environment
 exports.envFile = function() {
   var filename = '.env';
   if (process.env.NODE_ENV !== 'development')
     filename = filename + '.' + process.env.NODE_ENV;
   return filename;
-};
-
-// Getters for various aspects of the manifest (package.json)
-exports.manifest = function() {
-  return JSON.parse(fs.readFileSync('./package.json', 'utf8'));
-}
-
-exports.version = function() {
-  return 'v' + exports.manifest().version
-}
-
-function repo() {
-  var manifest = exports.manifest();
-  var repo = manifest.repository && /git@github\.com:([\w-]+)\/([\w-]+)\.git/.exec(manifest.repository.url);
-  if (!repo) repo = /git\:\/\/github\.com\/([\w-]+)\/([\w-]+)\.git/.exec(manifest.repository.url);
-  return repo;
-}
-
-exports.owner = function() {
-  return repo()[1];
-};
-
-exports.repo = function() {
-  return repo()[2];
 };
