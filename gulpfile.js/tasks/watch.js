@@ -5,38 +5,44 @@ var path = require('path');
 
 // Task to watch files for changes, and reload them
 function watch() {
-  // When template HTML files are changed
-  gulp.watch([
-    path.join(config.paths.src, '/**/*.html'),
-  ], function(event) {
-    if (event.type === 'changed') {
-      gulp.start('templates');
-    } else {
-      gulp.start('inject');
-    }
-  });
 
-  // When stylesheets are changed
-  gulp.watch([
-    path.join(config.paths.src, config.paths.styles, '/**/*.{' + config.extensions.styles + '}')
-  ], function(event) {
-    if (event.type === 'changed') {
-      gulp.start('styles');
-    } else {
-      gulp.start('inject');
+  function changed(task) {
+    return function(event) {
+      console.log(event)
+      if (event.type === 'changed') {
+        gulp.start(task);
+      } else {
+        gulp.start('inject');
+      }
     }
-  });
+  }
 
-  // When javascript files are changed
-  gulp.watch([
-    path.join(config.paths.src, config.paths.scripts, '/**/*.{js,coffee}'),
-  ], function(event) {
-    if (event.type === 'changed') {
-      gulp.start('scripts');
-    } else {
-      gulp.start('inject');
+  // When template HTML files are changed, recompile them
+  gulp.watch(
+    path.join(config.paths.src, '**/*.html'),
+    changed('templates')
+  );
+
+  // When stylesheets are changed, recompile them
+  gulp.watch(
+    path.join(config.paths.src, config.paths.styles, '**/*.{' + config.extensions.styles + '}'),
+    changed('templates')
+  );
+
+  // When javascript files are changed, recompile them
+  gulp.watch(
+    path.join(config.paths.src, config.paths.scripts, '**/*.{' + config.extensions.scripts + '}'),
+    changed('scripts')
+  );
+
+  // When images are added to the app, optimize them
+  gulp.watch(
+    path.join(config.paths.src, config.paths.images, '**/*'),
+    function(event) {
+      if (event.type === 'added')
+        gulp.start('images:optimize')
     }
-  });
+  );
 }
 
 gulp.task('watch', ['inject'], watch);

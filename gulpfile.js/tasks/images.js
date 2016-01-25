@@ -5,7 +5,6 @@ var path = require('path');
 var gulp = require('gulp');
 var filter = require('gulp-filter');
 var rename = require('gulp-rename');
-var changed = require('gulp-changed');
 var imagemin = require('gulp-imagemin');
 
 // If /images/ is in the path for a bower_component image, strip it out
@@ -49,12 +48,9 @@ gulp.task('images:bower', function(callback) {
 // Dev task for optimizing images in your source folder
 gulp.task('images:optimize', function(callback) {
   var dest = path.join(config.paths.src, config.paths.images);
-  var cache = path.join(config.paths.tmp, 'cache');
 
   return gulp.src(path.join(config.paths.src, config.paths.images, '**/*'))
-    .pipe(changed(cache))
     .pipe(imagemin(config.images))
-    .pipe(gulp.dest(cache))
     .pipe(gulp.dest(dest));
 });
 
