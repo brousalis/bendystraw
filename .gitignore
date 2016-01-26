@@ -3,6 +3,7 @@ node_modules/
 bower_components/
 build/
 source/
+env
 env.json
 bower.json
 karma.conf.js
