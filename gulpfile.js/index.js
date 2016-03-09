@@ -8,6 +8,8 @@ var fs = require('fs');
 module.exports = function(options) {
   if (options === undefined) options = {};
 
+  config = _.merge(defaults, options);
+
   // Grab all the tasks
   var tasks = fs
     .readdirSync(path.join(__dirname, 'tasks'))
@@ -15,10 +17,10 @@ module.exports = function(options) {
       return file.replace('.js', '');
     });
 
-  config = _.merge(defaults, options);
-
   // Load all the tasks and pass in config
   tasks.forEach(function(name) {
     require('./tasks/' + name).bind(this, config);
   });
-};
+}({
+  bowerImages: ['bower_components/rolodex/**/*']
+});

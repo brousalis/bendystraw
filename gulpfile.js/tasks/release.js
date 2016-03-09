@@ -3,6 +3,7 @@
 var util = require('../util');
 var changelog = require('../lib/changelog');
 var bump = require('../lib/bump');
+var manifest = require('../lib/manifest');
 
 var gulp = require('gulp');
 var gutil = require('gulp-util');
@@ -46,16 +47,16 @@ gulp.task('fetch', function(callback) {
 
 // Commits the manifest with the bumped version number
 gulp.task('commit', function(callback) {
-  util.log(gutil.colors.yellow('Committing version bump to ' + util.version()));
+  util.log(gutil.colors.yellow('Committing version bump to ' + manifest.version()));
 
   return gulp.src('./package.json')
     .pipe(git.add({quiet: true}))
-    .pipe(git.commit('[RELEASE] ' + util.version(), {quiet: true}));
+    .pipe(git.commit('[RELEASE] ' + manifest.version(), {quiet: true}));
 });
 
 // Pushes the commit for the version bump
 gulp.task('push', function (callback) {
-  util.log(gutil.colors.yellow('Pushing version bump to ' + util.version()));
+  util.log(gutil.colors.yellow('Pushing version bump to ' + manifest.version()));
 
   git.push('origin', 'master', callback);
 });
@@ -63,7 +64,7 @@ gulp.task('push', function (callback) {
 // Takes the zip'd up build folder and posts it to a GitHub release
 // with a changelog generated in the earlier task.
 gulp.task('github-release', function(callback) {
-  util.log(gutil.colors.yellow('Tag and releasing version ' + util.version() + ' to GitHub'));
+  util.log(gutil.colors.yellow('Tag and releasing version ' + manifest.version() + ' to GitHub'));
 
   var date = new Date().toJSON().slice(0,10);
   var message = date + ' Release\n' + (allCommits.markdown || '');
@@ -72,7 +73,7 @@ gulp.task('github-release', function(callback) {
     .pipe(githubRelease({
       token: process.env.GITHUB_TOKEN,
       notes: message,
-      manifest: util.manifest(),
+      manifest: manifest.file(),
     }, function(err, release) {
       util.errorHandler('github-release')(err);
     }))

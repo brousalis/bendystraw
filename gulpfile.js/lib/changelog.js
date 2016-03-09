@@ -1,6 +1,7 @@
 'use strict';
 
 var util = require('../util');
+var manifest = require('../lib/manifest');
 var gulp = require('gulp');
 
 // Gets the previously tagged release
@@ -27,7 +28,7 @@ function getPreviousVersion(callback) {
 // Generates a list of changes from one tag to HEAD based on commit messages
 // taken mostly from https://github.com/ariatemplates/git-release-notes
 function changelog(version, callback) {
-  version = typeof version !== 'undefined' ?  version : util.version();
+  version = typeof version !== 'undefined' ?  version : manifest.version();
 
   var spawn = require('child_process').spawn;
   var range = version.replace(/^\s+|\s+$/g, '') + '..HEAD';
@@ -77,8 +78,8 @@ function changelog(version, callback) {
         var title = data[2].replace(/(\r\n|\n|\r)/gm,""); // trim newlines
         var label = title.replace(/\[|\]/g,"`"); // convert [] to `` for markdown
         var sha = data[0].slice(0,5); // only need first 5 of sha
-        var shaUrl = '<https://github.com/' + util.owner()+ '/' + util.repo() + '/commit/' + sha + '>';
-        var slackUrl = '<https://github.com/' + util.owner()+ '/' + util.repo() + '/commit/' + sha + '|' + sha + '>';
+        var shaUrl = '<https://github.com/' + manifest.owner()+ '/' + manifest.repo() + '/commit/' + sha + '>';
+        var slackUrl = '<https://github.com/' + manifest.owner()+ '/' + manifest.repo() + '/commit/' + sha + '|' + sha + '>';
 
         commits.slack += author + ': ' + label + ' (' + slackUrl + ')\n';
         commits.markdown += '* ' + author + ': ' + label + ' (' + shaUrl + ')\n';
@@ -99,6 +100,6 @@ module.exports = function(previous, callback) {
       changelog(version, callback);
     })
   } else {
-    changelog(util.version(), callback);
+    changelog(manifest.version(), callback);
   }
 };

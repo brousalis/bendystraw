@@ -3,6 +3,7 @@
 var util = require('../util');
 var changelog = require('../lib/changelog');
 var slack = require('../lib/slack');
+var manifest = require('../lib/manifest');
 
 var path = require('path');
 
@@ -75,8 +76,8 @@ function deploy(commits) {
   // Upload all files, revisioned, gzipped, to S3 bucket
   var revAll = new RevAll(revOptions);
 
-  var version = util.version();
-  var owner = process.env.CIRCLE_USER || util.owner() || util.repo();
+  var version = manifest.version();
+  var owner = process.env.CIRCLE_USER || manifest.owner() || manifest.repo();
 
   util.log('Deploying ' + gutil.colors.yellow(version) + ' to S3 bucket ' + gutil.colors.yellow(options.aws_bucket));
 
@@ -93,8 +94,8 @@ function deploy(commits) {
       !silent,
       slack(
         owner + ' deployed ' +
-        '<https://github.com/' + util.owner()+ '/' + util.repo() + '/releases/tag/' + version + '|' + version + '> ' +
-        ' of <https://github.com/' + util.owner() + '/' + util.repo() + '|' + util.repo() + '> to ' +
+        '<https://github.com/' + manifest.owner()+ '/' + manifest.repo() + '/releases/tag/' + version + '|' + version + '> ' +
+        ' of <https://github.com/' + manifest.owner() + '/' + manifest.repo() + '|' + manifest.repo() + '> to ' +
         ' S3 bucket <https://console.aws.amazon.com/s3/home?&bucket=' + options.aws_bucket + '|' + options.aws_bucket + '>',
         {
           attachments: [

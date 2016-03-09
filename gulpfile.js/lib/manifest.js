@@ -1,8 +1,7 @@
-
-
+'use strict';
 
 // Getters for various aspects of the manifest (package.json)
-exports.manifest = function() {
+exports.file = function() {
   return JSON.parse(fs.readFileSync('./package.json', 'utf8'));
 }
 
