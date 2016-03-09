@@ -14,6 +14,8 @@ var angularFilesort = require('gulp-angular-filesort');
 // Injects compiled CSS/JS/HTML files into the main index page using gulp-inject
 // Also uses wiredep to include libs from bower_components
 function inject(callback) {
+
+  // Grab all of the css files
   var injectStyles = gulp.src([
     path.join(config.paths.tmp, config.paths.scripts, '/**/*.css')
   ], { read: false });
@@ -33,7 +35,7 @@ function inject(callback) {
     path.join('!' + config.paths.tmp, config.paths.scripts, '/**/*.mock.js'),
     path.join('!' + config.paths.src, config.paths.vendor)
   ])
-  .pipe(angularFilesort())
+  .pipe(gulpif(config.angular, angularFilesort()))
   .on('error', util.errorHandler('angularFilesort'));
 
   var injectScriptsOptions = {

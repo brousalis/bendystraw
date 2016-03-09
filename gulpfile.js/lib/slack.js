@@ -8,6 +8,7 @@ module.exports = function(message, custom) {
   custom = typeof custom !== 'undefined' ?  custom : false;
 
   return through.obj(function(file, enc, cb) {
+
     if (process.env.SLACK_WEBHOOK_URL === undefined ||
         process.env.SLACK_WEBHOOK_URL === '')
       return;

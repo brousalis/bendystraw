@@ -4,6 +4,7 @@ var util = require('../util');
 var path = require('path');
 
 var gulp = require('gulp');
+var gulpif = require('gulp-if');
 var gutil = require('gulp-util');
 var runSequence = require('run-sequence');
 var filter = require('gulp-filter');
@@ -34,7 +35,7 @@ function build() {
   return gulp.src(path.join(config.paths.tmp, '*.html'))
     .pipe(assets = useref.assets())
     .pipe(jsFilter)
-    .pipe(ngAnnotate())
+    .pipe(gulpif(config.angular, ngAnnotate()))
     .pipe(uglify()).on('error', util.errorHandler('uglify'))
     .pipe(jsFilter.restore())
     .pipe(cssFilter)

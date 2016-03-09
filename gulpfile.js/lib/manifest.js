@@ -1,4 +1,13 @@
 'use strict';
+// TODO: use https://github.com/npm/read-package-json
+
+// Reads out the repo
+function repo() {
+  var manifest = exports.manifest();
+  var repo = manifest.repository && /git@github\.com:([\w-]+)\/([\w-]+)\.git/.exec(manifest.repository.url);
+  if (!repo) repo = /git\:\/\/github\.com\/([\w-]+)\/([\w-]+)\.git/.exec(manifest.repository.url);
+  return repo;
+}
 
 // Getters for various aspects of the manifest (package.json)
 exports.file = function() {
@@ -7,13 +16,6 @@ exports.file = function() {
 
 exports.version = function() {
   return 'v' + exports.manifest().version
-}
-
-function repo() {
-  var manifest = exports.manifest();
-  var repo = manifest.repository && /git@github\.com:([\w-]+)\/([\w-]+)\.git/.exec(manifest.repository.url);
-  if (!repo) repo = /git\:\/\/github\.com\/([\w-]+)\/([\w-]+)\.git/.exec(manifest.repository.url);
-  return repo;
 }
 
 exports.owner = function() {

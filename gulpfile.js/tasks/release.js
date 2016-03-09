@@ -2,8 +2,8 @@
 
 var util = require('../util');
 var changelog = require('../lib/changelog');
-var bump = require('../lib/bump');
 var manifest = require('../lib/manifest');
+var bump = require('../lib/bump');
 
 var gulp = require('gulp');
 var gutil = require('gulp-util');

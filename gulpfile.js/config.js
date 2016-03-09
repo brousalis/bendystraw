@@ -21,6 +21,8 @@ var settings = {
 
   port: '4567',  // port to run the server on
 
+  // Angular specific config
+  angular: true, // turn on angular annotation and file sorting
   envModule: 'env', // angular module name for the env file
   envConstant: 'ENV', // angular constant name for env file
   templateModule: 'templates', // angular module name for template cache
