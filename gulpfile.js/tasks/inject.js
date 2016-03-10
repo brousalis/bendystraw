@@ -17,7 +17,7 @@ function inject(callback) {
 
   // Grab all of the css files
   var injectStyles = gulp.src([
-    path.join(config.paths.tmp, config.paths.scripts, '/**/*.css')
+    path.join(config.paths.tmp, config.paths.styles, '/**/*.css')
   ], { read: false });
 
   var injectStylesOptions = {

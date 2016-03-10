@@ -6,7 +6,8 @@ var gulp = require('gulp');
 var gutil = require('gulp-util');
 var path = require('path');
 var runSequence = require('run-sequence');
-var browserSync = require('browser-sync').create();
+var browserSync = require('browser-sync').create('server');
+var reload = browserSync.reload;
 var browserSyncSpa = require('browser-sync-spa');
 
 // Better support for Angular and BrowserSync
@@ -24,8 +25,9 @@ function server(callback) {
   });
 
   // Watch the root index file for changes
-  browserSync.watch(path.join(config.paths.src, '*.html')).on('change', function() {
-    runSequence('inject', browserSync.reload)
+  browserSync.watch(path.join(config.paths.src, '*.html'))
+  .on('change', function() {
+    runSequence('inject', reload)
   });
 
   callback();

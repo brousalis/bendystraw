@@ -8,7 +8,6 @@ function watch() {
 
   function changed(task) {
     return function(event) {
-      console.log(event)
       if (event.type === 'changed') {
         gulp.start(task);
       } else {
@@ -26,7 +25,7 @@ function watch() {
   // When stylesheets are changed, recompile them
   gulp.watch(
     path.join(config.paths.src, config.paths.styles, '**/*.{' + config.extensions.styles + '}'),
-    changed('templates')
+    changed('styles')
   );
 
   // When javascript files are changed, recompile them

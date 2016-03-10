@@ -3,7 +3,7 @@
 var path = require('path');
 
 var gulp = require('gulp');
-var browserSync = require('browser-sync').create();
+var browserSync = require('browser-sync').get('server');
 var minifyHtml = require('gulp-minify-html');
 var angularTemplatecache = require('gulp-angular-templatecache');
 var changed = require('gulp-changed');
