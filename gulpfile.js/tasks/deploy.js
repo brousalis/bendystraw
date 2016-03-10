@@ -2,8 +2,8 @@
 
 var util = require('../util');
 var changelog = require('../lib/changelog');
-var slack = require('../lib/slack');
 var manifest = require('../lib/manifest');
+var slack = require('../lib/slack');
 
 var path = require('path');
 
@@ -17,7 +17,7 @@ var cloudfront = require('gulp-cloudfront');
 
 var silent = false;
 
-// Pass in a custom environment
+// If --silent is passed in, it will ignore Slack post
 if (process.argv.length > 2) {
   var argv = require('minimist')(process.argv.slice(2));
   silent = argv.silent;
@@ -36,7 +36,7 @@ function deploy(commits) {
     aws_cloudfront_domain: conf.AWS_CLOUDFRONT_DOMAIN
   };
 
-  // update expected env variables based on app environment (default to --development)
+  // Update expected env variables based on app environment (default to --development)
   if (env !== 'development') {
     for (var key in options) {
       options[key] = conf[env.toUpperCase() + '_' + key.toUpperCase()];
@@ -95,8 +95,8 @@ function deploy(commits) {
       slack(
         owner + ' deployed ' +
         '<https://github.com/' + manifest.owner()+ '/' + manifest.repo() + '/releases/tag/' + version + '|' + version + '> ' +
-        ' of <https://github.com/' + manifest.owner() + '/' + manifest.repo() + '|' + manifest.repo() + '> to ' +
-        ' S3 bucket <https://console.aws.amazon.com/s3/home?&bucket=' + options.aws_bucket + '|' + options.aws_bucket + '>',
+        'of <https://github.com/' + manifest.owner() + '/' + manifest.repo() + '|' + manifest.repo() + '> to ' +
+        'S3 bucket <https://console.aws.amazon.com/s3/home?&bucket=' + options.aws_bucket + '|' + options.aws_bucket + '>',
         {
           attachments: [
             {

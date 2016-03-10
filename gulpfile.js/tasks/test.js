@@ -14,7 +14,6 @@ function runTests (singleRun, callback) {
   });
 }
 
-// Karma testing
 gulp.task('test', ['scripts'], function(callback) {
   runTests(true, callback);
 });

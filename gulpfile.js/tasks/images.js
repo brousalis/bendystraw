@@ -32,7 +32,7 @@ gulp.task('images:optimize', function(callback) {
     .pipe(gulp.dest(path.join(config.paths.src, config.paths.images)));
 });
 
-// Optimize all images (including those from bower) and put in the build folder
+// Optimize all images and put in the build folder
 function buildImages(callback) {
   return gulp.src(path.join(config.paths.src, config.paths.images, '**/*'))
     .pipe(imagemin(config.images))
@@ -48,6 +48,8 @@ function buildBowerImages(callback) {
     .pipe(gulp.dest(path.join(config.paths.dest, config.paths.images)));
 }
 
+// Prepares all of the images for the build. Makes sure bower_component images have been
+// optimized and moved into build folder, then does the rest of the images.
 gulp.task('images:build', function(callback) {
   buildBowerImages(callback);
   buildImages(callback);
