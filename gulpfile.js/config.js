@@ -27,8 +27,8 @@ var settings = {
   envConstant: 'ENV', // Constant name for env file, either Angular module or global on window
   templateModule: 'templates', // Angular module name for template cache
 
-  // Support JST template compilation :(
-  jst: false,
+  // Support JST/ECO template compilation
+  eco: false,
 
   sass: { // Options for the sass compiler
     indentedSyntax: true,
@@ -50,7 +50,7 @@ var settings = {
 
   extensions: { // Used as a reference in a couple tasks
     scripts: ['js', 'coffee'], // js preprocessor extensions
-    templates: ['html', 'haml', 'jade', 'slim', 'jst'], // html preprocessor extensions
+    templates: ['html', 'haml', 'jade', 'slim', 'jst', 'eco'], // html preprocessor extensions
     styles: ['css', 'scss', 'sass', 'style'], // css preprocessor extensions
     fonts: ['eot', 'svg', 'ttf', 'woff', 'woff2'], // font extensions
     images: ['jpg', 'jpeg', 'png', 'svg', 'gif'] // image extensions

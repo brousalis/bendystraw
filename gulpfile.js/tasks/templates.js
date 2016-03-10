@@ -5,6 +5,7 @@ var path = require('path');
 var gulp = require('gulp');
 var gulpif = require('gulp-if');
 var jst = require('gulp-jst-concat');
+var eco = require('gulp-eco');
 var browserSync = require('browser-sync').get('server');
 var minifyHtml = require('gulp-minify-html');
 var angularTemplateCache = require('gulp-angular-templatecache');
@@ -28,9 +29,9 @@ gulp.task('templates', ['markup'], function(callback) {
 gulp.task('markup', function(callback) {
   var dest = path.join(config.paths.tmp, config.paths.scripts);
 
-  return gulp.src(path.join(config.paths.src, config.paths.scripts, '/**/*.html'))
+  return gulp.src(path.join(config.paths.src, config.paths.scripts, '/**/*.{' + config.extensions.templates + '}'))
     .pipe(changed(dest, { extension: '.html' }))
-    .pipe(gulpif(config.jst, jst('templates.js')))
+    .pipe(gulpif(config.eco, eco()))
     .pipe(preprocess({ context: { NODE_ENV: process.env.NODE_ENV } }))
     .pipe(gulp.dest(dest));
 });

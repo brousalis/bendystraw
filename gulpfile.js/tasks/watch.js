@@ -18,7 +18,7 @@ function watch() {
 
   // When template HTML files are changed, recompile them
   gulp.watch(
-    path.join(config.paths.src, '**/*.html'),
+    path.join(config.paths.src, '**/*.{' + config.extensions.templates + '}'),
     changed('templates')
   );
 

@@ -55,7 +55,6 @@ function env() {
     fileContent = config.envConstant + " = " + fileContent;
   }
 
-  console.log(fileContent)
   // Write the app config to an env file
   return b2v.stream(new Buffer(fileContent), 'env.js')
     .pipe(gulpif(config.angular, gulpNgConfig(config.envModule, ngConfig))
