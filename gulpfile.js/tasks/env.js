@@ -6,6 +6,7 @@ var path = require('path');
 var fs = require('fs');
 
 var gulp = require('gulp');
+var gulpif = require('gulp-if');
 var b2v = require('buffer-to-vinyl');
 var dotenv = require('dotenv');
 var gulpNgConfig = require('gulp-ng-config');
@@ -36,16 +37,23 @@ function env() {
   fileContent = dotenv.parse(fileContent);
 
   // Wrap the object in a main key, easier to include in angular
-  var tmp = {};
-  tmp[config.envConstant] = fileContent;
-  fileContent = tmp;
+  if (config.angular) {
+    var tmp = {};
+    tmp[config.envConstant] = fileContent;
+    fileContent = tmp;
+  }
 
   // Stringify the .env file
   fileContent = JSON.stringify(fileContent);
 
+  // If not using angular, use a global variable for the env path
+  if (!config.angular) {
+    fileContent = config.envConstant + " = " + fileContent;
+  }
+
   // Write the app config to an env file
   return b2v.stream(new Buffer(fileContent), 'env.js')
-    .pipe(gulpNgConfig(config.envModule, ngConfig)
+    .pipe(gulpif(config.angular, gulpNgConfig(config.envModule, ngConfig))
     .on('error', util.errorHandler('ng-config')))
     .pipe(gulp.dest(dest));
 }

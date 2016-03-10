@@ -21,10 +21,10 @@ function scaffold() {
   mkdir(path.join(config.paths.src, config.paths.styles));
   mkdir(path.join(config.paths.src, config.paths.images));
 
-  fs.readFile(path.join('gulpfile.js/templates', 'index.html'), 'utf8', function (err, data) {
+  fs.readFile('gulpfile.js/templates/index.html', 'utf8', function (err, data) {
     fs.writeFile(path.join(config.paths.src, 'index.html'), data);
   });
-  fs.writeFile(path.join(config.paths.src, config.paths.scripts, 'app.coffee'), '');
+  fs.writeFile(path.join(config.paths.src, config.paths.scripts, 'app.js'), '');
   fs.writeFile(path.join(config.paths.src, config.paths.styles, 'app.sass'), '');
 }
 

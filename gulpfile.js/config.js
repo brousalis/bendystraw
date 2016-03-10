@@ -23,7 +23,7 @@ var settings = {
 
   // Angular specific config
   angular: true, // turn on angular annotation and file sorting
-  envModule: 'env', // angular module name for the env file
+  envModule: 'env', // angular module name for the env file, or global if angular: false
   envConstant: 'ENV', // angular constant name for env file
   templateModule: 'templates', // angular module name for template cache
 

@@ -5,6 +5,7 @@ var util = require('../util');
 var path = require('path');
 
 var gulp = require('gulp');
+var gulpif = require('gulp-if');
 var browserSync = require('browser-sync');
 var changed = require('gulp-changed');
 var sourcemaps = require('gulp-sourcemaps');
@@ -19,7 +20,7 @@ function scripts() {
     .pipe(changed(dest, { extension: '.js' }))
     .pipe(sourcemaps.init())
     .pipe(coffee()).on('error', util.errorHandler('coffeescript'))
-    .pipe(ngAnnotate())
+    .pipe(gulpif(config.angular, ngAnnotate()))
     .pipe(sourcemaps.write())
     .pipe(gulp.dest(dest))
     .pipe(browserSync.reload({ stream: true }));
