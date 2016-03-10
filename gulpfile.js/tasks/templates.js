@@ -3,9 +3,11 @@
 var path = require('path');
 
 var gulp = require('gulp');
+var gulpif = require('gulp-if');
+var jst = require('gulp-jst-concat');
 var browserSync = require('browser-sync').get('server');
 var minifyHtml = require('gulp-minify-html');
-var angularTemplatecache = require('gulp-angular-templatecache');
+var angularTemplateCache = require('gulp-angular-templatecache');
 var changed = require('gulp-changed');
 var preprocess = require('gulp-preprocess');
 
@@ -13,11 +15,11 @@ var preprocess = require('gulp-preprocess');
 gulp.task('templates', ['markup'], function(callback) {
   return gulp.src(path.join(config.paths.tmp, config.paths.scripts, '/**/*.html'))
     .pipe(minifyHtml(config.html))
-    .pipe(angularTemplatecache('templates.js', {
+    .pipe(gulpif(config.angular, angularTemplateCache('templates.js', {
       module: config.templateModule,
       root: config.paths.scripts,
       standalone: true
-    }))
+    })))
     .pipe(gulp.dest(path.join(config.paths.tmp, '/templates')))
     .pipe(browserSync.stream());
 });
@@ -28,6 +30,7 @@ gulp.task('markup', function(callback) {
 
   return gulp.src(path.join(config.paths.src, config.paths.scripts, '/**/*.html'))
     .pipe(changed(dest, { extension: '.html' }))
+    .pipe(gulpif(config.jst, jst('templates.js')))
     .pipe(preprocess({ context: { NODE_ENV: process.env.NODE_ENV } }))
     .pipe(gulp.dest(dest));
 });

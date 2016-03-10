@@ -36,25 +36,30 @@ function env() {
   // Parse the .env to an object
   fileContent = dotenv.parse(fileContent);
 
-  // Wrap the object in a main key, easier to include in angular
   if (config.angular) {
+    // Wrap the env object in a main key, easier to include in Angular
     var tmp = {};
     tmp[config.envConstant] = fileContent;
     fileContent = tmp;
+  } else {
+    // If angular is disabled, stub in NODE_ENV
+    fileContent['NODE_ENV'] = process.env.NODE_ENV;
   }
 
   // Stringify the .env file
   fileContent = JSON.stringify(fileContent);
 
   // If not using angular, use a global variable for the env path
+  // ex: Settings = {"API": "http://localhost"}
   if (!config.angular) {
     fileContent = config.envConstant + " = " + fileContent;
   }
 
+  console.log(fileContent)
   // Write the app config to an env file
   return b2v.stream(new Buffer(fileContent), 'env.js')
     .pipe(gulpif(config.angular, gulpNgConfig(config.envModule, ngConfig))
-    .on('error', util.errorHandler('ng-config')))
+    .on('error', util.errorHandler('env')))
     .pipe(gulp.dest(dest));
 }
 

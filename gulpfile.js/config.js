@@ -1,6 +1,6 @@
 process.env.NODE_ENV = 'development';
 
-// Pass in a custom environment
+// Pass in a custom environment --env=pizza
 if (process.argv.length > 2) {
   var argv = require('minimist')(process.argv.slice(2));
   process.env.NODE_ENV = argv.env || 'development';
@@ -8,46 +8,49 @@ if (process.argv.length > 2) {
 
 var settings = {
   paths: {
-    src: 'source', // source folder for the app
-    dest: 'build', // destination for the production build
-    tmp: '.dev', // temporary development build folder
-    scripts: 'app', // folder where main javascript files are located
-    styles: 'stylesheets', // stylesheets folder
-    images: 'images', // image folder
-    vendor: 'vendor', // third party scripts that aren't bower components
-    fonts: 'fonts', // fonts folder
-    tests: 'tests' // folder for end to end tests
+    src: 'source', // Source folder for the app
+    dest: 'build', // Destination for the production build
+    tmp: '.dev', // Temporary development build folder
+    scripts: 'app', // Folder where main javascript files are located
+    styles: 'stylesheets', // Stylesheets folder
+    images: 'images', // Image folder
+    vendor: 'vendor', // Third party scripts that aren't bower components
+    fonts: 'fonts', // Fonts folder
+    tests: 'tests' // Folder for end to end tests
   },
 
-  port: '4567',  // port to run the server on
+  port: '4567',  // Port to run the server on
 
   // Angular specific config
-  angular: true, // turn on angular annotation and file sorting
-  envModule: 'env', // angular module name for the env file, or global if angular: false
-  envConstant: 'ENV', // angular constant name for env file
-  templateModule: 'templates', // angular module name for template cache
+  angular: true, // Turn on angular annotation and file sorting
+  envModule: 'env', // Angular module name for the env file
+  envConstant: 'ENV', // Constant name for env file, either Angular module or global on window
+  templateModule: 'templates', // Angular module name for template cache
 
-  sass: { // options for the sass compiler
+  // Support JST template compilation :(
+  jst: false,
+
+  sass: { // Options for the sass compiler
     indentedSyntax: true,
     imagePath: 'images',
     precision: 8
   },
 
-  images: { // options for image optimizer
+  images: { // Options for image optimizer
     progressive: true,
     use: [ require('imagemin-pngquant')() ]
   },
 
-  html: { // options for html minification
+  html: { // Options for html minification
   },
 
-  bowerImages: [ // images to copy into project from bower_components
+  bowerImages: [ // Images to copy into project from bower_components
     // 'bower_components/rolodex/**/*'
   ],
 
-  extensions: { // used as a reference in a couple tasks
+  extensions: { // Used as a reference in a couple tasks
     scripts: ['js', 'coffee'], // js preprocessor extensions
-    templates: ['html', 'haml', 'jade', 'slim'], // html preprocessor extensions
+    templates: ['html', 'haml', 'jade', 'slim', 'jst'], // html preprocessor extensions
     styles: ['css', 'scss', 'sass', 'style'], // css preprocessor extensions
     fonts: ['eot', 'svg', 'ttf', 'woff', 'woff2'], // font extensions
     images: ['jpg', 'jpeg', 'png', 'svg', 'gif'] // image extensions
