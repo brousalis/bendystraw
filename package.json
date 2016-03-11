@@ -65,6 +65,7 @@
     "lodash": "^3.10.1",
     "main-bower-files": "~2.8.0",
     "minimist": "^1.2.0",
+    "node-notifier": "^4.5.0",
     "request": "^2.67.0",
     "run-sequence": "^1.1.4",
     "through2": "^2.0.0",

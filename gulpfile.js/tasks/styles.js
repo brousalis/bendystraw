@@ -16,12 +16,17 @@ var autoprefixer = require('gulp-autoprefixer');
 function styles() {
   var dest = path.join(config.paths.tmp, config.paths.styles);
 
-  return gulp.src(path.join(config.paths.src, config.paths.styles, '/*.{sass,scss}'))
+  return gulp.src([
+    path.join(config.paths.src, config.paths.styles, '**/*.{' + config.extensions.styles + '}'),
+    path.join(config.paths.src, config.paths.scripts, '**/*.{' + config.extensions.styles + '}')
+  ])
     // .pipe(gulpif(util.fileExists('bower.json'), wiredep({ directory: 'bower_components' })))
     // .on('error', util.errorHandler('wiredep'))
-    .pipe(sourcemaps.init())
-    .pipe(sass(config.sass)).on('error', util.errorHandler('sass'))
-    .pipe(autoprefixer()).on('error', util.errorHandler('autoprefixer'))
+    .pipe(gulpif(config.sass.sourcemaps, sourcemaps.init()))
+    .pipe(sass(config.sass.compiler))
+    .on('error', util.errorHandler('sass'))
+    .pipe(autoprefixer())
+    .on('error', util.errorHandler('autoprefixer'))
     .pipe(sourcemaps.write())
     .pipe(gulp.dest(dest))
     .pipe(browserSync.stream({match: "**/*.css"}));

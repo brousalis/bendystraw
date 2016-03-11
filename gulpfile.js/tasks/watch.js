@@ -25,6 +25,7 @@ function watch() {
   // When stylesheets are changed, recompile them
   gulp.watch(
     path.join(config.paths.src, config.paths.styles, '**/*.{' + config.extensions.styles + '}'),
+    path.join(config.paths.src, config.paths.scripts, '**/*.{' + config.extensions.styles + '}'),
     changed('styles')
   );
 

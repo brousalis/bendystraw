@@ -26,7 +26,7 @@ gulp.task('markup', function(callback) {
 
   return gulp.src(path.join(config.paths.src, config.paths.scripts, '/**/*.{' + config.extensions.templates + '}'))
     .pipe(changed(dest, { extension: '.html' }))
-    .pipe(gulpif(config.eco, eco({ basePath: path.join(config.paths.src, config.paths.scripts) })))
+    .pipe(gulpif(config.eco.enabled, eco({ basePath: config.eco.basePath === null ? path.join(config.paths.src, config.paths.scripts) : config.eco.basePath })))
     .pipe(preprocess({ context: { NODE_ENV: process.env.NODE_ENV } }))
     .pipe(gulp.dest(dest));
 });

@@ -23,14 +23,12 @@ function other() {
   // This isn't a very good way of doing this :(
   return gulp.src([
     path.join(config.paths.src, '/**/*'),
-    path.join('!' + config.paths.src, '/**/*.{' + config.extensions.fonts.join(',') + '}'),
     path.join('!' + config.paths.src, '/**/*.{' + config.extensions.styles.join(',') + '}'),
     path.join('!' + config.paths.src, '/**/*.{' + config.extensions.scripts.join(',') + '}'),
-    path.join('!' + config.paths.src, '/**/*.{' + config.extensions.images.join(',') + '}'),
     path.join('!' + config.paths.src, '/**/*.{' + config.extensions.templates.join(',') + '}')
   ])
     .pipe(fileFilter)
-    .pipe(gulp.dest(path.join(config.paths.dest, '/')));
+    .pipe(gulp.dest(path.join(config.paths.tmp, '/')));
 }
 
 gulp.task('other', other);

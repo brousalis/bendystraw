@@ -3,6 +3,7 @@
 var util = require('../util');
 
 var gulp = require('gulp');
+var notifier = require('node-notifier');
 var gutil = require('gulp-util');
 var path = require('path');
 var runSequence = require('run-sequence');
@@ -21,6 +22,7 @@ function server(callback) {
       baseDir: [config.paths.tmp, config.paths.src],
       routes: {'/bower_components': 'bower_components'}
     },
+    open: false,
     port: config.port
   });
 
@@ -29,6 +31,13 @@ function server(callback) {
   .on('change', function() {
     runSequence('inject', reload)
   });
+
+  notifier.notify({
+    title: 'bendystraw',
+    message: 'Server is up and running on port: ' + config.port,
+    icon: path.join(__dirname, '../lib/logo.png'),
+    sound: true
+  })
 
   callback();
 }
