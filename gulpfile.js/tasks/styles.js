@@ -16,10 +16,7 @@ var autoprefixer = require('gulp-autoprefixer');
 function styles() {
   var dest = path.join(config.paths.tmp, config.paths.styles);
 
-  return gulp.src([
-    path.join(config.paths.src, config.paths.styles, '**/*.{' + config.extensions.styles + '}'),
-    path.join(config.paths.src, config.paths.scripts, '**/*.{' + config.extensions.styles + '}')
-  ])
+  return gulp.src(path.join(config.paths.src, config.paths.styles, '**/*.{' + config.extensions.styles + '}'))
     // .pipe(gulpif(util.fileExists('bower.json'), wiredep({ directory: 'bower_components' })))
     // .on('error', util.errorHandler('wiredep'))
     .pipe(gulpif(config.sass.sourcemaps, sourcemaps.init()))
