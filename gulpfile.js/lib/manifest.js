@@ -1,9 +1,10 @@
 'use strict';
 // TODO: use https://github.com/npm/read-package-json
+var fs = require('fs');
 
 // Reads out the repo
 function repo() {
-  var manifest = exports.manifest();
+  var manifest = exports.file();
   var repo = manifest.repository && /git@github\.com:([\w-]+)\/([\w-]+)\.git/.exec(manifest.repository.url);
   if (!repo) repo = /git\:\/\/github\.com\/([\w-]+)\/([\w-]+)\.git/.exec(manifest.repository.url);
   return repo;
@@ -15,7 +16,7 @@ exports.file = function() {
 }
 
 exports.version = function() {
-  return 'v' + exports.manifest().version
+  return 'v' + exports.file().version
 }
 
 exports.owner = function() {
