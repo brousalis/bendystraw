@@ -36,7 +36,7 @@ function env() {
   // Parse the .env to an object
   fileContent = dotenv.parse(fileContent);
 
-  if (config.angular) {
+  if (config.angular.enabled) {
     // Wrap the env object in a main key, easier to include in Angular
     var tmp = {};
     tmp[config.envConstant] = fileContent;
@@ -51,13 +51,13 @@ function env() {
 
   // If not using angular, use a global variable for the env path
   // ex: Settings = {"API": "http://localhost"}
-  if (!config.angular) {
+  if (!config.angular.enabled) {
     fileContent = config.envConstant + " = " + fileContent;
   }
 
   // Write the app config to an env file
   return b2v.stream(new Buffer(fileContent), 'env.js')
-    .pipe(gulpif(config.angular, gulpNgConfig(config.envModule, ngConfig))
+    .pipe(gulpif(config.angular.enabled, gulpNgConfig(config.angular.envModule, ngConfig))
     .on('error', util.errorHandler('env')))
     .pipe(gulp.dest(dest));
 }

@@ -35,7 +35,7 @@ function build() {
   return gulp.src(path.join(config.paths.tmp, '*.html'))
     .pipe(assets = useref.assets())
     .pipe(jsFilter)
-    .pipe(gulpif(config.angular, ngAnnotate()))
+    .pipe(gulpif(config.angular.enabled, ngAnnotate()))
     .pipe(uglify()).on('error', util.errorHandler('uglify'))
     .pipe(jsFilter.restore())
     .pipe(cssFilter)

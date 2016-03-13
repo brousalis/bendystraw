@@ -6,7 +6,6 @@ var path = require('path');
 
 var gulp = require('gulp');
 var gulpif = require('gulp-if');
-var wiredep = require('wiredep').stream;
 var browserSync = require('browser-sync').get('server');
 var sourcemaps = require('gulp-sourcemaps');
 var sass = require('gulp-sass');
@@ -17,14 +16,12 @@ function styles() {
   var dest = path.join(config.paths.tmp, config.paths.styles);
 
   return gulp.src(path.join(config.paths.src, config.paths.styles, '**/*.{' + config.extensions.styles + '}'))
-    // .pipe(gulpif(util.fileExists('bower.json'), wiredep({ directory: 'bower_components' })))
-    // .on('error', util.errorHandler('wiredep'))
     .pipe(gulpif(config.sass.sourcemaps, sourcemaps.init()))
-    .pipe(sass(config.sass.compiler))
+    .pipe(gulpif(config.sass.enabled, sass(config.sass.compiler)))
     .on('error', util.errorHandler('sass'))
-    .pipe(autoprefixer())
+    .pipe(gulpif(config.sass.autoprefixer, autoprefixer()))
     .on('error', util.errorHandler('autoprefixer'))
-    .pipe(sourcemaps.write())
+    .pipe(gulpif(config.sass.sourcemaps, sourcemaps.write()))
     .pipe(gulp.dest(dest))
     .pipe(browserSync.stream({match: "**/*.css"}));
 }

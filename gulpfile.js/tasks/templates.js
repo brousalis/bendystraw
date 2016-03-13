@@ -14,9 +14,9 @@ var preprocess = require('gulp-preprocess');
 // Takes the compiled html files, minifys them, then adds them to the Angular template cache file.
 gulp.task('templates', ['markup'], function(callback) {
   return gulp.src(path.join(config.paths.tmp, config.paths.scripts, '/**/*.html'))
-    .pipe(minifyHtml(config.html))
-    .pipe(gulpif(config.angular, angularTemplateCache('templates.js', { module: config.templateModule, root: config.paths.scripts, standalone: true })))
-    .pipe(gulpif(config.angular, gulp.dest(path.join(config.paths.tmp, '/templates'))))
+    .pipe(minifyHtml(config.html.minifyOptions))
+    .pipe(gulpif(config.angular.enabled, angularTemplateCache('templates.js', { module: config.templateModule, root: config.paths.scripts, standalone: true })))
+    .pipe(gulpif(config.angular.enabled, gulp.dest(path.join(config.paths.tmp, '/templates'))))
     .pipe(browserSync.stream());
 });
 
@@ -26,7 +26,7 @@ gulp.task('markup', function(callback) {
 
   return gulp.src(path.join(config.paths.src, config.paths.scripts, '/**/*.{' + config.extensions.templates + '}'))
     .pipe(changed(dest, { extension: '.html' }))
-    .pipe(gulpif(config.eco.enabled, eco({ basePath: config.eco.basePath === null ? path.join(config.paths.src, config.paths.scripts) : config.eco.basePath })))
+    .pipe(gulpif(config.html.preprocessor, config.html.preprocessor(config.html.preprocessorOptions)))
     .pipe(preprocess({ context: { NODE_ENV: process.env.NODE_ENV } }))
     .pipe(gulp.dest(dest));
 });

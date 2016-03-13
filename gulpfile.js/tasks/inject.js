@@ -35,7 +35,7 @@ function inject(callback) {
     path.join('!' + config.paths.tmp, config.paths.scripts, '/**/*.mock.js'),
     path.join('!' + config.paths.src, config.paths.vendor)
   ])
-  .pipe(gulpif(config.angular, angularFilesort()))
+  .pipe(gulpif(config.angular.enabled, angularFilesort()))
   .on('error', util.errorHandler('angularFilesort'));
 
   var injectScriptsOptions = {
@@ -62,7 +62,7 @@ function inject(callback) {
   return gulp.src(path.join(config.paths.src, '/*.html'))
     .pipe(gulpif(util.fileExists('bower.json'), wiredep({ directory: 'bower_components' })))
     .on('error', util.errorHandler('wiredep'))
-    .pipe(gulpif(config.angular, ginject(injectTemplates, injectTemplatesOptions)))
+    .pipe(gulpif(config.angular.enabled, ginject(injectTemplates, injectTemplatesOptions)))
     .pipe(ginject(injectStyles, injectStylesOptions))
     .pipe(ginject(injectVendor, injectVendorOptions))
     .pipe(ginject(injectScripts, injectScriptsOptions))

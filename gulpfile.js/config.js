@@ -11,7 +11,9 @@ var settings = {
     src: 'source', // Source folder for the app
     dest: 'build', // Destination for the production build
     tmp: '.dev', // Temporary development build folder
-    scripts: 'app', // Folder where main javascript files are located
+
+    // All of these paths are located INSIDE the paths.src (source/) folder
+    scripts: 'app', // Folder where main javascript files are located (source/app)
     styles: 'stylesheets', // Stylesheets folder
     images: 'images', // Image folder
     vendor: 'vendor', // Third party scripts that aren't bower components
@@ -19,21 +21,39 @@ var settings = {
     tests: 'tests' // Folder for end to end tests
   },
 
-  port: '4567',  // Port to run the server on
+  // Name for env settings object,
+  // either Angular module constant or global variable
+  envConstant: 'ENV',
 
-  // Angular specific config
-  angular: true, // Turn on angular annotation and file sorting
-  envModule: 'env', // Angular module name for the env file
-  envConstant: 'ENV', // Constant name for env file, either Angular module or global on window
-  templateModule: 'templates', // Angular module name for template cache
+  browsersync: { // Server config
+    port: '4567',  // Port to run the server on
+    open: true, // Opens a browser tab with the app when the server starts
+  },
 
-  // Support JST/ECO template compilation
-  eco: {
-    enabled: false,
-    basePath: null // Path to strip out of the JST name
+  angular: { // Angular specific config
+    enabled: true, // Turn on Angular specific features of Bendystraw
+    templateCache: true, // Turn on Angular templateCache compilation
+    templateModule: 'templates', // Module name for compiled templates file
+    envModule: 'env', // Module name for the compiled env settings file
+  },
+
+  javascript: { // Javascript settings
+    coffeescript: true,
+    sourcemaps: true
+  },
+
+  html: { // Support template preprocessing
+    preprocessor: null, // Use a custom html preprocessor, require('gulp-haml')
+                        // Must be gulp-friendly!
+    preprocessorOptions: { // Pass options into the preprocessor
+    },
+    minifyOptions: { // Options for html-min
+    }
   },
 
   sass: { // Options for the sass compiler
+    enabled: true,
+    autoprefixer: true,
     sourcemaps: true,
     compiler: {
       indentedSyntax: true,
@@ -47,11 +67,8 @@ var settings = {
     use: [ require('imagemin-pngquant')() ]
   },
 
-  html: { // Options for html minification
-  },
-
-  bowerImages: [ // Images to copy into project from bower_components
-    // 'bower_components/rolodex/**/*'
+  bowerImages: [ // Images to copy from bower_components into the project
+    // 'bower_components/package/**/*'
   ],
 
   extensions: { // Used as a reference in a couple tasks
