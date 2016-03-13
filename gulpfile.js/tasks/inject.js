@@ -70,6 +70,6 @@ function inject(callback) {
     .pipe(gulp.dest(config.paths.tmp));
 }
 
-gulp.task('inject', ['templates', 'scripts', 'vendor', 'styles', 'env', 'images'], inject);
+gulp.task('inject', ['templates', 'scripts', 'vendor', 'misc', 'styles', 'env', 'images'], inject);
 
 module.exports = inject;

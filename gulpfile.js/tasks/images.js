@@ -33,7 +33,7 @@ gulp.task('images:optimize', function(callback) {
 });
 
 // Optimize all images and put in the build folder
-function buildImages(callback) {
+function buildImages() {
   return gulp.src(path.join(config.paths.src, config.paths.images, '**/*'))
     .pipe(imagemin(config.images))
     .pipe(gulp.dest(path.join(config.paths.dest, config.paths.images)));
@@ -41,7 +41,7 @@ function buildImages(callback) {
 
 // Grab images from bower_components, optimize them, then put them in the build folder
 // This is only used in the final build
-function buildBowerImages(callback) {
+function buildBowerImages() {
   return gulp.src(config.bowerImages)
     .pipe(filter('**/*.{' + config.extensions.images.join(',') + '}'))
     .pipe(rename(imageFolder))
@@ -51,8 +51,9 @@ function buildBowerImages(callback) {
 // Prepares all of the images for the build. Makes sure bower_component images have been
 // optimized and moved into build folder, then does the rest of the images.
 gulp.task('images:build', function(callback) {
-  buildBowerImages(callback);
-  buildImages(callback);
+  buildBowerImages();
+  buildImages();
+  callback();
 });
 
 module.exports = function(){};

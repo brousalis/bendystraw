@@ -11,7 +11,7 @@ var flatten = require('gulp-flatten');
 
 // Only applies to fonts from bower dependencies
 // Custom fonts are handled by the "other" task
-function fonts() {
+function fonts(callback) {
   if (!util.fileExists('bower.json')) return;
 
   return gulp.src(mainBowerFiles())
@@ -20,6 +20,6 @@ function fonts() {
     .pipe(gulp.dest(path.join(config.paths.dest, '/fonts/')));
 }
 
-gulp.task('fonts', fonts);
+gulp.task('fonts:build', fonts);
 
 module.exports = fonts;
