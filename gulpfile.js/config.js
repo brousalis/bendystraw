@@ -21,14 +21,14 @@ var settings = {
     tests: 'tests' // Folder for end to end tests
   },
 
+  browserSync: { // Server config
+    port: 4567,  // Port to run the server on
+    open: true, // Opens a browser tab with the app when the server starts
+  },
+
   // Name for env settings object,
   // either Angular module constant or global variable
   envConstant: 'ENV',
-
-  browsersync: { // Server config
-    port: '4567',  // Port to run the server on
-    open: true, // Opens a browser tab with the app when the server starts
-  },
 
   angular: { // Angular specific config
     enabled: true, // Turn on Angular specific features of Bendystraw
@@ -43,11 +43,9 @@ var settings = {
   },
 
   html: { // Support template preprocessing
-    preprocessor: function(){} , // Use a custom html preprocessor (the gulp variant!), require('gulp-haml')
-    preprocessorOptions: { // Pass options into the preprocessor
-    },
-    minifyOptions: { // Options for html-min
-    }
+    preprocessor: false, // Use a custom html preprocessor (the gulp variant!), require('gulp-haml')
+    preprocessorOptions: {}, // Pass options into the preprocessor
+    minifyOptions: {} // Options for html-min
   },
 
   sass: { // Options for the sass compiler

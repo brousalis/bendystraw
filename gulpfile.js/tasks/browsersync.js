@@ -23,8 +23,8 @@ function server(callback) {
       baseDir: [config.paths.tmp, config.paths.src],
       routes: {'/bower_components': 'bower_components'}
     },
-    open: config.browsersync.open,
-    port: config.browsersync.port,
+    open: config.browserSync.open,
+    port: config.browserSync.port,
     ghostMode: true,
     logPrefix: function() {
       return gutil.colors.green('[bendystraw] ');
@@ -45,7 +45,7 @@ gulp.task('browsersync', server);
 gulp.task('notify', function(callback) {
   notifier.notify({
     title: 'bendystraw',
-    message: 'Server is running on localhost:' + config.browsersync.port,
+    message: 'Server is running on localhost:' + config.browserSync.port,
     icon: path.join(__dirname, '../lib/logo.png'),
     sound: true
   })

@@ -61,7 +61,7 @@
     "gulp-zip": "^3.0.2",
     "imagemin-pngquant": "^4.2.0",
     "karma": "~0.13.16",
-    "lodash": "^3.10.1",
+    "lodash": "^4.6.1",
     "main-bower-files": "~2.8.0",
     "minimist": "^1.2.0",
     "node-notifier": "^4.5.0",

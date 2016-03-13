@@ -25,7 +25,7 @@ gulp.task('markup', function(callback) {
 
   return gulp.src(path.join(config.paths.src, config.paths.scripts, '/**/*.{' + config.extensions.templates + '}'))
     .pipe(changed(dest, { extension: '.html' }))
-    .pipe(gulpif(config.html.preprocessor, config.html.preprocessor(config.html.preprocessorOptions)))
+    .pipe(gulpif(config.html.preprocessing, config.html.preprocessor(config.html.preprocessorOptions)))
     .pipe(preprocess({ context: { NODE_ENV: process.env.NODE_ENV } }))
     .pipe(gulp.dest(dest));
 });
