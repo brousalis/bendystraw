@@ -19,7 +19,7 @@ function scripts() {
   return gulp.src(path.join(config.paths.src, config.paths.scripts, '**/*.{' + config.extensions.scripts + '}'))
     .pipe(changed(dest, { extension: '.js' }))
     .pipe(gulpif(config.javascript.sourcemaps, sourcemaps.init()))
-    .pipe(gulpif(config.javascript.enabled, coffee()))
+    .pipe(gulpif(config.javascript.coffeescript, coffee()))
     .on('error', util.errorHandler('coffeescript'))
     .pipe(gulpif(config.angular.enabled, ngAnnotate()))
     .pipe(gulpif(config.javascript.sourcemaps, sourcemaps.write()))

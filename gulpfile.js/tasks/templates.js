@@ -4,7 +4,6 @@ var path = require('path');
 
 var gulp = require('gulp');
 var gulpif = require('gulp-if');
-var eco = require('gulp-eco');
 var browserSync = require('browser-sync').get('server');
 var minifyHtml = require('gulp-minify-html');
 var angularTemplateCache = require('gulp-angular-templatecache');

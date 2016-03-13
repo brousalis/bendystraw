@@ -43,8 +43,7 @@ var settings = {
   },
 
   html: { // Support template preprocessing
-    preprocessor: null, // Use a custom html preprocessor, require('gulp-haml')
-                        // Must be gulp-friendly!
+    preprocessor: function(){} , // Use a custom html preprocessor (the gulp variant!), require('gulp-haml')
     preprocessorOptions: { // Pass options into the preprocessor
     },
     minifyOptions: { // Options for html-min
