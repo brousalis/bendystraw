@@ -19,7 +19,7 @@ function imageFolder(path) {
 // Move all of the images from bower components into the dev images folder
 // This is used by `inject`
 gulp.task('images', function(callback) {
-  return gulp.src(config.bowerImages)
+  return gulp.src(config.images.bower)
     .pipe(filter('**/*.{' + config.extensions.images.join(',') + '}'))
     .pipe(rename(imageFolder))
     .pipe(gulp.dest(path.join(config.paths.tmp, config.paths.images)));
@@ -42,7 +42,7 @@ function buildImages() {
 // Grab images from bower_components, optimize them, then put them in the build folder
 // This is only used in the final build
 function buildBowerImages() {
-  return gulp.src(config.bowerImages)
+  return gulp.src(config.images.bower)
     .pipe(filter('**/*.{' + config.extensions.images.join(',') + '}'))
     .pipe(rename(imageFolder))
     .pipe(gulp.dest(path.join(config.paths.dest, config.paths.images)));

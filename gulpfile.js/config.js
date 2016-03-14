@@ -13,9 +13,9 @@ var settings = {
     tmp: '.dev', // Temporary development build folder
 
     // All of these paths are located INSIDE the paths.src (source/) folder
-    scripts: 'app', // Folder where main javascript files are located (source/app)
+    scripts: 'javascripts', // Folder where main javascript files are located
     styles: 'stylesheets', // Stylesheets folder
-    images: 'images', // Image folder
+    images: 'images', // Images folder
     vendor: 'vendor', // Third party scripts that aren't bower components
     fonts: 'fonts', // Fonts folder
     tests: 'tests' // Folder for end to end tests
@@ -26,23 +26,23 @@ var settings = {
     open: true, // Opens a browser tab with the app when the server starts
   },
 
-  // Name for env settings object,
-  // either Angular module constant or global variable
+  // Name for env settings object, either Angular module constant or global variable
   envConstant: 'ENV',
 
   angular: { // Angular specific config
-    enabled: true, // Turn on Angular specific features of Bendystraw
+    enabled: false , // Turn on Angular specific features of Bendystraw
     templateCache: true, // Turn on Angular templateCache compilation
     templateModule: 'templates', // Module name for compiled templates file
     envModule: 'env', // Module name for the compiled env settings file
   },
 
-  javascript: { // Javascript settings
-    coffeescript: true, // Enable coffeescript compilation
+  scripts: { // Javascript settings
+    coffeescript: false, // Enable coffeescript compilation
     sourcemaps: true, // Enable sourcemap generation
-    inject: [ // In what order should COMPILED scripts be injected into the template, and bundled on build
-      // 'source/javascripts/components/**/*.js',
-      // 'source/javascripts/models/**/*.js',
+    inject: [ // In what order should COMPILED scripts be injected into the template and bundled on build
+      // Paths taken relative to the src (default 'source') folder.
+      // ex: 'javascripts/components/**/*.js',
+      // ex: 'javascripts/models/**/*.js',
     ]
   },
 
@@ -60,27 +60,23 @@ var settings = {
       indentedSyntax: true,
       imagePath: 'images',
       precision: 8
-    },
-    inject: [ // In what order should COMPILED styles be injected into the template, and bundled on build
-      // 'source/stylesheets/**/*.css'
-    ]
+    }
   },
 
   images: { // Options for image optimizer
-    progressive: true,
-    use: [ require('imagemin-pngquant')() ]
+    progressive: true, // Enables progressive jpeg optimizations
+    use: [ require('imagemin-pngquant')() ], // Which image optimizer to use
+    bower: [ // Images to copy from bower_components into the project
+      // ex: 'bower_components/package/**/*'
+    ]
   },
 
-  bowerImages: [ // Images to copy from bower_components into the project
-    // 'bower_components/package/**/*'
-  ],
-
   extensions: { // Used as a reference in a couple tasks
-    scripts: ['js', 'coffee', 'js.coffee'], // js preprocessor extensions
-    templates: ['html', 'haml', 'jade', 'slim', 'jst', 'eco', 'jst.eco'], // html preprocessor extensions
-    styles: ['css', 'scss', 'sass', 'style', 'css.scss', 'css.sass'], // css preprocessor extensions
-    fonts: ['eot', 'svg', 'ttf', 'woff', 'woff2', 'otf'], // font extensions
-    images: ['jpg', 'jpeg', 'png', 'svg', 'gif'] // image extensions
+    scripts: ['js', 'coffee', 'js.coffee'],
+    templates: ['html', 'haml', 'jade', 'slim', 'jst', 'eco', 'jst.eco'],
+    styles: ['css', 'scss', 'sass', 'style', 'css.scss', 'css.sass'],
+    fonts: ['eot', 'svg', 'ttf', 'woff', 'woff2', 'otf'],
+    images: ['jpg', 'jpeg', 'png', 'svg', 'gif']
   }
 };
 

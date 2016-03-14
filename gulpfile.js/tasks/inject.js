@@ -26,11 +26,18 @@ function inject(callback) {
   };
 
   // Inject the javascript files into the index
-  var paths = null;
-  var scripts = config.javascript.inject;
+  var paths = [];
+  var scripts = config.scripts.inject;
 
   if (scripts.length > 0) {
-    paths = scripts
+    scripts.forEach(function(path) {
+      // If the string beings with !, stub in the tmp directory after it
+      if (/^\!/.test(path)) {
+        paths.push(path.substr(0, 1) + config.paths.tmp + '/' + path.substr(1))
+      } else {
+        paths.push(config.paths.tmp + '/' + path)
+      }
+    });
   } else {
     paths = [
       path.join(config.paths.tmp, config.paths.scripts, '/**/*.js'),
