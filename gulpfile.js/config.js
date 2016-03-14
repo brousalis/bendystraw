@@ -38,8 +38,12 @@ var settings = {
   },
 
   javascript: { // Javascript settings
-    coffeescript: true,
-    sourcemaps: true
+    coffeescript: true, // Enable coffeescript compilation
+    sourcemaps: true, // Enable sourcemap generation
+    inject: [ // In what order should COMPILED scripts be injected into the template, and bundled on build
+      // 'source/javascripts/components/**/*.js',
+      // 'source/javascripts/models/**/*.js',
+    ]
   },
 
   html: { // Support template preprocessing
@@ -48,15 +52,18 @@ var settings = {
     minifyOptions: {} // Options for html-min
   },
 
-  sass: { // Options for the sass compiler
-    enabled: true,
+  styles: { // Options for the sass compiler
+    sass: true,
     autoprefixer: true,
     sourcemaps: true,
     compiler: {
       indentedSyntax: true,
       imagePath: 'images',
       precision: 8
-    }
+    },
+    inject: [ // In what order should COMPILED styles be injected into the template, and bundled on build
+      // 'source/stylesheets/**/*.css'
+    ]
   },
 
   images: { // Options for image optimizer

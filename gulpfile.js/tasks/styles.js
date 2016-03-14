@@ -16,12 +16,12 @@ function styles() {
   var dest = path.join(config.paths.tmp, config.paths.styles);
 
   return gulp.src(path.join(config.paths.src, config.paths.styles, '**/*.{' + config.extensions.styles + '}'))
-    .pipe(gulpif(config.sass.sourcemaps, sourcemaps.init()))
-    .pipe(gulpif(config.sass.enabled, sass(config.sass.compiler)))
+    .pipe(gulpif(config.styles.sourcemaps, sourcemaps.init()))
+    .pipe(gulpif(config.styles.sass, sass(config.styles.compiler)))
     .on('error', util.errorHandler('sass'))
-    .pipe(gulpif(config.sass.autoprefixer, autoprefixer()))
+    .pipe(gulpif(config.styles.autoprefixer, autoprefixer()))
     .on('error', util.errorHandler('autoprefixer'))
-    .pipe(gulpif(config.sass.sourcemaps, sourcemaps.write()))
+    .pipe(gulpif(config.styles.sourcemaps, sourcemaps.write()))
     .pipe(gulp.dest(dest))
     .pipe(browserSync.stream({match: "**/*.css"}));
 }

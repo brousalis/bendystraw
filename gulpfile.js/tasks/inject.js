@@ -25,16 +25,22 @@ function inject(callback) {
     addRootSlash: false
   };
 
-  // Sort the JS files so Angular dependency injection doesn't freak out
-  var injectScripts = gulp.src([
-    path.join(config.paths.src, config.paths.scripts, '/**/*.js'),
-    path.join(config.paths.tmp, config.paths.scripts, '/**/*.js'),
-    path.join('!' + config.paths.src, config.paths.scripts, '/**/*.spec.js'),
-    path.join('!' + config.paths.src, config.paths.scripts, '/**/*.mock.js'),
-    path.join('!' + config.paths.tmp, config.paths.scripts, '/**/*.spec.js'),
-    path.join('!' + config.paths.tmp, config.paths.scripts, '/**/*.mock.js'),
-    path.join('!' + config.paths.src, config.paths.vendor)
-  ])
+  // Inject the javascript files into the index
+  var paths = null;
+  var scripts = config.javascript.inject;
+
+  if (scripts.length > 0) {
+    paths = scripts
+  } else {
+    paths = [
+      path.join(config.paths.tmp, config.paths.scripts, '/**/*.js'),
+      path.join('!' + config.paths.tmp, config.paths.scripts, '/**/*.spec.js'),
+      path.join('!' + config.paths.tmp, config.paths.scripts, '/**/*.mock.js'),
+    ]
+  }
+  console.log(paths)
+
+  var injectScripts = gulp.src(paths)
   .pipe(gulpif(config.angular.enabled, angularFilesort()))
   .on('error', util.errorHandler('angularFilesort'));
 
