@@ -62,7 +62,7 @@ gulp.task('build', function(callback) {
 
   runSequence(
     'clean',
-    ['vendor:build', 'misc:build', 'images:build', 'fonts:build'],
+    ['misc:build', 'images:build', 'fonts:build'],
     'compile',
     callback
   );
