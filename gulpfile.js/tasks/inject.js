@@ -15,17 +15,15 @@ var angularFilesort = require('gulp-angular-filesort');
 // Also uses wiredep to include libs from bower_components
 function inject(callback) {
 
-  // Grab all of the css files
-  var injectStyles = gulp.src([
-    path.join(config.paths.tmp, config.paths.styles, '/**/*.css')
-  ], { read: false });
+  // Grab all of the compiled css files
+  var injectStyles = gulp.src(path.join(config.paths.tmp, config.paths.styles, '/**/*.css'), { read: false });
 
   var injectStylesOptions = {
     ignorePath: [config.paths.src, path.join(config.paths.tmp)],
     addRootSlash: false
   };
 
-  // Inject the javascript files into the index
+  // Inject the compiled javascript files into the index
   var paths = [];
   var scripts = config.scripts.inject;
 
@@ -45,13 +43,21 @@ function inject(callback) {
       path.join('!' + config.paths.tmp, config.paths.scripts, '/**/*.mock.js'),
     ]
   }
-  console.log(paths)
 
   var injectScripts = gulp.src(paths)
-  .pipe(gulpif(config.angular.enabled, angularFilesort()))
-  .on('error', util.errorHandler('angularFilesort'));
+    .pipe(gulpif(config.angular.enabled, angularFilesort()))
+    .on('error', util.errorHandler('angularFilesort'));
 
   var injectScriptsOptions = {
+    ignorePath: [config.paths.src, config.paths.tmp],
+    addRootSlash: false
+  };
+
+  // Inject file containing environment settings, just incase
+  // this file needs to be imported before others
+  var injectEnv = gulp.src(path.join(config.paths.tmp, config.paths.scripts, '/env.js'), { read: false });
+  var injectEnvOptions = {
+    starttag: '<!-- inject:env -->',
     ignorePath: [config.paths.src, config.paths.tmp],
     addRootSlash: false
   };
@@ -77,6 +83,7 @@ function inject(callback) {
     .on('error', util.errorHandler('wiredep'))
     .pipe(gulpif(config.angular.enabled, ginject(injectTemplates, injectTemplatesOptions)))
     .pipe(ginject(injectStyles, injectStylesOptions))
+    .pipe(ginject(injectEnv, injectEnvOptions))
     .pipe(ginject(injectVendor, injectVendorOptions))
     .pipe(ginject(injectScripts, injectScriptsOptions))
     .pipe(preprocess({ context: { NODE_ENV: process.env.NODE_ENV } }))
