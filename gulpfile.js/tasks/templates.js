@@ -13,7 +13,7 @@ var preprocess = require('gulp-preprocess');
 // Takes the compiled html files, minifys them, then adds them to the Angular template cache file.
 gulp.task('templates', ['markup'], function(callback) {
   return gulp.src(path.join(config.paths.tmp, config.paths.scripts, '/**/*.html'))
-    .pipe(minifyHtml(config.html.minifyOptions))
+    .pipe(gulpif(config.html.minify, minifyHtml(config.html.minifyOptions)))
     .pipe(gulpif(config.angular.enabled, angularTemplateCache('templates.js', { module: config.templateModule, root: config.paths.scripts, standalone: true })))
     .pipe(gulpif(config.angular.enabled, gulp.dest(path.join(config.paths.tmp, '/templates'))))
     .pipe(browserSync.stream());
