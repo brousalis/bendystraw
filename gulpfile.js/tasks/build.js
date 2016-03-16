@@ -54,8 +54,6 @@ function build() {
     .pipe(gulp.dest(path.join(config.paths.dest, '/')))
 }
 
-gulp.task('compile', ['inject'], build);
-
 // Builds the app to be deployed to production.
 gulp.task('build', function(callback) {
   util.log('Building app in ' + gutil.colors.yellow(process.env.NODE_ENV) + ' environment');
@@ -63,8 +61,8 @@ gulp.task('build', function(callback) {
   runSequence(
     'clean',
     ['misc:build', 'images:build', 'fonts:build'],
-    'compile',
-    callback
+    'inject',
+    build
   );
 });
 
