@@ -32,10 +32,11 @@ function server(callback) {
   });
 
   // Watch the root index file for changes
-  browserSync.watch(path.join(config.paths.src, '*.html'))
-  .on('change', function() {
-    runSequence('inject', reload)
-  });
+  browserSync
+    .watch(path.join(config.paths.src, '*.html'))
+    .on('change', function() {
+      runSequence('inject', reload)
+    });
 
   callback();
 }

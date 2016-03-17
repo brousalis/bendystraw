@@ -45,12 +45,12 @@ function build() {
     .pipe(useref())
     .pipe(htmlFilter)
     .pipe(preprocess({ context: { NODE_ENV: 'production' } }))
-    .pipe(minifyHtml(config.html))
+    .pipe(gulpif(config.html.minify, minifyHtml(config.html)))
     .pipe(htmlFilter.restore())
     .pipe(gulp.dest(path.join(config.paths.dest, '/')))
-    .pipe(gzip())
+    .pipe(gulpif(config.build.gzip, gzip()))
     .pipe(gulp.dest(path.join(config.paths.dest, '/')))
-    .pipe(zip('build.zip'))
+    .pipe(gulpif(config.build.archive, zip('build.zip')))
     .pipe(gulp.dest(path.join(config.paths.dest, '/')))
 }
 

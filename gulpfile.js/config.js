@@ -72,6 +72,11 @@ var settings = {
     ]
   },
 
+  build: { // Options for compiling the app
+    gzip: true, // Enable gzip compression
+    archive: true, // Zip up the app contents into build.zip (for uploading to GitHub releases)
+  },
+
   extensions: { // Used as a reference in a couple tasks
     scripts: ['js', 'coffee', 'js.coffee'],
     templates: ['html', 'haml', 'jade', 'slim', 'jst', 'eco', 'jst.eco'],
