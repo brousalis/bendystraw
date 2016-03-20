@@ -1,8 +1,9 @@
 'use strict';
 
 var util = require('../util');
+var mvmkdir = require('../lib/mvmkdir');
+
 var path = require('path');
-var spawn = require('child_process').spawn;
 var exec = require('child_process').exec;
 
 var _ = require('lodash');
@@ -27,27 +28,28 @@ function folder() {
   if (_.isString(config.build.folder)) dest = config.build.folder;
   if (_.isFunction(config.build.folder)) dest = config.build.folder();
 
-  util.log('Moving app into ' + gutil.colors.yellow(path.join(config.paths.dest, dest)));
+  // Some fun with SHAs
+  if (config.build.folder === 'sha') {
+    var exec = require('child_process').exec;
+    var git = exec(
+      'git rev-parse HEAD',
+      function (err, stdout, stderr) {
+        dest = stdout.split('\n').join('');
 
-  // ¯\_(ツ)_/¯
-  var mkdir = spawn(
-    'mkdir',
-    ['-p', dest],
-    {cwd: config.paths.dest }
-  );
+        util.log('Moving app into ' + gutil.colors.yellow(path.join(config.paths.dest, dest)));
 
-  mkdir.on('exit', function(code) {
-    if (code === 0) {
-      // Now move them into the folder we just created
-      var mv = exec(
-        'mv * ./' + dest,
-        {cwd: config.paths.dest },
-        function(error, stdout, stderr) {
+        mvmkdir(dest, function() {
           return true;
-        }
-      );
-    }
-  });
+        });
+      }
+    );
+  } else {
+    util.log('Moving app into ' + gutil.colors.yellow(path.join(config.paths.dest, dest)));
+
+    mvmkdir(dest, function() {
+      return true;
+    });
+  }
 }
 
 gulp.task('folder', folder);
