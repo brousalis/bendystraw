@@ -19,20 +19,13 @@ gulp.task('templates', ['markup'], function(callback) {
     .pipe(browserSync.stream());
 });
 
-function preprocess() {
-  // Always return true, thanks gulp-if
-  return config.html.preprocessor ? config.html.preprocessor(config.html.preprocessorOptions) : true;
-}
-
-console.log(preprocess())
-
 // Compiles changed html files to the dev folder
 gulp.task('markup', function(callback) {
   var dest = path.join(config.paths.tmp, config.paths.scripts);
 
   return gulp.src(path.join(config.paths.src, config.paths.scripts, '/**/*.{' + config.extensions.templates + '}'))
     .pipe(changed(dest, { extension: '.html' }))
-    .pipe(gulpif(config.html.preprocessor, config.html.preprocessor(config.html.preprocessorOptions)))
+    .pipe(gulpif(config.html.preprocessor, config.html.preprocessor ? config.html.preprocessor(config.html.preprocessorOptions) : true))
     .pipe(preprocess({ context: { NODE_ENV: process.env.NODE_ENV } }))
     .pipe(gulp.dest(dest));
 });
