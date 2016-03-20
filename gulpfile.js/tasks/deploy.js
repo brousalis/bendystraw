@@ -112,7 +112,7 @@ function deploy(commits) {
 }
 
 gulp.task('deploy', function(callback) {
-  if (!util.fileExists('build/build.zip')) {
+  if (!util.fileExists(config.paths.dest)) {
     util.errorHandler('deploy')(new Error('You need to build the application first. Run `gulp build`'));
     return;
   }
