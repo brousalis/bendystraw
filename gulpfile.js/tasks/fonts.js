@@ -17,7 +17,7 @@ function fonts(callback) {
   return gulp.src(mainBowerFiles())
     .pipe(filter('**/*.{' + config.extensions.fonts.join(',') + '}'))
     .pipe(flatten())
-    .pipe(gulp.dest(path.join(config.paths.dest, config.paths.fonts)));
+    .pipe(gulp.dest(path.join(config.paths.build, config.paths.fonts)));
 }
 
 gulp.task('fonts:build', fonts);

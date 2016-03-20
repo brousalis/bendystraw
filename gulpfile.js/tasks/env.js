@@ -18,7 +18,7 @@ var gulpNgConfig = require('gulp-ng-config');
 //   .constant('NODE_ENV', "development");
 // So you can access environment variables easier from your Angular app
 function env() {
-  var dest = path.join(config.paths.tmp, config.paths.scripts);
+  var dest = path.join(config.paths.dev, config.paths.scripts);
 
   // Check if we even have a .env file to use
   if (!util.fileExists(util.envFile()))

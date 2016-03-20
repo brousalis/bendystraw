@@ -12,7 +12,7 @@ module.exports = function(folder, callback) {
   var mkdir = spawn(
     'mkdir',
     ['-p', folder],
-    {cwd: config.paths.dest }
+    {cwd: config.paths.build }
   );
 
   mkdir.on('exit', function(code) {
@@ -20,7 +20,7 @@ module.exports = function(folder, callback) {
       // Now move the files into the folder we just created
       var mv = exec(
         'mv * ./' + folder,
-        {cwd: config.paths.dest },
+        {cwd: config.paths.build },
         function(err, stdout, stderr) {
           callback();
         }

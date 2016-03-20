@@ -69,10 +69,10 @@ gulp.task('github-release', function(callback) {
   var date = new Date().toJSON().slice(0,10);
   var message = date + ' Release\n' + (allCommits.markdown || '');
 
-  var dest = config.paths.dest;
+  var dest = config.paths.build;
 
   if (config.build.archive)
-    dest = path.join(config.paths.dest, config.build.archiveName)
+    dest = path.join(config.paths.build, config.build.archiveName)
 
   return gulp.src(dest)
     .pipe(githubRelease({
@@ -92,7 +92,7 @@ function release(callback) {
     return false;
   }
 
-  if (!util.fileExists(config.paths.dest)) {
+  if (!util.fileExists(config.paths.build)) {
     util.errorHandler('deploy')(new Error('You need to build the application first. Run `gulp build`'));
     return;
   }

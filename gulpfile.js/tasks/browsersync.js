@@ -20,7 +20,7 @@ function server(callback) {
   browserSync.init({
     startPath: '/',
     server: {
-      baseDir: [config.paths.tmp, config.paths.src],
+      baseDir: [config.paths.dev, config.paths.src],
       routes: {'/bower_components': 'bower_components'}
     },
     open: config.browserSync.open,

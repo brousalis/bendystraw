@@ -23,7 +23,7 @@ var zip = require('gulp-zip');
 
 // Custom build folder, useful for deployments to a sub folder
 function folder() {
-  var dest = config.paths.dest
+  var dest = config.paths.build
 
   if (_.isString(config.build.folder)) dest = config.build.folder;
   if (_.isFunction(config.build.folder)) dest = config.build.folder();
@@ -36,7 +36,7 @@ function folder() {
       function (err, stdout, stderr) {
         dest = stdout.split('\n').join('');
 
-        util.log('Moving app into ' + gutil.colors.yellow(path.join(config.paths.dest, dest)));
+        util.log('Moving app into ' + gutil.colors.yellow(path.join(config.paths.build, dest)));
 
         mvmkdir(dest, function() {
           return true;
@@ -44,7 +44,7 @@ function folder() {
       }
     );
   } else {
-    util.log('Moving app into ' + gutil.colors.yellow(path.join(config.paths.dest, dest)));
+    util.log('Moving app into ' + gutil.colors.yellow(path.join(config.paths.build, dest)));
 
     mvmkdir(dest, function() {
       return true;
@@ -61,7 +61,7 @@ function compile(callback) {
   var cssFilter = filter('**/*.css');
   var assets;
 
-  return gulp.src(path.join(config.paths.tmp, '*.html'))
+  return gulp.src(path.join(config.paths.dev, '*.html'))
     .pipe(assets = useref.assets())
     .pipe(jsFilter)
     .pipe(gulpif(config.angular.enabled, ngAnnotate()))
@@ -76,11 +76,11 @@ function compile(callback) {
     .pipe(preprocess({ context: { NODE_ENV: 'production' } }))
     .pipe(gulpif(config.html.minify, minifyHtml(config.html)))
     .pipe(htmlFilter.restore())
-    .pipe(gulp.dest(path.join(config.paths.dest, '/')))
+    .pipe(gulp.dest(path.join(config.paths.build, '/')))
     .pipe(gulpif(config.build.gzip, gzip()))
-    .pipe(gulp.dest(path.join(config.paths.dest, '/')))
+    .pipe(gulp.dest(path.join(config.paths.build, '/')))
     .pipe(gulpif(config.build.archive, zip('build.zip')))
-    .pipe(gulp.dest(path.join(config.paths.dest, '/')))
+    .pipe(gulp.dest(path.join(config.paths.build, '/')))
     // .pipe(gulpif(config.build.folder, folder(callback)))
 }
 

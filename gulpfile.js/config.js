@@ -9,8 +9,8 @@ if (process.argv.length > 2) {
 var settings = {
   paths: {
     src: 'source', // Source folder for the app
-    dest: 'build', // Destination for the production build
-    tmp: '.dev', // Temporary development build folder
+    build: 'build', // Destination for the production build
+    dev: '.dev', // Temporary development build folder
 
     // All of these paths are located INSIDE the paths.src (source/) folder
     scripts: 'javascripts', // Folder where main javascript files are located
@@ -37,7 +37,7 @@ var settings = {
   },
 
   scripts: { // Javascript settings
-    coffeescript: false, // Enable coffeescript compilation
+    coffeescript: true, // Enable coffeescript compilation
     sourcemaps: true, // Enable sourcemap generation
     inject: [ // In what order should COMPILED scripts be injected into the template and bundled on build
       // Paths taken relative to the src (default 'source') folder.

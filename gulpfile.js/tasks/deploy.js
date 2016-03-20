@@ -83,8 +83,8 @@ function deploy(commits) {
   util.log('Deploying ' + gutil.colors.yellow(version) + ' to S3 bucket ' + gutil.colors.yellow(options.aws_bucket));
 
   return gulp.src([
-    path.join(config.paths.dest, '*'),
-    path.join(config.paths.dest, '**/*'),
+    path.join(config.paths.build, '*'),
+    path.join(config.paths.build, '**/*'),
   ])
     .pipe(revAll.revision())
     .pipe(publisher.publish())
@@ -112,7 +112,7 @@ function deploy(commits) {
 }
 
 gulp.task('deploy', function(callback) {
-  if (!util.fileExists(config.paths.dest)) {
+  if (!util.fileExists(config.paths.build)) {
     util.errorHandler('deploy')(new Error('You need to build the application first. Run `gulp build`'));
     return;
   }

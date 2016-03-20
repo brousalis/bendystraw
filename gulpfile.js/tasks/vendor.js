@@ -15,12 +15,12 @@ function vendor(dest) {
 }
 
 gulp.task('vendor', function(callback) {
-  vendor(config.paths.tmp)
+  vendor(config.paths.dev)
   callback();
 });
 
 gulp.task('vendor:build', function(callback) {
-  vendor(config.paths.dest)
+  vendor(config.paths.build)
   callback();
 });
 

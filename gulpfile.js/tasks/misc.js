@@ -23,12 +23,12 @@ function misc(dest) {
 }
 
 gulp.task('misc', function(callback) {
-  misc(config.paths.tmp);
+  misc(config.paths.dev);
   callback();
 });
 
 gulp.task('misc:build', function(callback) {
-  misc(config.paths.dest);
+  misc(config.paths.build);
   callback();
 });
 

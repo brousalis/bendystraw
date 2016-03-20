@@ -14,7 +14,7 @@ var autoprefixer = require('gulp-autoprefixer');
 
 // Compile the Sass files and autoprefix them
 function styles() {
-  var dest = path.join(config.paths.tmp, config.paths.styles);
+  var dest = path.join(config.paths.dev, config.paths.styles);
 
   return gulp.src(path.join(config.paths.src, config.paths.styles, '**/*.{' + config.extensions.styles + '}'))
     .pipe(gulpif(config.styles.sourcemaps, sourcemaps.init()))
