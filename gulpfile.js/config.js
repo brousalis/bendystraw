@@ -80,7 +80,8 @@ var settings = {
   build: { // Options for compiling the app
     gzip: true, // Enable gzip compression
     archive: true, // Zip up the app contents into build.zip (for uploading to GitHub releases)
-    archiveName: 'build.zip' // Name of the archive (only .zip supported for now)
+    archiveName: 'build.zip', // Name of the archive (only .zip supported for now)
+    folder: false, // str | function. A custom folder to build into. Useful when needing to deploy into a subfolder
   },
 
   extensions: { // Used as a reference in a couple tasks

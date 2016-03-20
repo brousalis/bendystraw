@@ -2,7 +2,10 @@
 
 var util = require('../util');
 var path = require('path');
+var spawn = require('child_process').spawn;
+var exec = require('child_process').exec;
 
+var _ = require('lodash');
 var gulp = require('gulp');
 var gulpif = require('gulp-if');
 var gutil = require('gulp-util');
@@ -17,16 +20,40 @@ var preprocess = require('gulp-preprocess');
 var gzip = require('gulp-gzip');
 var zip = require('gulp-zip');
 
-// This does a lot.
-// - Uses ngAnnotate to correct the syntax of the Angular dependency injection
-// - Minifies javascript files
-// - Minifies css
-// - Uses useref to concat files into bundles using build: syntax in html
-// - Cachebusting for all assets using rev
-// - Minifies html files
-// - Copies all files into the build folder
-// - Prints out sizes of compiled files
-function build() {
+// Custom build folder, useful for deployments to a sub folder
+function folder() {
+  var dest = config.paths.dest
+
+  if (_.isString(config.build.folder)) dest = config.build.folder;
+  if (_.isFunction(config.build.folder)) dest = config.build.folder();
+
+  util.log('Moving app into ' + gutil.colors.yellow(path.join(config.paths.dest, dest)));
+
+  // ¯\_(ツ)_/¯
+  var mkdir = spawn(
+    'mkdir',
+    ['-p', dest],
+    {cwd: config.paths.dest }
+  );
+
+  mkdir.on('exit', function(code) {
+    if (code === 0) {
+      // Now move them into the folder we just created
+      var mv = exec(
+        'mv * ./' + dest,
+        {cwd: config.paths.dest },
+        function(error, stdout, stderr) {
+          return true;
+        }
+      );
+    }
+  });
+}
+
+gulp.task('folder', folder);
+
+// Compiles, minifies, file injection, asset revisioning.
+function compile(callback) {
   var htmlFilter = filter('*.html');
   var jsFilter = filter('**/*.js');
   var cssFilter = filter('**/*.css');
@@ -52,7 +79,10 @@ function build() {
     .pipe(gulp.dest(path.join(config.paths.dest, '/')))
     .pipe(gulpif(config.build.archive, zip('build.zip')))
     .pipe(gulp.dest(path.join(config.paths.dest, '/')))
+    // .pipe(gulpif(config.build.folder, folder(callback)))
 }
+
+gulp.task('compile', compile);
 
 // Builds the app to be deployed to production.
 gulp.task('build', function(callback) {
@@ -62,8 +92,13 @@ gulp.task('build', function(callback) {
     'clean',
     ['misc:build', 'images:build', 'fonts:build'],
     'inject',
-    build
+    'compile',
+    function() {
+      if (config.build.folder) {
+        folder();
+      }
+    }
   );
 });
 
-module.exports = build;
+module.exports = compile;
