@@ -42,7 +42,7 @@ gulp.task('bump', function(callback) {
 
 // Fetches tags
 gulp.task('fetch', function(callback) {
-  git.fetch('origin', '', {quiet: true}, callback);
+  git.fetch(config.github.upstream, '', {quiet: true}, callback);
 });
 
 // Commits the manifest with the bumped version number
@@ -58,7 +58,7 @@ gulp.task('commit', function(callback) {
 gulp.task('push', function (callback) {
   util.log(gutil.colors.yellow('Pushing version bump to ' + manifest.version()));
 
-  git.push('origin', 'master', callback);
+  git.push(config.github.upstream, config.github.origin, callback);
 });
 
 // Takes the zip'd up build folder and posts it to a GitHub release
@@ -72,7 +72,7 @@ gulp.task('github-release', function(callback) {
   var path = config.paths.dest;
 
   if (config.build.archive)
-    path = path.join(config.paths.dest, 'build.zip')
+    path = path.join(config.paths.dest, config.build.archiveName)
 
   return gulp.src(path)
     .pipe(githubRelease({
@@ -92,7 +92,7 @@ function release(callback) {
     return false;
   }
 
-  if (!util.fileExists('build/index.html')) {
+  if (!util.fileExists(path.join(config.paths.dest, 'index.html'))) {
     util.errorHandler('deploy')(new Error('You need to build the application first. Run `gulp build`'));
     return;
   }

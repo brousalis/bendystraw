@@ -72,14 +72,20 @@ var settings = {
     ]
   },
 
+  github: { // Options for github release
+    upstream: 'origin', // The "upstream" branch to fetch changes from
+    origin: 'master', // Which branch to push the created release and tags to
+  },
+
   build: { // Options for compiling the app
     gzip: true, // Enable gzip compression
     archive: true, // Zip up the app contents into build.zip (for uploading to GitHub releases)
+    archiveName: 'build.zip' // Name of the archive (only .zip supported for now)
   },
 
   extensions: { // Used as a reference in a couple tasks
     scripts: ['js', 'coffee', 'js.coffee'],
-    templates: ['html', 'haml', 'jade', 'slim', 'jst', 'eco', 'jst.eco'],
+    templates: ['html', 'haml', 'jade', 'pug', 'slim', 'jst', 'eco', 'jst.eco'],
     styles: ['css', 'scss', 'sass', 'style', 'css.scss', 'css.sass'],
     fonts: ['eot', 'svg', 'ttf', 'woff', 'woff2', 'otf'],
     images: ['jpg', 'jpeg', 'png', 'svg', 'gif']
