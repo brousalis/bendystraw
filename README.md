@@ -2,11 +2,9 @@
 # bendystraw [![NPM version](https://img.shields.io/npm/v/bendystraw.svg?style=flat-square)](https://www.npmjs.com/package/bendystraw)
 
 <img src="http://i.imgur.com/Pdmetdq.png" alt="bendystraw" align="right" />
-bendystraw is a set of [Gulp](https://github.com/gulpjs/gulp/) tasks for developing and deploying Angular apps.
+bendystraw is a set of [Gulp](https://github.com/gulpjs/gulp/) tasks for developing and deploying JavaScript-based apps.
 
 Some features include [Browersync](https://www.browsersync.io/) development, multiple app environments and configuration, GitHub changelog and release creation, Slack integration, and more...
-
-To see an example of an Angular app using bendystraw, check out the [example](https://github.com/brousalis/bendystraw-test) repo.
 
 ## Usage
 
@@ -20,13 +18,13 @@ require('bendystraw')()
 
 ## Features
 - **JS:**
-  - Built for Angular
+  - Built-in Angular features
     - Dependency injection annotations
     - Compiles html files to the Angular template cache
     - Automatic file sort to avoid injection issues
   - Coffeescript support
   - Bower components injected through [wiredep](https://github.com/taptapship/wiredep)
-  - Multiple script bundles through [useref](https://github.com/jonkemp/useref)
+  - Multiple script bundles created with [useref](https://github.com/jonkemp/useref)
 - **CSS:**
   - Sass support, indented or scss using node-sass
   - Autoprefixer
@@ -61,17 +59,21 @@ command | description
 `gulp deploy` | deploys `/build` to an S3 bucket, posts to Slack if configured and successful
 `gulp test` | runs tests using karma runner
 
+All of these tasks can be run in different environments, ie: `gulp build --env staging`. This will then load `.env.staging` into the compiled app, if you're utilizing this feature.
+
 ## Config
 
 To configure settings and paths, do this:
 ```javascript
 require('bendystraw')({
   paths: {
-    src: 'app', // override main javascript folder
-    dest: 'public', // override the build folder
-    styles: 'css' // override the stylesheet folder
+    src: 'app', // Override main javascript folder
+    build: 'public', // Override the build folder
+    styles: 'css' // Override the stylesheet folder
   },
-  port: 42 // port to launch the server on
+  scripts: {
+    coffeescript: true, // Enable coffeescript 
+  }
 })
 ```
 Check out the default config values [here](https://github.com/brousalis/bendystraw/blob/master/gulpfile.js/config.js)
@@ -83,8 +85,8 @@ These tasks are used in the primary tasks, but you can run them manually.
 command | description
 ------- | ------------
 `gulp clean` | deletes the `/build` and `/.dev` folders
-`gulp scaffold` | creates folders/files based on the config
 `gulp ship` | chains together `build`, `release`, `deploy`
+`gulp scaffold` | creates folders/files based on the config
 `gulp scripts` | compiles coffeescript files to javascript into the `./dev`
 `gulp styles` | compiles sass files to css into the `/.dev`
 `gulp templates` | compiles the html files then creates a templates.js file
@@ -92,9 +94,9 @@ command | description
 `gulp images` | copy images from bower components into dev folder
 `gulp images:build` | optimize images and put them in the build folder
 `gulp images:optimize` | optimizes images from source folder and into dev folder
-`gulp env` | creates a env.js file from a .env file
+`gulp env` | creates a env.js file from a .env (dotenv) file
 `gulp vendor` | copies third party libs from the `/vendor` folder into dev folder
-`gulp other` | copies extra folders/files in the source folder into build folder
+`gulp misc` | copies extra folders/files in the source folder into build folder
 
 ## Features
 
@@ -112,7 +114,7 @@ gulp-inject looks for this in your html file:
 and injects all of your javascript files there, added in the correct order thanks to angular-filesort. when building the app (`gulp build`), [gulp-useref](https://github.com/jonkemp/gulp-useref) allows us to bundle multiple files together, like so:
 
 ```html
-<!-- build:js app/app.js -->
+<!-- build:js javascripts/app.js -->
   <!-- inject:templates -->
   <!-- endinject -->
 
@@ -126,7 +128,7 @@ Take a look at the bendystraw example [index.html](https://github.com/brousalis/
 We can even use [wiredep](https://github.com/taptapship/wiredep) to automatically include Bower components and third party libraries (configurable folder location):
 
 ```html
-<!-- build:js(source) app/vendor.js -->
+<!-- build:js javascripts/vendor.js -->
   <!-- bower:js -->
   <!-- endbower -->
 
@@ -204,7 +206,7 @@ The `templates.js` file gets bundled into your compiled app.js on build if you h
 
 bendystraw uses [dotenv](https://github.com/motdotla/dotenv) for app specific configuration. if you want to override variables per environment, create a `.env.environment`, then run any Gulp command with `--env environment` (the word environment can anything).
 
-These variables will be dumped into an Angular module called `env` (name can be configured). load that into your app, then you have access to the `ENV` and `NODE_ENV` constants.
+If `angular.enabled` is true, these variables will be dumped into an Angular module called `env` (name can be configured). 
 
 ```javascript
 angular.module('testApp', [
@@ -214,6 +216,9 @@ angular.module('testApp', [
   console.log('app config', ENV, NODE_ENV);
 });
 ```
+
+Otherwise, they'll be added onto the window as a global object, configured by name with `envConstant` (default is `ENV`).
+
 
 > **WARNING!** Do not put anything in this file you wouldn't want exposed to everyone! `.env` gets compiled and included in your source app.js.
 
