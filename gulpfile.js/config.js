@@ -19,12 +19,13 @@ var settings = {
     images: 'images', // Images folder
     vendor: 'vendor', // Third party scripts that aren't bower components
     fonts: 'fonts', // Fonts folder
-    tests: 'tests' // Folder for end to end tests
   },
 
   browserSync: { // Server config
     port: 4567,  // Port to run the server on
     open: true, // Opens a browser tab with the app when the server starts
+    notify: false, // Show/hides the small notification popup when changes are made
+    ghostMode: false, // Enables ghost mode (mirroring actions to all open browsers)
   },
 
   // Name for env settings object, either Angular module constant or global variable

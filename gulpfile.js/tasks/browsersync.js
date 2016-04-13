@@ -23,9 +23,10 @@ function server(callback) {
       baseDir: [config.paths.dev, config.paths.src],
       routes: {'/bower_components': 'bower_components'}
     },
+    notify: config.browserSync.notify,
     open: config.browserSync.open,
     port: config.browserSync.port,
-    ghostMode: true,
+    ghostMode: config.browserSync.ghostMode,
     logPrefix: function() {
       return gutil.colors.green('[bendystraw] ');
     }

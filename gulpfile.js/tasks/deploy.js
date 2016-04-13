@@ -36,8 +36,8 @@ function deploy(commits) {
     aws_cloudfront_domain: conf.AWS_CLOUDFRONT_DOMAIN
   };
 
-  // Prefix env variables based on app environment (unless in --env=development)
-  // --env=production, AWS_BUCKET becomes PRODUCTION_AWS_BUCKET
+  // Prefix env variables based on app environment (unless in --env development)
+  // --env production, AWS_BUCKET becomes PRODUCTION_AWS_BUCKET
   if (env !== 'development') {
     for (var key in options) {
       options[key] = conf[env.toUpperCase() + '_' + key.toUpperCase()];
