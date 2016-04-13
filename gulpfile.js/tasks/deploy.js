@@ -89,7 +89,6 @@ function deploy(commits) {
     .pipe(revAll.revision())
     .pipe(publisher.publish())
     .pipe(publisher.cache())
-    .pipe(awspublish.reporter())
     .pipe(gulpif(options.aws_distribution_id !== undefined, cloudfront(cdn)))
     .pipe(gulpif(
       !silent,
@@ -108,6 +107,15 @@ function deploy(commits) {
           ]
         }
       )
+    ))
+    .pipe(gulpif(
+      true,
+      notifier.notify({
+        title: 'bendystraw',
+        message: 'Successfully deployed to ' + options.aws_bucket,
+        icon: path.join(__dirname, '../lib/logo.png'),
+        sound: true
+      })
     ));
 }
 

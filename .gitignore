@@ -2,11 +2,13 @@
 node_modules/
 bower_components/
 build/
-source/
+source*
+test/
 env
 env.json
 bower.json
 karma.conf.js
+protractor.conf.js
 .backup
 .sass-cache/
 .idea/
