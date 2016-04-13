@@ -1,6 +1,6 @@
 process.env.NODE_ENV = 'development';
 
-// Pass in a custom environment --env=pizza
+// Pass in a custom environment, --env pizza
 if (process.argv.length > 2) {
   var argv = require('minimist')(process.argv.slice(2));
   process.env.NODE_ENV = argv.env || 'development';
@@ -11,6 +11,7 @@ var settings = {
     src: 'source', // Source folder for the app
     build: 'build', // Destination for the production build
     dev: '.dev', // Temporary development build folder
+    tests: 'test', // Folder for end to end tests
 
     // All of these paths are located INSIDE the paths.src (source/) folder
     scripts: 'javascripts', // Folder where main javascript files are located

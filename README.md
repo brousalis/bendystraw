@@ -16,12 +16,29 @@ In order to use the gulp tasks, create a `gulpfile.js` with:
 require('bendystraw')()
 ```
 
+## Config
+
+To configure settings and paths, do this:
+```javascript
+require('bendystraw')({
+  paths: {
+    src: 'app', // Override main javascript folder
+    build: 'public', // Override the build folder
+    styles: 'css' // Override the stylesheet folder
+  },
+  scripts: {
+    coffeescript: true, // Enable CoffeeScript
+  }
+})
+```
+Check out all the config values [here](https://github.com/brousalis/bendystraw/blob/master/gulpfile.js/config.js)
+
 ## Features
 - **JS:**
   - Built-in Angular features
     - Dependency injection annotations
-    - Compiles html files to the Angular template cache
-    - Automatic file sort to avoid injection issues
+    - Compiles html template files to the Angular template cache
+    - Automatic file sorting to avoid injection issues
   - Coffeescript support
   - Bower components injected through [wiredep](https://github.com/taptapship/wiredep)
   - Multiple script bundles created with [useref](https://github.com/jonkemp/useref)
@@ -57,26 +74,9 @@ command | description
 `gulp build` | builds the app to `/build`
 `gulp release` | bumps, tags, and creates a GitHub release based on `package.json` version
 `gulp deploy` | deploys `/build` to an S3 bucket, posts to Slack if configured and successful
-`gulp test` | runs tests using karma runner
+`gulp test` | runs tests using Karma
 
 All of these tasks can be run in different environments, ie: `gulp build --env staging`. This will then load `.env.staging` into the compiled app, if you're utilizing this feature.
-
-## Config
-
-To configure settings and paths, do this:
-```javascript
-require('bendystraw')({
-  paths: {
-    src: 'app', // Override main javascript folder
-    build: 'public', // Override the build folder
-    styles: 'css' // Override the stylesheet folder
-  },
-  scripts: {
-    coffeescript: true, // Enable coffeescript 
-  }
-})
-```
-Check out the default config values [here](https://github.com/brousalis/bendystraw/blob/master/gulpfile.js/config.js)
 
 ## Extra tasks
 
@@ -206,7 +206,7 @@ The `templates.js` file gets bundled into your compiled app.js on build if you h
 
 bendystraw uses [dotenv](https://github.com/motdotla/dotenv) for app specific configuration. if you want to override variables per environment, create a `.env.environment`, then run any Gulp command with `--env environment` (the word environment can anything).
 
-If `angular.enabled` is true, these variables will be dumped into an Angular module called `env` (name can be configured). 
+If `angular.enabled` is true, these variables will be dumped into an Angular module called `env` (name can be configured).
 
 ```javascript
 angular.module('testApp', [
