@@ -76,14 +76,23 @@ var settings = {
 
   github: { // Options for github release
     upstream: 'origin', // The "upstream" branch to fetch changes from
-    origin: 'master', // Which branch to push the created release and tags to
+    branch: 'master', // Which branch to push the created release and tags to
+  },
+
+  test: { // Options for tests
   },
 
   build: { // Options for compiling the app
     gzip: true, // Enable gzip compression
     archive: true, // Zip up the app contents into build.zip (for uploading to GitHub releases)
     archiveName: 'build.zip', // Name of the archive (only .zip supported for now)
-    folder: false, // str | function. A custom folder to build into. Useful when needing to deploy into a subfolder
+    folder: false, // str | function. A custom folder to build into. Useful when needing to deploy to a sub folder
+  },
+
+  deploy: { // Options for deploying the app
+    cache: false, // Create a cache file .aws-publish-* to avoid reuploading unchanged files
+    sync: false, // Overwrite the entire S3 bucket with every deploy
+    slack: true, // Using SLACK_WEBHOOK_URL env variable, post a message to slack
   },
 
   extensions: { // Used as a reference in a couple tasks

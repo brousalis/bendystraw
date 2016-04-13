@@ -58,7 +58,7 @@ gulp.task('commit', function(callback) {
 gulp.task('push', function (callback) {
   util.log(gutil.colors.yellow('Pushing version bump to ' + manifest.version()));
 
-  git.push(config.github.upstream, config.github.origin, callback);
+  git.push(config.github.upstream, config.github.branch, callback);
 });
 
 // Takes the zip'd up build folder and posts it to a GitHub release

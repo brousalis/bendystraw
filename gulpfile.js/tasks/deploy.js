@@ -88,10 +88,12 @@ function deploy(commits) {
   ])
     .pipe(revAll.revision())
     .pipe(publisher.publish())
-    .pipe(publisher.cache())
+    .pipe(gulpif(config.sync, publisher.sync()))
+    .pipe(gulpif(config.cache, publisher.cache()))
+    .pipe(awspublish.reporter({states: ['create', 'update', 'delete']}))
     .pipe(gulpif(options.aws_distribution_id !== undefined, cloudfront(cdn)))
     .pipe(gulpif(
-      !silent,
+      config.deploy.slack || !silent,
       slack(
         owner + ' deployed ' +
         '<https://github.com/' + manifest.owner()+ '/' + manifest.repo() + '/releases/tag/' + version + '|' + version + '> ' +

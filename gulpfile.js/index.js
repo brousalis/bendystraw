@@ -4,8 +4,9 @@ var defaults = require('./config');
 var util = require('./util');
 var fs = require('fs');
 
-// Merge options with defaults
-module.exports = function(options) {
+config = {};
+
+function Bendystraw(options) {
   if (options === undefined) options = {};
 
   config = _.merge(defaults, options);
@@ -22,3 +23,9 @@ module.exports = function(options) {
     require('./tasks/' + name).bind(this, config);
   });
 };
+
+Bendystraw.getConfig = function getConfig() {
+  return config;
+}
+
+module.exports = Bendystraw;
