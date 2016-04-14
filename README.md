@@ -21,10 +21,10 @@ require('bendystraw')()
 command | description
 ------- | ------------
 `gulp` | defaults to server task
-`gulp server` | builds the app to `/.dev` and runs the development server
-`gulp build` | builds the app to `/build`
-`gulp release` | bumps, tags, and creates a GitHub release based on `package.json` version
-`gulp deploy` | deploys `/build` to an S3 bucket, posts to Slack if configured and successful
+`gulp server` | builds the app to the dev folder and runs the Browsersync server
+`gulp build` | builds the app to the build folder
+`gulp release` | bumps version, tags, and creates a GitHub release based on `package.json`
+`gulp deploy` | deploys the build folder to a S3 bucket, posts to Slack if configured
 `gulp test` | runs tests using Karma
 `gulp e2e` | run end to end tests with Protractor
 
