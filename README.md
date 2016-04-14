@@ -18,16 +18,19 @@ require('bendystraw')()
 
 ## Config
 
-To configure settings and paths, do this:
+To configure settings, paths, etc...
 ```javascript
 require('bendystraw')({
   paths: {
-    src: 'app', // Override main javascript folder
-    build: 'public', // Override the build folder
-    styles: 'css' // Override the stylesheet folder
+    build: 'public', // Override the build folder name
+    styles: 'stylez', // Override the stylesheet source folder
+  },
+  html: {
+    preprocessor: require('gulp-jade'),
   },
   scripts: {
-    coffeescript: true, // Enable CoffeeScript
+    coffeescript: true, 
+    sourcemaps: false
   }
 })
 ```
