@@ -3,22 +3,26 @@ process.env.NODE_ENV = 'development';
 // Pass in a custom environment, --env pizza
 if (process.argv.length > 2) {
   var argv = require('minimist')(process.argv.slice(2));
-  process.env.NODE_ENV = argv.env || 'development';
+  process.env.NODE_ENV = argv.env;
 }
 
 var settings = {
   paths: {
     src: 'source', // Source folder for the app
-    build: 'build', // Destination for the production build
     dev: '.dev', // Temporary development build folder
+    build: 'build', // Destination for the production build
     tests: 'test', // Folder for end to end tests
 
-    // All of these paths are located INSIDE the paths.src (source/) folder
+    // All of these paths are located inside the paths.src (source/) folder
     scripts: 'javascripts', // Folder where main javascript files are located
     styles: 'stylesheets', // Stylesheets folder
     images: 'images', // Images folder
     vendor: 'vendor', // Third party scripts that aren't bower components
     fonts: 'fonts', // Fonts folder
+
+    // All of these paths are located inside the paths.tess (test/) folder
+    e2e: 'e2e', // Protractor tests folder
+    unit: 'unit', // Unit tests folder
   },
 
   browserSync: { // Server config
