@@ -3,7 +3,7 @@ process.env.NODE_ENV = 'development';
 // Pass in a custom environment, --env pizza
 if (process.argv.length > 2) {
   var argv = require('minimist')(process.argv.slice(2));
-  process.env.NODE_ENV = argv.env;
+  process.env.NODE_ENV = argv.env || 'development';
 }
 
 var settings = {
