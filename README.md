@@ -16,6 +16,22 @@ In order to use the gulp tasks, create a `gulpfile.js` with:
 require('bendystraw')()
 ```
 
+## Tasks
+
+command | description
+------- | ------------
+`gulp` | defaults to server task
+`gulp server` | builds the app to `/.dev` and runs the development server
+`gulp build` | builds the app to `/build`
+`gulp release` | bumps, tags, and creates a GitHub release based on `package.json` version
+`gulp deploy` | deploys `/build` to an S3 bucket, posts to Slack if configured and successful
+`gulp test` | runs tests using Karma
+`gulp e2e` | run end to end tests with Protractor
+
+All of these tasks can be run in different environments, ie: `gulp build --env staging`. This will then load `.env.staging` into the app.
+
+To see a full list of tasks, check out the [wiki](https://github.com/brousalis/bendystraw/wiki).
+
 ## Config
 
 To configure settings, paths, etc...
@@ -35,22 +51,6 @@ require('bendystraw')({
 })
 ```
 Check out all the config values [here](https://github.com/brousalis/bendystraw/blob/master/gulpfile.js/config.js)
-
-## Tasks
-
-command | description
-------- | ------------
-`gulp` | defaults to server task
-`gulp server` | builds the app to `/.dev` and runs the development server
-`gulp build` | builds the app to `/build`
-`gulp release` | bumps, tags, and creates a GitHub release based on `package.json` version
-`gulp deploy` | deploys `/build` to an S3 bucket, posts to Slack if configured and successful
-`gulp test` | runs tests using Karma
-`gulp e2e` | run end to end tests with Protractor
-
-All of these tasks can be run in different environments, ie: `gulp build --env staging`. This will then load `.env.staging` into the app.
-
-To see a full list of tasks, check out the [wiki](https://github.com/brousalis/bendystraw/wiki).
 
 ## Examples
 
