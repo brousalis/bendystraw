@@ -15,14 +15,18 @@ gulp.task('test', function(callback) {
   new Server({
     singleRun: true,
     configFile: path.resolve('karma.conf.js')
-  }, callback).start();
+  }, function() {
+    callback();
+  }).start();
 });
 
 // Run tests with Karma and watch for file changes
 gulp.task('tdd', function (callback) {
   new Server({
     configFile: path.resolve('karma.conf.js')
-  }, callback).start();
+  }, function() {
+    callback();
+  }).start();
 });
 
 // End to end with Protractor

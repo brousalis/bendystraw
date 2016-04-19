@@ -88,8 +88,8 @@ function deploy(commits) {
   ])
     .pipe(revAll.revision())
     .pipe(publisher.publish())
-    .pipe(gulpif(config.sync, publisher.sync()))
-    .pipe(gulpif(config.cache, publisher.cache()))
+    .pipe(gulpif(config.deploy.sync, publisher.sync()))
+    .pipe(gulpif(config.deploy.cache, publisher.cache()))
     .pipe(awspublish.reporter({states: ['create', 'update', 'delete']}))
     .pipe(gulpif(options.aws_distribution_id !== undefined, cloudfront(cdn)))
     .pipe(gulpif(
