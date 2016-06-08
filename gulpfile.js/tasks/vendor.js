@@ -8,8 +8,7 @@ var filter = require('gulp-filter');
 // Used for non-Bower third party libraries
 function vendor(dest) {
   return gulp.src([
-    path.join(config.paths.src, config.paths.vendor, '/**/*.js'),
-    path.join(config.paths.src, config.paths.vendor, '/**/*.css'),
+    path.join(config.paths.src, config.paths.vendor, '/**/*'),
   ])
     .pipe(gulp.dest(path.join(dest, config.paths.vendor)));
 }
