@@ -14,6 +14,7 @@ var RevAll = require('gulp-rev-all');
 var runSequence = require('run-sequence');
 var awspublish = require('gulp-awspublish');
 var cloudfront = require('gulp-cloudfront');
+var notifier = require('node-notifier');
 
 var silent = false;
 
