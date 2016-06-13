@@ -11,6 +11,7 @@ var browserSync = require('browser-sync').get('server');
 var sourcemaps = require('gulp-sourcemaps');
 var ngAnnotate = require('gulp-ng-annotate');
 var coffee = require('gulp-coffee');
+var babel = require('gulp-babel');
 
 // Compiles coffeescript files to javascript files, creates sourcemaps
 function scripts() {
@@ -21,6 +22,8 @@ function scripts() {
     .pipe(gulpif(config.scripts.sourcemaps, sourcemaps.init()))
     .pipe(gulpif(config.scripts.coffeescript, coffee()))
     .on('error', util.errorHandler('coffeescript'))
+    .pipe(gulpif(config.scripts.babel, babel({ presets: ['es2015'] })))
+    .on('error', util.errorHandler('babel'))
     .pipe(gulpif(config.angular.enabled, ngAnnotate()))
     .pipe(gulpif(config.scripts.sourcemaps, sourcemaps.write()))
     .pipe(gulp.dest(dest))
