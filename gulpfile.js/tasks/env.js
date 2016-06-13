@@ -26,7 +26,6 @@ function env() {
 
   // Gets the config settings for the current NODE_ENV, also stubs that in
   var ngConfig = {
-    environment: process.env.NODE_ENV,
     constants: { NODE_ENV: process.env.NODE_ENV }
   };
 
