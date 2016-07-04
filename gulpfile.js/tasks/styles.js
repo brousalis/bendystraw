@@ -24,7 +24,7 @@ function styles() {
     .on('error', util.errorHandler('sass'))
     .pipe(gulpif(config.styles.autoprefixer, autoprefixer()))
     .on('error', util.errorHandler('autoprefixer'))
-    .pipe(gulpif(config.styles.combineMQ, cmq()))
+    .pipe(gulpif(config.styles.combineMediaQueries, cmq()))
     .on('error', util.errorHandler('combine-mq'))
     .pipe(gulpif(config.styles.sourcemaps, sourcemaps.write()))
     .pipe(gulp.dest(dest))

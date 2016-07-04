@@ -46,7 +46,6 @@ var settings = {
     babel: false, // Enable babel es2015
     coffeescript: false, // Enable coffeescript compilation
     sourcemaps: false, // Enable sourcemap generation
-    combineMQ: true, // Auto combine media queries
     inject: [ // In what order should COMPILED scripts be injected into the template and bundled on build
       // Paths taken relative to the src (default 'source') folder.
       // ex: 'javascripts/components/**/*.js',
@@ -65,6 +64,7 @@ var settings = {
     sass: true,
     autoprefixer: true,
     sourcemaps: false,
+    combineMediaQueries: true, // Combine media queries
     compiler: {
       indentedSyntax: true,
       imagePath: 'images',
