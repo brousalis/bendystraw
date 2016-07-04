@@ -46,6 +46,7 @@ var settings = {
     babel: false, // Enable babel es2015
     coffeescript: false, // Enable coffeescript compilation
     sourcemaps: false, // Enable sourcemap generation
+    combineMQ: true, // Auto combine media queries
     inject: [ // In what order should COMPILED scripts be injected into the template and bundled on build
       // Paths taken relative to the src (default 'source') folder.
       // ex: 'javascripts/components/**/*.js',
@@ -63,7 +64,7 @@ var settings = {
   styles: { // Options for the sass compiler
     sass: true,
     autoprefixer: true,
-    sourcemaps: true,
+    sourcemaps: false,
     compiler: {
       indentedSyntax: true,
       imagePath: 'images',
@@ -92,6 +93,7 @@ var settings = {
     archive: true, // Zip up the app contents into build.zip (for uploading to GitHub releases)
     archiveName: 'build.zip', // Name of the archive (only .zip supported for now)
     folder: false, // str | function. A custom folder to build into. Useful when needing to deploy to a sub folder
+    uncss: false // Remove unused CSS styles from your compiled stylesheet
   },
 
   deploy: { // Options for deploying the app

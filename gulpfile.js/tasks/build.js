@@ -17,6 +17,7 @@ var useref = require('gulp-useref');
 var uglify = require('gulp-uglify');
 var minifyCss = require('gulp-minify-css');
 var minifyHtml = require('gulp-minify-html');
+var uncss = require('gulp-uncss');
 var preprocess = require('gulp-preprocess');
 var gzip = require('gulp-gzip');
 var zip = require('gulp-zip');
@@ -68,6 +69,7 @@ function compile(callback) {
     .pipe(uglify()).on('error', util.errorHandler('uglify'))
     .pipe(jsFilter.restore())
     .pipe(cssFilter)
+    .pipe(gulpif(config.build.uncss, uncss({ html: [ path.join(config.paths.dev, '**/*.html') ] })))
     .pipe(minifyCss())
     .pipe(cssFilter.restore())
     .pipe(assets.restore())
