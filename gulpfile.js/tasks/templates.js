@@ -14,7 +14,7 @@ var preprocess = require('gulp-preprocess');
 gulp.task('templates', ['markup'], function(callback) {
   return gulp.src(path.join(config.paths.dev, config.paths.scripts, '/**/*.html'))
     .pipe(gulpif(config.html.minify, minifyHtml(config.html.minifyOptions)))
-    .pipe(gulpif(config.angular.enabled, angularTemplateCache('templates.js', { module: config.templateModule, root: config.paths.scripts, standalone: true })))
+    .pipe(gulpif(config.angular.enabled, angularTemplateCache('templates.js', { module: config.angular.templateModule, root: config.paths.scripts, standalone: true })))
     .pipe(gulpif(config.angular.enabled, gulp.dest(path.join(config.paths.dev, '/templates'))))
     .pipe(browserSync.stream());
 });

@@ -38,14 +38,14 @@ var settings = {
   angular: { // Angular specific config
     enabled: false , // Turn on Angular specific features of Bendystraw
     templateCache: true, // Turn on Angular templateCache compilation
-    templateModule: 'templates', // Module name for compiled templates file
-    envModule: 'env', // Module name for the compiled env settings file
+    templateModule: 'bendy.templates', // Module name for compiled templates file
+    envModule: 'bendy.env', // Module name for the compiled env settings file
   },
 
   scripts: { // Javascript settings
-    babel: true, // Enable babel es2015
+    babel: false, // Enable babel es2015
     coffeescript: false, // Enable coffeescript compilation
-    sourcemaps: true, // Enable sourcemap generation
+    sourcemaps: false, // Enable sourcemap generation
     inject: [ // In what order should COMPILED scripts be injected into the template and bundled on build
       // Paths taken relative to the src (default 'source') folder.
       // ex: 'javascripts/components/**/*.js',
