@@ -84,7 +84,7 @@ var settings = {
     ]
   },
 
-  github: { // Options for github release
+  release: { // Options for github release
     upstream: 'origin', // The "upstream" branch to fetch changes from
     branch: 'master', // Which branch to push the created release and tags to
   },

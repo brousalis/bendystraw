@@ -42,7 +42,7 @@ gulp.task('bump', function(callback) {
 
 // Fetches tags
 gulp.task('fetch', function(callback) {
-  git.fetch(config.github.upstream, '', {quiet: true}, callback);
+  git.fetch(config.release.upstream, '', {quiet: true}, callback);
 });
 
 // Commits the manifest with the bumped version number
@@ -58,7 +58,7 @@ gulp.task('commit', function(callback) {
 gulp.task('push', function (callback) {
   util.log(gutil.colors.yellow('Pushing version bump to ' + manifest.version()));
 
-  git.push(config.github.upstream, config.github.branch, callback);
+  git.push(config.release.upstream, config.release.branch, callback);
 });
 
 // Takes the zip'd up build folder and posts it to a GitHub release
@@ -71,8 +71,9 @@ gulp.task('github-release', function(callback) {
 
   var dest = config.paths.build;
 
-  if (config.build.archive)
+  if (config.build.archive) {
     dest = path.join(config.paths.build, config.build.archiveName)
+  }
 
   return gulp.src(dest)
     .pipe(githubRelease({
@@ -88,12 +89,17 @@ gulp.task('github-release', function(callback) {
 function release(callback) {
   if (process.env.GITHUB_TOKEN === '' ||
       process.env.GITHUB_TOKEN === undefined) {
-    util.errorHandler('deploy')(new Error('Missing GITHUB_TOKEN environment variable'));
+    util.errorHandler('release')(new Error('Missing GITHUB_TOKEN environment variable.'));
     return false;
   }
 
   if (!util.fileExists(config.paths.build)) {
-    util.errorHandler('deploy')(new Error('You need to build the application first. Run `gulp build`'));
+    util.errorHandler('release')(new Error('You need to build the application first. Run `gulp build`.'));
+    return;
+  }
+
+  if (!manifest.repo()) {
+    util.errorHandler('release')(new Error('You need to fix your `package.json` url and repo fields.'));
     return;
   }
 
