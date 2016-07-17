@@ -25,7 +25,7 @@ if (process.argv.length > 2) {
 }
 
 // Deploy the build folder to an S3 bucket
-function deploy(commits) {
+function deploy(callback) {
   var conf = process.env;
   var env = process.env.NODE_ENV;
 
@@ -78,9 +78,6 @@ function deploy(commits) {
 
   // Upload all files, revisioned, gzipped, to S3 bucket
   var revAll = new RevAll(revOptions);
-  var version = manifest.version();
-
-  util.log('🚀 Deploying ' + gutil.colors.yellow(version) + ' to S3 bucket ' + gutil.colors.yellow(options.aws_bucket));
 
   return gulp.src([
     path.join(config.paths.build, '*'),
@@ -90,49 +87,61 @@ function deploy(commits) {
     .pipe(publisher.publish())
     .pipe(gulpif(config.deploy.sync, publisher.sync()))
     .pipe(gulpif(config.deploy.cache, publisher.cache()))
-    .pipe(awspublish.reporter({states: ['create', 'update', 'delete']}))
+    .pipe(awspublish.reporter())
     .pipe(gulpif(options.aws_distribution_id !== undefined, cloudfront(cdn)))
-    .pipe(gulpif(
-      config.deploy.slack || !silent,
-      slack(
-        'deployed ' + version + ' of ' + manifest.name() + ' to ' +
-        'S3 bucket <https://console.aws.amazon.com/s3/home?&bucket=' + options.aws_bucket + '|' + options.aws_bucket + '>',
-        {
-          attachments: [
-            {
-              color: '#63bbe9',
-              mrkdwn_in: ['text', 'pretext'],
-              text: (commits ? commits.slack : '')
-            }
-          ]
-        }
-      )
-    ))
-    .pipe(gulpif(
-      true,
-      notifier.notify({
-        title: 'bendystraw',
-        message: '🍺 Deployed to ' + options.aws_bucket,
-        icon: path.join(__dirname, '../lib/logo.png'),
-        sound: true
-      })
-    ));
+    .on('finish', function() {
+      if (process.env.GITHUB_TOKEN === '' || process.env.GITHUB_TOKEN === undefined) {
+        completeDeploy();
+      } else {
+        changelog(true, function(commits) {
+          completeDeploy(commits);
+        });
+      }
+      callback();
+    });
 }
+
+function completeDeploy(commits) {
+  var conf = process.env;
+
+  var options = {
+    aws_bucket: conf.AWS_BUCKET
+  };
+
+  var message = 'Deployed ' + manifest.version() + ' of ' + manifest.name();
+
+  util.log('🍺  ' + gutil.colors.yellow(message));
+
+  if (config.deploy.slack || !silent) {
+    slack(
+      message + ' to S3 bucket <https://console.aws.amazon.com/s3/home?&bucket=' + options.aws_bucket + '|' + options.aws_bucket + '>',
+      {
+        attachments: [
+          {
+            color: '#63bbe9',
+            mrkdwn_in: ['text', 'pretext'],
+            text: (commits ? commits.slack : '')
+          }
+        ]
+      }
+    );
+  }
+
+  notifier.notify({
+    title: 'bendystraw',
+    message: '🍺  Deployed to ' + options.aws_bucket,
+    icon: path.join(__dirname, '../lib/logo.png'),
+    sound: true
+  })
+};
 
 gulp.task('deploy', function(callback) {
   if (!util.fileExists(config.paths.build)) {
     util.errorHandler('deploy')(new Error('You need to build the application first. Run `gulp build`'));
     return;
   }
-  if (process.env.GITHUB_TOKEN === '' ||
-      process.env.GITHUB_TOKEN === undefined) {
-    deploy();
-  } else {
-    // have to wait until changelog hits the disk to call deploy
-    changelog(true, function(commits) {
-      deploy(commits);
-    });
-  }
+
+  deploy(callback);
 });
 
 module.exports = deploy;
