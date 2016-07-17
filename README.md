@@ -25,6 +25,7 @@ bendystraw assumes you have a defined `source` folder to use the tasks. By defau
 You can generate this structure by using `gulp scaffold`, or you can override it to fit your needs. Here's an example configuration:
 
 ```javascript
+// gulpfile.js
 require('bendystraw')({
   paths: {
     build: 'public', // Override the build folder name
@@ -49,7 +50,7 @@ require('bendystraw')({
 ```
 Check out all the config values [here](https://github.com/brousalis/bendystraw/blob/master/gulpfile.js/config.js)
 
-> NOTE: `gulp scaffold` will generate an `index.html` file. This shows how bendystraw uses `gulp-inject` and `gulp-useref` to inject your app's javascript and create bundles. Make sure to change the paths in the file if you've overridden the defaults. Read more about it on the [wiki](https://github.com/brousalis/bendystraw/wiki#asset-injection).
+> NOTE: `gulp scaffold` will generate an [index.html](https://github.com/brousalis/bendystraw/blob/master/gulpfile.js/templates/index.html) file. This shows how bendystraw uses `gulp-inject` and `gulp-useref` to inject your app's javascript and create bundles. Make sure to change the paths in the file if you've overridden the defaults. Read more about it on the [wiki](https://github.com/brousalis/bendystraw/wiki#asset-injection).
 
 ## Tasks
 
@@ -63,13 +64,9 @@ command | description
 `gulp test` | runs tests using Karma
 `gulp e2e` | runs end to end tests with Protractor
 
-All of these tasks can be run in different environments, ie: `gulp build --env staging`. This will then load `.env.staging` into the app.
+bendystraw uses [dotenv](https://github.com/motdotla/dotenv) to load environment variables into the app. All of these tasks can be run with `--env`, ie: `gulp build --env staging`. This will make `.env.staging` available to the app.
 
-To see a full list of tasks, check out the [wiki](https://github.com/brousalis/bendystraw/wiki).
-
-## Examples
-
-For more in-depth explanation of the tasks and examples on how to configure your app, check out the [wiki](https://github.com/brousalis/bendystraw/wiki). There's also an example Angular app I use for testing, [bendystraw-test](https://github.com/brousalis/bendystraw-test).
+To read more about the tasks and environment, check out the [wiki](https://github.com/brousalis/bendystraw/wiki).
 
 ## Features
 
