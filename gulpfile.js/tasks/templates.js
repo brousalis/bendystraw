@@ -10,7 +10,7 @@ var angularTemplateCache = require('gulp-angular-templatecache');
 var changed = require('gulp-changed');
 var preprocess = require('gulp-preprocess');
 
-// Takes the compiled html files, minifys them, then adds them to the Angular template cache file.
+// Takes the processed html files, minifys them
 gulp.task('templates', ['markup'], function(callback) {
   return gulp.src(path.join(config.paths.dev, config.paths.scripts, '/**/*.html'))
     .pipe(gulpif(config.html.minify, minifyHtml(config.html.minifyOptions)))
@@ -19,7 +19,7 @@ gulp.task('templates', ['markup'], function(callback) {
     .pipe(browserSync.stream());
 });
 
-// Compiles changed html files to the dev folder
+// Processes changed html files to the dev folder
 gulp.task('markup', function(callback) {
   var dest = path.join(config.paths.dev, config.paths.scripts);
 

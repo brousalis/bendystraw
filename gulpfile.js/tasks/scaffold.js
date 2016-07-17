@@ -21,7 +21,8 @@ function scaffold() {
   mkdir(path.join(config.paths.src, config.paths.styles));
   mkdir(path.join(config.paths.src, config.paths.images));
 
-  fs.readFile('gulpfile.js/templates/index.html', 'utf8', function (err, data) {
+  fs.readFile(path.resolve('gulpfile.js/templates/index.html'), 'utf8', function (err, data) {
+    console.log(data)
     fs.writeFile(path.join(config.paths.src, 'index.html'), data);
   });
   fs.writeFile(path.join(config.paths.src, config.paths.scripts, 'app.js'), '');
