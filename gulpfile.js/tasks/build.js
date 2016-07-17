@@ -98,7 +98,7 @@ gulp.task('build', function(callback) {
 
   runSequence(
     'clean',
-    ['misc:build', 'images:build', 'fonts:build'],
+    ['misc:build', 'images:build'],
     'inject',
     'compile',
     'size',
