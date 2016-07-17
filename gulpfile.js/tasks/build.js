@@ -10,6 +10,7 @@ var _ = require('lodash');
 var gulp = require('gulp');
 var gulpif = require('gulp-if');
 var gutil = require('gulp-util');
+var size = require('gulp-size');
 var runSequence = require('run-sequence');
 var filter = require('gulp-filter');
 var ngAnnotate = require('gulp-ng-annotate');
@@ -81,10 +82,15 @@ function compile(callback) {
     .pipe(gulp.dest(path.join(config.paths.build, '/')))
     .pipe(gulpif(config.build.archive, zip('build.zip')))
     .pipe(gulp.dest(path.join(config.paths.build, '/')))
-    .pipe(gulpif(config.build.folder, folder(callback)))
+    // .pipe(gulpif(config.build.folder, folder(callback)))
 }
 
 gulp.task('compile', compile);
+
+gulp.task('size', function(callback) {
+  return gulp.src(path.join(config.paths.build, '**/*'))
+    .pipe(size({ title: 'build', showFiles: true }))
+});
 
 // Builds the app to be deployed to production.
 gulp.task('build', function(callback) {
@@ -95,6 +101,7 @@ gulp.task('build', function(callback) {
     ['misc:build', 'images:build', 'fonts:build'],
     'inject',
     'compile',
+    'size',
     function() {
       if (config.build.folder) {
         folder();
