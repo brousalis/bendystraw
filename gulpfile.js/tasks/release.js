@@ -98,6 +98,11 @@ function release(callback) {
     return;
   }
 
+  if (!manifest.repo()) {
+    util.errorHandler('release')(new Error('Your package.json is missing the repository field.'));
+    return;
+  }
+
   runSequence(
     'changelog',
     'bump',

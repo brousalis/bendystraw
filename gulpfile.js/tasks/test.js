@@ -33,7 +33,7 @@ gulp.task('tdd', function (callback) {
 gulp.task('webdriver_update', webdriver_update);
 gulp.task('webdriver_standalone', webdriver_standalone);
 
-gulp.task('e2e', function(callback) {
+gulp.task('e2e', ['webdriver_update'], function(callback) {
   gulp.src(path.join(config.paths.tests, config.paths.e2e, '/**/*.{' + config.extensions.scripts + '}'))
     .pipe(protractor({
       configFile: path.resolve('protractor.conf.js'),
