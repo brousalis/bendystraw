@@ -20,7 +20,7 @@ require('bendystraw')()
 
 bendystraw assumes you have a defined `source` folder to use the tasks. By default, it looks like this:
 
-![Imgur](http://i.imgur.com/tSW7amn.png)
+![Imgur](http://i.imgur.com/mlbIp7q.png)
 
 You can generate this structure by using `gulp scaffold`, or you can override it to fit your needs. Here's an example configuration:
 
