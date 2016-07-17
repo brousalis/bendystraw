@@ -98,11 +98,6 @@ function release(callback) {
     return;
   }
 
-  if (!manifest.repo()) {
-    util.errorHandler('release')(new Error('You need to fix your `package.json` url and repo fields.'));
-    return;
-  }
-
   runSequence(
     'changelog',
     'bump',

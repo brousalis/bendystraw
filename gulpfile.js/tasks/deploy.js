@@ -72,14 +72,13 @@ function deploy(commits) {
   };
 
   if (options.aws_cloudfront_domain !== '' &&
-      options.aws_cloudfront_domain !== undefined)
+      options.aws_cloudfront_domain !== undefined) {
     revOptions.prefix = 'https://' + options.aws_cloudfront_domain;
+  }
 
   // Upload all files, revisioned, gzipped, to S3 bucket
   var revAll = new RevAll(revOptions);
-
   var version = manifest.version();
-  var owner = process.env.CIRCLE_USER || manifest.owner() || manifest.repo();
 
   util.log('🚀 Deploying ' + gutil.colors.yellow(version) + ' to S3 bucket ' + gutil.colors.yellow(options.aws_bucket));
 
@@ -96,16 +95,14 @@ function deploy(commits) {
     .pipe(gulpif(
       config.deploy.slack || !silent,
       slack(
-        owner + ' deployed ' +
-        '<https://github.com/' + manifest.owner()+ '/' + manifest.repo() + '/releases/tag/' + version + '|' + version + '> ' +
-        'of <https://github.com/' + manifest.owner() + '/' + manifest.repo() + '|' + manifest.repo() + '> to ' +
+        'deployed ' + version + ' of ' + manifest.name() + ' to ' +
         'S3 bucket <https://console.aws.amazon.com/s3/home?&bucket=' + options.aws_bucket + '|' + options.aws_bucket + '>',
         {
           attachments: [
             {
               color: '#63bbe9',
               mrkdwn_in: ['text', 'pretext'],
-              text: commits.slack
+              text: (commits ? commits.slack : '')
             }
           ]
         }
@@ -127,11 +124,15 @@ gulp.task('deploy', function(callback) {
     util.errorHandler('deploy')(new Error('You need to build the application first. Run `gulp build`'));
     return;
   }
-
-  // have to wait until changelog hits the disk to call deploy
-  changelog(true, function(commits) {
-    deploy(commits);
-  });
+  if (process.env.GITHUB_TOKEN === '' ||
+      process.env.GITHUB_TOKEN === undefined) {
+    deploy();
+  } else {
+    // have to wait until changelog hits the disk to call deploy
+    changelog(true, function(commits) {
+      deploy(commits);
+    });
+  }
 });
 
 module.exports = deploy;

@@ -78,11 +78,9 @@ function changelog(version, callback) {
         var title = data[2].replace(/(\r\n|\n|\r)/gm,""); // trim newlines
         var label = title.replace(/\[|\]/g,"`"); // convert [] to `` for markdown
         var sha = data[0].slice(0,5); // only need first 5 of sha
-        var shaUrl = '<https://github.com/' + manifest.owner()+ '/' + manifest.repo() + '/commit/' + sha + '>';
-        var slackUrl = '<https://github.com/' + manifest.owner()+ '/' + manifest.repo() + '/commit/' + sha + '|' + sha + '>';
 
-        commits.slack += author + ': ' + label + ' (' + slackUrl + ')\n';
-        commits.markdown += '* ' + author + ': ' + label + ' (' + shaUrl + ')\n';
+        commits.slack += author + ': ' + label + ' (' + sha + ')\n';
+        commits.markdown += '* ' + author + ': ' + label + ' (' + sha + ')\n';
         commits.raw += author + ': ' + title + ' (' + sha + ')\n';
       });
 
