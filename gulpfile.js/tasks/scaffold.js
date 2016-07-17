@@ -1,6 +1,7 @@
 'use strict';
 
 var util = require('../util');
+var template = require('../lib/index')
 
 var gulp = require('gulp');
 var path = require('path');
@@ -21,10 +22,7 @@ function scaffold() {
   mkdir(path.join(config.paths.src, config.paths.styles));
   mkdir(path.join(config.paths.src, config.paths.images));
 
-  fs.readFile(path.resolve('gulpfile.js/templates/index.html'), 'utf8', function (err, data) {
-    console.log(data)
-    fs.writeFile(path.join(config.paths.src, 'index.html'), data);
-  });
+  fs.writeFile(path.join(config.paths.src, 'index.html'), template(config.paths));
   fs.writeFile(path.join(config.paths.src, config.paths.scripts, 'app.js'), '');
   fs.writeFile(path.join(config.paths.src, config.paths.styles, 'app.sass'), '');
 }
