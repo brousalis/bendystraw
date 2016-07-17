@@ -12,8 +12,9 @@ var reload = browserSync.reload;
 var browserSyncSpa = require('browser-sync-spa');
 
 // Better support for Angular and BrowserSync
-if (config.angular.enabled)
+if (config.angular.enabled) {
   browserSync.use(browserSyncSpa({selector: '[ng-app]'}));
+}
 
 // Development server
 function server(callback) {
@@ -30,6 +31,13 @@ function server(callback) {
     logPrefix: function() {
       return gutil.colors.green('[bendystraw] ');
     }
+  }, function() {
+    notifier.notify({
+      title: 'bendystraw',
+      message: 'Server is running on localhost:' + config.browserSync.port,
+      icon: path.join(__dirname, '../lib/logo.png'),
+      sound: true
+    });
   });
 
   // Watch the root index file for changes
@@ -44,16 +52,6 @@ function server(callback) {
 
 gulp.task('browsersync', server);
 
-gulp.task('notify', function(callback) {
-  notifier.notify({
-    title: 'bendystraw',
-    message: 'Server is running on localhost:' + config.browserSync.port,
-    icon: path.join(__dirname, '../lib/logo.png'),
-    sound: true
-  })
-  callback();
-})
-
 gulp.task('server', function(callback) {
   util.log('Starting server in ' + gutil.colors.yellow(process.env.NODE_ENV) + ' environment');
 
@@ -61,7 +59,6 @@ gulp.task('server', function(callback) {
     'clean',
     'watch',
     'browsersync',
-    'notify',
     callback
   );
 });

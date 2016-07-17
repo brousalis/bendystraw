@@ -14,7 +14,7 @@ var settings = {
     tests: 'test', // Folder for end to end tests
 
     // All of these paths are located inside the paths.src (source/) folder
-    scripts: 'javascripts', // Folder where main javascript files are located
+    scripts: 'app', // Folder where main javascript files are located
     styles: 'stylesheets', // Stylesheets folder
     images: 'images', // Images folder
     vendor: 'vendor', // Third party scripts that aren't bower components
@@ -27,9 +27,9 @@ var settings = {
 
   browserSync: { // Server config
     port: 4567,  // Port to run the server on
-    open: true, // Opens a browser tab with the app when the server starts
+    open: false, // Opens a browser tab with the app when the server starts
     notify: false, // Show/hides the small notification popup when changes are made
-    ghostMode: false, // Enables ghost mode (mirroring actions to all open browsers)
+    ghostMode: false, // Enables ghost mode (mirroring actions to all connected browsers)
   },
 
   // Name for env settings object, either Angular module constant or global variable
@@ -54,7 +54,7 @@ var settings = {
   },
 
   html: { // Support template preprocessing
-    preprocessor: false, // Use a custom html preprocessor (the gulp variant!), require('gulp-haml')
+    preprocessor: false, // Use a custom html preprocessor (the gulp variant!), ex: require('gulp-haml')
     preprocessorOptions: {}, // Pass options into the preprocessor
     minify: true, // Enable html minification
     minifyOptions: {} // Options for html-min
@@ -62,13 +62,17 @@ var settings = {
 
   styles: { // Options for the sass compiler
     sass: true,
-    autoprefixer: true,
-    sourcemaps: false,
-    combineMediaQueries: true, // Combine media queries
-    compiler: {
+    sassOptions: {
       indentedSyntax: true,
       imagePath: 'images',
       precision: 8
+    },
+    autoprefixer: true, // Autoprefixer
+    sourcemaps: false, // Sass sourcemaps
+    combineMediaQueries: true, // Combine media queries
+    uncss: false, // Remove unused CSS styles from your production compiled stylesheet
+    uncssOptions: {
+      ignore: [/disabled+/, /open+/, /active+/]
     }
   },
 
@@ -86,6 +90,9 @@ var settings = {
   },
 
   test: { // Options for tests
+    protractor: {
+      baseUrl: 'http://localhost'
+    }
   },
 
   build: { // Options for compiling the app
@@ -93,7 +100,6 @@ var settings = {
     archive: true, // Zip up the app contents into build.zip (for uploading to GitHub releases)
     archiveName: 'build.zip', // Name of the archive (only .zip supported for now)
     folder: false, // str | function. A custom folder to build into. Useful when needing to deploy to a sub folder
-    uncss: false // Remove unused CSS styles from your compiled stylesheet
   },
 
   deploy: { // Options for deploying the app
@@ -102,10 +108,10 @@ var settings = {
     slack: true, // Using SLACK_WEBHOOK_URL env variable, post a message to slack
   },
 
-  extensions: { // Used as a reference in a couple tasks
+  extensions: { // Used as a reference for globs in a couple tasks
     scripts: ['js', 'coffee', 'js.coffee'],
     templates: ['html', 'haml', 'jade', 'pug', 'slim', 'jst', 'eco', 'jst.eco'],
-    styles: ['css', 'scss', 'sass', 'style', 'css.scss', 'css.sass'],
+    styles: ['css', 'scss', 'sass', 'css.scss', 'css.sass'],
     fonts: ['eot', 'svg', 'ttf', 'woff', 'woff2', 'otf'],
     images: ['jpg', 'jpeg', 'png', 'svg', 'gif']
   }

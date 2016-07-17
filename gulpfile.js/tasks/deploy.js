@@ -81,7 +81,7 @@ function deploy(commits) {
   var version = manifest.version();
   var owner = process.env.CIRCLE_USER || manifest.owner() || manifest.repo();
 
-  util.log('Deploying ' + gutil.colors.yellow(version) + ' to S3 bucket ' + gutil.colors.yellow(options.aws_bucket));
+  util.log('🚀 Deploying ' + gutil.colors.yellow(version) + ' to S3 bucket ' + gutil.colors.yellow(options.aws_bucket));
 
   return gulp.src([
     path.join(config.paths.build, '*'),
@@ -115,7 +115,7 @@ function deploy(commits) {
       true,
       notifier.notify({
         title: 'bendystraw',
-        message: 'Successfully deployed to ' + options.aws_bucket,
+        message: '🍺 Deployed to ' + options.aws_bucket,
         icon: path.join(__dirname, '../lib/logo.png'),
         sound: true
       })
@@ -132,15 +132,6 @@ gulp.task('deploy', function(callback) {
   changelog(true, function(commits) {
     deploy(commits);
   });
-});
-
-gulp.task('ship', function(callback) {
-  runSequence(
-    'build',
-    'release',
-    'deploy',
-    callback
-  );
 });
 
 module.exports = deploy;

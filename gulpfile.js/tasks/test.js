@@ -33,16 +33,13 @@ gulp.task('tdd', function (callback) {
 gulp.task('webdriver_update', webdriver_update);
 gulp.task('webdriver_standalone', webdriver_standalone);
 
-gulp.task('e2e', ['webdriver_update'], function(callback) {
-  gulp.src(path.join(config.paths.tests, config.paths.e2e, '/**/*.{js,coffee}'))
+gulp.task('e2e', function(callback) {
+  gulp.src(path.join(config.paths.tests, config.paths.e2e, '/**/*.{' + config.extensions.scripts + '}'))
     .pipe(protractor({
       configFile: path.resolve('protractor.conf.js'),
-      args: ['--baseUrl', 'http://localhost:' + config.browserSync.port]
+      args: ['--baseUrl', config.test.protractor.baseUrl + ':' + config.browserSync.port]
     }))
     .on('error', util.errorHandler('protractor'))
-    .on('end', function () {
-      callback();
-    });
 });
 
 module.exports = function(){};

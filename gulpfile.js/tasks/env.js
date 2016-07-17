@@ -49,7 +49,7 @@ function env() {
   fileContent = JSON.stringify(fileContent);
 
   // If not using angular, use a global variable for the env path
-  // ex: Settings = {"API": "http://localhost"}
+  // ex: ENV = {"API": "http://localhost"}
   if (!config.angular.enabled) {
     fileContent = config.envConstant + " = " + fileContent;
   }
