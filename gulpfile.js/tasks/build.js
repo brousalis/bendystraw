@@ -15,7 +15,7 @@ var filter = require('gulp-filter');
 var ngAnnotate = require('gulp-ng-annotate');
 var useref = require('gulp-useref');
 var uglify = require('gulp-uglify');
-var minifyCss = require('gulp-minify-css');
+var cleanCSS = require('gulp-clean-css');
 var minifyHtml = require('gulp-minify-html');
 var preprocess = require('gulp-preprocess');
 var gzip = require('gulp-gzip');
@@ -68,7 +68,7 @@ function compile(callback) {
     .pipe(uglify())
     .pipe(jsFilter.restore())
     .pipe(cssFilter)
-    .pipe(minifyCss())
+    .pipe(cleanCSS())
     .pipe(cssFilter.restore())
     .pipe(assets.restore())
     .pipe(useref())
