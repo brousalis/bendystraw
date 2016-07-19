@@ -8,6 +8,7 @@ function watch() {
 
   function changed(task) {
     return function(event) {
+      gulp.start('lint');
       if (event.type === 'changed') {
         gulp.start(task);
       } else {
