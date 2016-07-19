@@ -61,6 +61,7 @@ command | description
 `gulp build` | builds, minifys the app to the build folder (for production)
 `gulp release` | bumps version, tags, and creates a GitHub release based on your `package.json`
 `gulp deploy` | deploys the build folder to a S3 bucket, posts to Slack if configured
+`gulp lint` | lints using sass-lint, eslint, and coffeelint
 `gulp test` | runs tests using Karma
 `gulp e2e` | runs end to end tests with Protractor
 
@@ -77,6 +78,7 @@ To read more about the tasks and environment, check out the [wiki](https://githu
     - Compiles html files to the Angular templateCache
   - Babel es2015 support
   - CoffeeScript support
+  - CoffeeLint/ESLint
   - Sourcemaps
   - Bower components automatically injected through [wiredep](https://github.com/taptapship/wiredep)
   - Multiple script bundles created with [useref](https://github.com/jonkemp/useref)
@@ -84,6 +86,7 @@ To read more about the tasks and environment, check out the [wiki](https://githu
   - Sass support, indented or scss using node-sass
   - Sourcemaps
   - Autoprefixer
+  - SassLint
   - Uncss
 - **HTML:**
   - Any gulp-based html preprocessor support (gulp-haml, gulp-jade, etc)

@@ -89,6 +89,33 @@ var settings = {
     branch: 'master', // Which branch to push the created release and tags to
   },
 
+  lint: { // Options for linting
+    sasslint: {
+      enabled: true, // Will disable itself if sass isn't enable
+      rules: { // Override defaults from sass-lint.yml
+        'mixins-before-declarations': 0,
+        'no-vendor-prefixes': 0,
+        'force-element-nesting': 0,
+        'force-pseudo-nesting': 0,
+        'property-sort-order': 2,
+        'quotes': [2, {'style': 'double'}],
+        'shorthand-values': [2, {'allowed-shorthands': [4]}],
+        'empty-line-between-blocks': 0
+      }
+    },
+    eslint: {
+      enabled: true, // Will disable itself if coffeescript is enabled
+      rules: { // Override defaults from eslintrc
+      }
+    },
+    coffeelint: {
+      enabled: true, // Will disable itself if coffeescript is disabled
+      rules: { // Override defaults from coffelint.json
+        max_line_length: 'ignore'
+      }
+    }
+  },
+
   test: { // Options for tests
     protractor: {
       baseUrl: 'http://localhost'
