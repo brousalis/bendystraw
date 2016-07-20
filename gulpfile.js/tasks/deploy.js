@@ -108,7 +108,7 @@ function completeDeploy(commits) {
     aws_bucket: conf.AWS_BUCKET
   };
 
-  var message = 'Deployed ' + manifest.version() + ' of ' + manifest.name();
+  var message = 'Deployed ' + manifest.version() + ' to ' + options.aws_bucket;
 
   util.log('🍺  ' + gutil.colors.yellow(message));
 
