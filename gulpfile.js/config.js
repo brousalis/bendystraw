@@ -98,6 +98,8 @@ var settings = {
         'force-element-nesting': 0,
         'force-pseudo-nesting': 0,
         'property-sort-order': 2,
+        'force-attribute-nesting': 0,
+        'no-qualifying-elements': 0,
         'quotes': [2, {'style': 'double'}],
         'shorthand-values': [2, {'allowed-shorthands': [4]}],
         'empty-line-between-blocks': 0
@@ -105,7 +107,7 @@ var settings = {
     },
     eslint: {
       enabled: true, // Will disable itself if coffeescript is enabled
-      rules: { // Override defaults from eslintrc
+      rules: { // Override defaults from lib/eslintrc.js
       }
     },
     coffeelint: {

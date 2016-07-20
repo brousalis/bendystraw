@@ -1,4 +1,4 @@
-{
+module.exports = {
   "env": {
     "browser": true,
     "es6": true,
@@ -6,9 +6,7 @@
     "jasmine": true
   },
   "extends": "eslint:recommended",
-  "globals": {
-    "angular": 1
-  },
+
   "parserOptions": {
     "sourceType": "module"
   },
@@ -191,6 +189,7 @@
     "no-unused-expressions": "error",
     "no-use-before-define": "off",
     "no-useless-call": "error",
+    "no-console": "error",
     "no-useless-computed-key": "error",
     "no-useless-concat": "error",
     "no-useless-constructor": "error",
@@ -282,4 +281,4 @@
       "never"
     ]
   }
-}
+};
