@@ -11,7 +11,7 @@ var webdriver_standalone = require('gulp-protractor').webdriver_standalone;
 var webdriver_update = require('gulp-protractor').webdriver_update;
 
 // Run tests with Karma
-gulp.task('test', function(callback) {
+gulp.task('test', ['lint:build'], function(callback) {
   new Server({
     singleRun: true,
     configFile: path.resolve('karma.conf.js')
@@ -21,7 +21,7 @@ gulp.task('test', function(callback) {
 });
 
 // Run tests with Karma and watch for file changes
-gulp.task('tdd', function (callback) {
+gulp.task('tdd', ['lint'], function (callback) {
   new Server({
     configFile: path.resolve('karma.conf.js')
   }, function() {

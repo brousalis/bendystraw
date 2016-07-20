@@ -2,18 +2,23 @@
 
 var gulp = require('gulp');
 var path = require('path');
+var runSequence = require('run-sequence');
 
 // Task to watch files for changes, and reload them
 function watch() {
 
   function changed(task) {
     return function(event) {
-      gulp.start('lint');
-      if (event.type === 'changed') {
-        gulp.start(task);
-      } else {
-        gulp.start('inject');
-      }
+      runSequence(
+        'lint',
+        function(error) {
+          if (event.type === 'changed') {
+            gulp.start(task);
+          } else {
+            gulp.start('inject');
+          }
+        }
+      );
     }
   }
 
