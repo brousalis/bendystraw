@@ -9,7 +9,6 @@ var eslintrc = require('../lib/eslintrc');
 var gulp = require('gulp');
 var gulpif = require('gulp-if');
 var sasslint = require('gulp-sass-lint');
-var coffeelint = require('gulp-coffeelint');
 var eslint = require('gulp-eslint');
 var notifier = require('node-notifier');
 
@@ -29,7 +28,6 @@ function lintSass(callback) {
         icon: path.join(__dirname, '../lib/logo-warning.png'),
         sound: true
       });
-      callback();
     }));
 }
 
@@ -54,28 +52,13 @@ function lintJS(callback) {
           icon: path.join(__dirname, '../lib/logo-warning.png'),
           sound: true
         });
-        callback();
       }
     }))
 }
 
-function lintCoffee(callback) {
-  if (!config.scripts.coffeescript || !config.lint.coffeelint.enabled)
-    return callback();
+gulp.task('lint:sass', function(callback) { lintSass(); callback(); });
+gulp.task('lint:js', function(callback) { lintJS(); callback(); });
 
-  return gulp.src([
-    path.join(config.paths.src, '**/*.coffee'),
-    '!node_modules/**'
-  ])
-    .pipe(coffeelint(config.lint.coffeelint))
-    .pipe(coffeelint.reporter())
-    .on('error', function() { util.log('The build has CoffeeScript linting errors.') })
-};
-
-gulp.task('lint:sass', function(callback) { lintSass(callback); });
-gulp.task('lint:js', function(callback) { lintJS(callback); });
-gulp.task('lint:coffee', function(callback) { lintCoffee(callback); });
-
-gulp.task('lint', ['lint:sass', 'lint:js', 'lint:coffee']);
+gulp.task('lint', ['lint:sass', 'lint:js']);
 
 module.exports = function(){};
