@@ -7,25 +7,16 @@ var runSequence = require('run-sequence');
 // Task to watch files for changes, and reload them
 function watch() {
 
-  function changed(task) {
-    return function(event) {
-      runSequence(
-        'lint',
-        function(error) {
-          if (event.type === 'changed') {
-            gulp.start(task);
-          } else {
-            gulp.start('inject');
-          }
-        }
-      );
-    }
-  }
-
   // When template HTML files are changed, recompile them
   gulp.watch(
     path.join(config.paths.src, '**/*.{' + config.extensions.templates + '}'),
-    changed('templates')
+    function(event) {
+      if (event.type === 'changed') {
+        gulp.start('templates');
+      } else {
+        gulp.start('inject');
+      }
+    }
   );
 
   // When stylesheets are changed, recompile them
@@ -33,13 +24,25 @@ function watch() {
       path.join(config.paths.src, config.paths.styles, '**/*.{' + config.extensions.styles + '}'),
       path.join(config.paths.src, config.paths.scripts, '**/*.{' + config.extensions.styles + '}'),
     ],
-    changed('styles')
+    function(event) {
+      if (event.type === 'changed') {
+        runSequence('styles','lint');
+      } else {
+        runSequence('inject','lint');
+      }
+    }
   );
 
   // When javascript files are changed, recompile them
   gulp.watch(
     path.join(config.paths.src, config.paths.scripts, '**/*.{' + config.extensions.scripts + '}'),
-    changed('scripts')
+    function(event) {
+      if (event.type === 'changed') {
+        runSequence('scripts','lint');
+      } else {
+        gulp.start('inject');
+      }
+    }
   );
 
   // When images are added to the app, optimize them
