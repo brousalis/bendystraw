@@ -11,26 +11,29 @@ var gulpif = require('gulp-if');
 var sasslint = require('gulp-sass-lint');
 var coffeelint = require('gulp-coffeelint');
 var eslint = require('gulp-eslint');
+var notifier = require('node-notifier');
 
-function lintSass(fail, callback) {
+function lintSass(callback) {
   if (!config.styles.sass || !config.lint.sasslint.enabled)
     return callback();
 
   return gulp.src(path.join(config.paths.src, '**/*.{' + config.extensions.styles + '}'))
     .pipe(sasslint(config.lint.sasslint))
     .pipe(sasslint.format())
-    .pipe(gulpif(fail, sasslint.failOnError()))
-    .on('error', function() { util.log('The build failed due to a linting error') })
-    .on('finish', function() {
-      if (!fail) {
-        return callback();
-      } else {
-        return process.exit(1);
-      }
-    });
+    .pipe(sasslint.failOnError(function(err) {
+      var message = 'sass-lint: ' + err;
+      util.log(message);
+      notifier.notify({
+        title: 'bendystraw',
+        message: message,
+        icon: path.join(__dirname, '../lib/logo-warning.png'),
+        sound: true
+      });
+      callback();
+    }));
 }
 
-function lintJS(fail, callback) {
+function lintJS(callback) {
   if (config.scripts.coffeescript || !config.lint.eslint.enabled)
     return;
 
@@ -40,56 +43,38 @@ function lintJS(fail, callback) {
   ])
     .pipe(eslint(_.merge(eslintrc, config.lint.eslint)))
     .pipe(eslint.format())
-    .pipe(gulpif(fail, eslint.failAfterError()))
-    .on('error', function() { util.log('The build failed due to a linting error') })
-    .on('finish', function() {
-      if (!fail) {
-        return callback();
-      } else {
-        return process.exit(1);
+    .pipe(eslint.results(function(results) {
+      if (results.errorCount > 0 || results.warningCount > 0) {
+        var count = results.errorCount + results.warningCount;
+        var message = 'eslint: ' + count  + ' ' + (count > 1 ? 'issues' : 'issue') + ' found with the build.';
+        util.log(message);
+        notifier.notify({
+          title: 'bendystraw',
+          message: message,
+          icon: path.join(__dirname, '../lib/logo-warning.png'),
+          sound: true
+        });
+        callback();
       }
-    });
+    }))
 }
 
-function lintCoffee(fail, callback) {
+function lintCoffee(callback) {
   if (!config.scripts.coffeescript || !config.lint.coffeelint.enabled)
     return callback();
-
-  var reporter = fail ? 'fail' : '';
 
   return gulp.src([
     path.join(config.paths.src, '**/*.coffee'),
     '!node_modules/**'
   ])
     .pipe(coffeelint(config.lint.coffeelint))
-    .pipe(coffeelint.reporter(reporter))
-    .on('error', function() { util.log('The build failed due to a linting error') })
-    .on('finish', function() {
-      if (!fail) {
-        return callback();
-      } else {
-        return process.exit(1);
-      }
-    });
+    .pipe(coffeelint.reporter())
+    .on('error', function() { util.log('The build has CoffeeScript linting errors.') })
 };
 
-gulp.task('lint:sass', function(callback) {
-  lintSass(false, callback);
-});
-
-gulp.task('lint:js', function(callback) {
-  lintJS(false, callback);
-});
-
-gulp.task('lint:coffee', function(callback) {
-  lintCoffee(false, callback);
-});
-
-gulp.task('lint:build', function(callback) {
-  lintJS(true, callback);
-  lintCoffee(true, callback);
-  lintSass(true, callback);
-});
+gulp.task('lint:sass', function(callback) { lintSass(callback); });
+gulp.task('lint:js', function(callback) { lintJS(callback); });
+gulp.task('lint:coffee', function(callback) { lintCoffee(callback); });
 
 gulp.task('lint', ['lint:sass', 'lint:js', 'lint:coffee']);
 

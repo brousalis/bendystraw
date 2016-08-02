@@ -11,7 +11,7 @@ function clean(callback) {
     path.join(config.paths.dev, '/')
   ];
 
-  del(folders, callback);
+  return del(folders);
 }
 
 gulp.task('clean', clean);
