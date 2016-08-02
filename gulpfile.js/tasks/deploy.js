@@ -108,6 +108,12 @@ function completeDeploy(commits) {
     aws_bucket: conf.AWS_BUCKET
   };
 
+  if (env !== 'development') {
+    for (var key in options) {
+      options[key] = conf[env.toUpperCase() + '_' + key.toUpperCase()];
+    }
+  }
+
   var message = 'Deployed ' + manifest.version() + ' to ' + options.aws_bucket;
 
   util.log('🍺  ' + gutil.colors.yellow(message));
