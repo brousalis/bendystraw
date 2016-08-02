@@ -47,8 +47,8 @@ function deploy(callback) {
 
   if (options.aws_bucket === '' ||
       options.aws_bucket === undefined) {
-    util.errorHandler('deploy')(new Error('Missing AWS settings in env.'));
-    return false
+    util.errorHandler('deploy')('Missing AWS settings in env.');
+    return callback();
   }
 
   var headers = { 'Cache-Control': 'max-age=315360000, no-transform, public' };
@@ -143,8 +143,8 @@ function completeDeploy(commits) {
 
 gulp.task('deploy', function(callback) {
   if (!util.fileExists(config.paths.build)) {
-    util.errorHandler('deploy')(new Error('You need to build the application first. Run `gulp build`'));
-    return;
+    util.errorHandler('deploy')('You need to build the application first. Run `gulp build`');
+    return callback();
   }
 
   deploy(callback);

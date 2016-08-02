@@ -53,7 +53,7 @@ function server(callback) {
 // Development server
 function buildServer(callback) {
   if (!util.fileExists(config.paths.build)) {
-    util.errorHandler('server:build')(new Error('You need to build the application first. Run `gulp build`'));
+    util.errorHandler('server')('You need to build the application first. Run `gulp build`');
     return;
   }
 

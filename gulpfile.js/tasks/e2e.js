@@ -17,7 +17,7 @@ gulp.task('webdriver_standalone', webdriver_standalone);
 gulp.task('e2e', ['webdriver_update', 'browsersync'], function(callback) {
 
   if (!browserSync.get('server').active) {
-    util.errorHandler('e2e')(new Error('browsersync server failed to run.'));
+    util.errorHandler('e2e')('browsersync server failed to run.');
     return;
   }
 

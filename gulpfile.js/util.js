@@ -1,24 +1,28 @@
 var path = require('path');
 var fs = require('fs');
 
-var notify = require('gulp-notify');
+var notifier= require('node-notifier');
 var gutil = require('gulp-util');
 
 // Handles error messaging in the stream. Will post a Mac toast if errors.
 exports.errorHandler = function(title) {
   return function(err) {
-    gutil.log(gutil.colors.red('[' + title + ']'), err);
+    gutil.log(gutil.colors.green('[bendystraw]'), gutil.colors.red('[ERROR]'), gutil.colors.red(err));
 
     if (err.stack !== 'undefined') {
       message = err.stack;
-    } else {
+    } else if (err.message !== 'undefined') {
       message = err.message;
+    } else {
+      message = err;
     }
 
-    notify.onError({
-      title: title,
-      message: gutil.colors.stripColor(message)
-    }).apply(this, arguments);
+    notifier.notify({
+      title: 'bendystraw',
+      message: 'Error: ' + err,
+      icon: path.join(__dirname, 'lib/logo-warning.png'),
+      sound: true
+    });
 
     if (typeof this.emit === 'function') this.emit('end');
   };

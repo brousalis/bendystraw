@@ -7,6 +7,14 @@ var runSequence = require('run-sequence');
 // Task to watch files for changes, and reload them
 function watch() {
 
+  // When bower_components change, reinject
+  gulp.watch(
+    path.join(config.paths.bower, '**/*'),
+    function(event) {
+      gulp.start('inject');
+    }
+  );
+
   // When template HTML files are changed, recompile them
   gulp.watch(
     path.join(config.paths.src, '**/*.{' + config.extensions.templates + '}'),

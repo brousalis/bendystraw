@@ -89,17 +89,17 @@ gulp.task('github-release', function(callback) {
 function release(callback) {
   if (process.env.GITHUB_TOKEN === '' ||
       process.env.GITHUB_TOKEN === undefined) {
-    util.errorHandler('release')(new Error('Missing GITHUB_TOKEN environment variable.'));
+    util.errorHandler('release')('Missing GITHUB_TOKEN environment variable.');
     return false;
   }
 
   if (!util.fileExists(config.paths.build)) {
-    util.errorHandler('release')(new Error('You need to build the application first. Run `gulp build`.'));
+    util.errorHandler('release')('You need to build the application first. Run `gulp build`.');
     return;
   }
 
   if (!manifest.repo()) {
-    util.errorHandler('release')(new Error('Your package.json is missing the repository field.'));
+    util.errorHandler('release')('Your package.json is missing the repository field.');
     return;
   }
 
