@@ -42,7 +42,11 @@ function buildImages() {
 // Grab images from bower_components, optimize them, then put them in the build folder
 // This is only used in the final build
 function buildBowerImages() {
-  return gulp.src(config.images.bower)
+  if (config.images.bower.length < 1) {
+    return;
+  }
+
+  return gulp.src(path.join(config.paths.bower, config.images.bower))
     .pipe(filter('**/*.{' + config.extensions.images.join(',') + '}'))
     .pipe(rename(imageFolder))
     .pipe(gulp.dest(path.join(config.paths.build, config.paths.images)));

@@ -79,7 +79,7 @@ function inject(callback) {
   };
 
   return gulp.src(path.join(config.paths.src, '/*.html'))
-    .pipe(gulpif(util.fileExists('bower.json'), wiredep({ directory: 'bower_components' })))
+    .pipe(gulpif(util.fileExists('bower.json'), wiredep({ directory: config.paths.bower })))
     .on('error', util.errorHandler('wiredep'))
     .pipe(gulpif(config.angular.enabled, ginject(injectTemplates, injectTemplatesOptions)))
     .pipe(ginject(injectStyles, injectStylesOptions))

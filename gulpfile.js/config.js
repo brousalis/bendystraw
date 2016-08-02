@@ -23,6 +23,8 @@ var settings = {
     // All of these paths are located inside the paths.tess (test/) folder
     e2e: 'e2e', // Protractor tests folder
     unit: 'unit', // Unit tests folder
+
+    bower: 'bower_components', // Bower components folder
   },
 
   browserSync: { // Server config
@@ -79,8 +81,8 @@ var settings = {
   images: { // Options for image optimizer
     progressive: true, // Enables progressive jpeg optimizations
     use: [ require('imagemin-pngquant')() ], // Which image optimizer to use
-    bower: [ // Images to copy from bower_components into the project
-      // ex: 'bower_components/package/**/*'
+    bower: [ // Images to copy from ./bower_components into the project
+      // ex: 'package/**/*'
     ]
   },
 
