@@ -57,8 +57,9 @@ function watch() {
   gulp.watch(
     path.join(config.paths.src, config.paths.images, '**/*'),
     function(event) {
-      if (event.type === 'added')
-        gulp.start('images:optimize')
+      if (event.type === 'added') {
+        runSequence('images:optimize', 'images:build')
+      }
     }
   );
 }
