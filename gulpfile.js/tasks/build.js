@@ -97,7 +97,6 @@ gulp.task('build', function(callback) {
   util.log('Building app in ' + gutil.colors.yellow(process.env.NODE_ENV) + ' environment');
 
   runSequence(
-    'lint',
     'clean',
     ['misc:build', 'images:build'],
     'inject',
